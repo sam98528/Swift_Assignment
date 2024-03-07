@@ -18,4 +18,8 @@ for i in stride(from: 0, to: 100, by: 10){
 
 let flatArr = numArr.flatMap{$0}
 let answer = flatArr.filter{$0 % 3 == 0}
+for (index,element) in numArr.enumerated() {
+    numArr[index] = numArr[index].filter{$0 % 3 == 0}
+}
+print(numArr)
 print(answer)

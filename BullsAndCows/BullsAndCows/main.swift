@@ -1,10 +1,13 @@
-// LV 5
+// LV 6
 
 import Foundation
 class Game {
     fileprivate var answer : [Int] = []
     fileprivate var attempts: [Int] = []
     
+    deinit {
+        print("<숫자 야구 게임을 종료합니다>")
+    }
     func launch (){
         var end = false
         
@@ -26,6 +29,9 @@ class Game {
                         startGame()
                     case 2:
                         showAttempts()
+                    case 3:
+                        end = true
+                        print("")
                     default:
                         print("옮바른 숫자를 입력해주세요")
                         print("")
@@ -143,5 +149,6 @@ class Game {
 }
 
 
-let firstGame = Game()
-firstGame.launch()
+var firstGame : Game? = Game()
+firstGame!.launch()
+firstGame = nil

@@ -1,8 +1,37 @@
-// LV 3
+// LV 4
 
 import Foundation
 class Game {
     fileprivate var answer : [Int] = []
+    
+    func launch (){
+        var end = false
+        
+        while(!end){
+            print("환영합니다! 원하시는 번호를 입력하세요")
+            print("1. 게임시작하기")
+            print("2. 게임 기록 보기")
+            print("3. 종료하기")
+            if let str = readLine(){
+                if str.count != 1 {
+                    print("잘못된 입력입니다")
+                    continue
+                }
+                if let option = Int(str) {
+                    switch option{
+                    case 1:
+                        generateAnswer()
+                        startGame()
+                    default:
+                        print("잘못된 입력입니다")
+                    }
+                    
+                }
+            }
+        }
+        
+        
+    }
     
     func generateAnswer(){
         var numbers = [1,2,3,4,5,6,7,8,9,0]
@@ -92,5 +121,4 @@ class Game {
 
 
 let firstGame = Game()
-firstGame.generateAnswer()
-firstGame.startGame()
+firstGame.launch()

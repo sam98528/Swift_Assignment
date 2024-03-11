@@ -1,8 +1,9 @@
-// LV 4
+// LV 5
 
 import Foundation
 class Game {
     fileprivate var answer : [Int] = []
+    fileprivate var attempts: [Int] = []
     
     func launch (){
         var end = false
@@ -14,7 +15,8 @@ class Game {
             print("3. 종료하기")
             if let str = readLine(){
                 if str.count != 1 {
-                    print("잘못된 입력입니다")
+                    print("옮바른 숫자를 입력해주세요")
+                    print("")
                     continue
                 }
                 if let option = Int(str) {
@@ -22,14 +24,53 @@ class Game {
                     case 1:
                         generateAnswer()
                         startGame()
+                    case 2:
+                        showAttempts()
                     default:
-                        print("잘못된 입력입니다")
+                        print("옮바른 숫자를 입력해주세요")
+                        print("")
                     }
                     
                 }
             }
         }
         
+        
+    }
+    func startGame () {
+        var attempt = 0
+        print("")
+        print("<게임을 시작합니다>")
+        print(answer)
+        var correct = false
+        while(!correct){
+            print("숫자를 입력하세요!")
+            if let str = readLine(){
+                if !isCorrectString(str) {
+                    continue
+                }else {
+                    correct = checkAnswer(str)
+                    attempt += 1
+                }
+            }
+            
+            
+            print("")
+        }
+        attempts.append(attempt)
+    }
+    
+    func showAttempts(){
+        print("")
+        if attempts.isEmpty {
+            print("아직 게임 기록이 없습니다!")
+        }else{
+            print("<게임 기록 보기>")
+            for (index,attempt) in attempts.enumerated() {
+                print("\(index + 1) 번째 게임 : 시도 횟수 - \(attempt)")
+            }
+        }
+        print("")
         
     }
     
@@ -52,25 +93,7 @@ class Game {
         answer = ans
     }
     
-    func startGame () {
-        print("<게임을 시작합니다>")
-        print(answer)
-        var correct = false
-        while(!correct){
-            print("숫자를 입력하세요!")
-            if let str = readLine(){
-                if !isCorrectString(str) {
-                    continue
-                }else {
-                    correct = checkAnswer(str)
-                }
-            }
-            
-            
-            print("")
-        }
-    }
-    
+
     func isCorrectString (_ input: String) -> Bool {
         if input.count != 3 {
             print("올바르지 않는 입력값입니다.(3자리 수)")

@@ -2,12 +2,16 @@
 
 import Foundation
 class Game {
+    
     fileprivate var answer : [Int] = []
     fileprivate var attempts: [Int] = []
     
     deinit {
         print("<숫자 야구 게임을 종료합니다>")
     }
+    
+    // Game Launch 함수
+    // 게임 메인 화면 표시 및 다른 메뉴로 이동 관련 함수
     func launch (){
         var end = false
         
@@ -40,14 +44,12 @@ class Game {
                 }
             }
         }
-        
-        
     }
+    // 실제 게임 스타트 함수
     func startGame () {
         var attempt = 0
         print("")
         print("<게임을 시작합니다>")
-        print(answer)
         var correct = false
         while(!correct){
             print("숫자를 입력하세요!")
@@ -66,6 +68,7 @@ class Game {
         attempts.append(attempt)
     }
     
+    // 기록 보여주기 함수
     func showAttempts(){
         print("")
         if attempts.isEmpty {
@@ -80,6 +83,7 @@ class Game {
         
     }
     
+    // 랜덤 숫자 만들기 함수
     func generateAnswer(){
         var numbers = [1,2,3,4,5,6,7,8,9,0]
         var ans : [Int] = []
@@ -99,7 +103,7 @@ class Game {
         answer = ans
     }
     
-
+    // 입력값이 정확한 입력값이 확인하는 함수
     func isCorrectString (_ input: String) -> Bool {
         if input.count != 3 {
             print("올바르지 않는 입력값입니다.(3자리 수)")
@@ -117,6 +121,7 @@ class Game {
         return true
     }
     
+    // 정답인지 확인하는 함수
     func checkAnswer(_ input : String) -> Bool{
         var strike = 0
         var ball = 0

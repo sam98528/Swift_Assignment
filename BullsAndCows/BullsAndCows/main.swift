@@ -28,4 +28,3 @@ var answerWithRandomElement = generateRandomElement(numbers)
 var answerWithShuffle = generateShuffle(numbers)
 print(answerWithRandomElement)
 print(answerWithShuffle)
-

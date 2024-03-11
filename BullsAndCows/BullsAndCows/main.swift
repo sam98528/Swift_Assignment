@@ -1,19 +1,25 @@
-import Foundation
+// LV 3
 
+import Foundation
 class Game {
     fileprivate var answer : [Int] = []
     
     func generateAnswer(){
         var numbers = [1,2,3,4,5,6,7,8,9,0]
         var ans : [Int] = []
-        for _ in 1...3 {
+        while (ans.count < 3){
             if let number = numbers.randomElement() {
-                ans.append(number)
-                numbers.remove(at: numbers.firstIndex(of: number)!)
+                if ans.count == 0 && number == 0 {
+                    continue
+                }else{
+                    ans.append(number)
+                    numbers.remove(at: numbers.firstIndex(of: number)!)
+                }
             }else {
                 print("ERROR")
             }
         }
+        
         answer = ans
     }
     

@@ -40,7 +40,9 @@ class Game {
                         print("옮바른 숫자를 입력해주세요")
                         print("")
                     }
-                    
+                }else{
+                    print("옮바른 숫자를 입력해주세요")
+                    print("")
                 }
             }
         }

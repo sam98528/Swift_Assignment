@@ -267,8 +267,8 @@ firstGame = nil
 
 ![](https://velog.velcdn.com/images/sam98528/post/a7992349-2045-49a0-9975-14cdc9321bc4/image.png)
 
-![업로드중..](blob:https://velog.io/6407dc89-33fb-4920-9981-e285b71434f9)
+![](blob:https://velog.io/6407dc89-33fb-4920-9981-e285b71434f9)
 
 ![](https://velog.velcdn.com/images/sam98528/post/6a84485d-f894-4b9a-8364-4f4d19000523/image.png)
 
-![업로드중..](blob:https://velog.io/e7b8c6df-970c-4b2a-b0f0-58498a17dfef)
+![](blob:https://velog.io/e7b8c6df-970c-4b2a-b0f0-58498a17dfef)

@@ -267,8 +267,10 @@ firstGame = nil
 
 ![](https://velog.velcdn.com/images/sam98528/post/a7992349-2045-49a0-9975-14cdc9321bc4/image.png)
 
-![](blob:https://velog.io/6407dc89-33fb-4920-9981-e285b71434f9)
+![](https://velog.velcdn.com/images/sam98528/post/ecb575e1-8f29-475b-81fb-e699e750e3a2/image.png)
+
 
 ![](https://velog.velcdn.com/images/sam98528/post/6a84485d-f894-4b9a-8364-4f4d19000523/image.png)
 
-![](blob:https://velog.io/e7b8c6df-970c-4b2a-b0f0-58498a17dfef)
+![](https://velog.velcdn.com/images/sam98528/post/b88acbf9-c2e1-45b0-8451-1d1ae6ab1628/image.png)
+

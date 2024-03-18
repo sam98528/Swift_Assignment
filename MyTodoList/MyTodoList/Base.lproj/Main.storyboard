@@ -20,6 +20,9 @@
                                 <rect key="frame" x="347" y="59" width="83" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="추가하기"/>
+                                <connections>
+                                    <action selector="MybuttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2f6-j6-PaX"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oDr-lf-cko">
                                 <rect key="frame" x="0.0" y="94" width="430" height="755"/>

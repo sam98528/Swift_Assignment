@@ -13,15 +13,5 @@ struct Todo{
     var isCompleted : Bool
 }
 
-extension Todo{
-    static var data = [
-        Todo(id: 1, title: "123", isCompleted: false),
-        Todo(id: 1, title: "123", isCompleted: false),
-        Todo(id: 1, title: "123", isCompleted: false),
-        Todo(id: 1, title: "123", isCompleted: false),
-        Todo(id: 1, title: "123", isCompleted: false)
-    ]
-}
-
 
 

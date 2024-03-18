@@ -13,16 +13,16 @@ class ViewController: UIViewController{
     
     @IBOutlet weak var MyButton: UIButton!
     @IBOutlet weak var MyTableView: UITableView!
+    
+    
     var list : [Todo] = []
     
     
     @IBAction func MybuttonClicked(_ sender: Any) {
         let alert = UIAlertController(title: "할 일 추가", message: "입력해주세요!", preferredStyle: .alert)
-        alert.addTextField { field in
-                    
-                }
+        alert.addTextField()
         
-        let confirm = UIAlertAction(title: "추가", style: .default){action in
+        let confirm = UIAlertAction(title: "추가", style: .destructive){action in
             if let textField = alert.textFields?.first {
                 self.list.append(Todo(id: 1, title: textField.text!, isCompleted: false))
                 self.MyTableView.reloadData()
@@ -50,6 +50,7 @@ class ViewController: UIViewController{
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDelegate {
+    
     func switchIsChanged(index: Int) {
         list[index].isCompleted = list[index].isCompleted ? false : true
         self.MyTableView.reloadData()
@@ -67,7 +68,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         cell.Title.text = target.title
         cell.index = indexPath.row
         list[indexPath.row].id = indexPath.row
-        cell.delagate = self
+        cell.delegate = self
         if target.isCompleted == true {
             cell.Title.attributedText = cell.Title.text?.strikeThrough()
             cell.IsCompletedSwitch.setOn(true, animated: false)
@@ -82,17 +83,24 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         return cell
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-            
-            if editingStyle == .delete {
-                
-                list.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                
-            } else if editingStyle == .insert {
-                
-            }
-        }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+       let action = UIContextualAction(style: .normal, title: "swipe", handler: {(action, view, completionHandler) in
+           print("Swiped") // 실행하고 싶은 내용
+           completionHandler(true)
+       })
+       
+       return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "swipe", handler: {(action, view, completionHandler) in
+            self.list.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade) // 실행하고 싶은 내용
+            completionHandler(true)
+        })
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
 
 

@@ -18,10 +18,10 @@ class ToDoTableViewCell: UITableViewCell {
     @IBOutlet weak var IsCompletedSwitch: UISwitch!
     @IBOutlet weak var Title: UILabel!
     
-    var delagate : TableViewDelegate?
+    var delegate : TableViewDelegate?
     
     @IBAction func IsCompletedSwitchTouched(_ sender: UISwitch) {
-        self.delagate?.switchIsChanged(index: index)
+        self.delegate?.switchIsChanged(index: index)
     }
     
     override func prepareForReuse() {

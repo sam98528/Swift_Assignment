@@ -5,6 +5,8 @@
 //  Created by Sam.Lee on 3/18/24.
 //
 
+
+
 import UIKit
 
 class ViewController: UIViewController{
@@ -33,13 +35,13 @@ class ViewController: UIViewController{
         present(alert, animated: true, completion: nil)
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         list.append(Todo(id: 1, title: "123", isCompleted: false))
         list.append(Todo(id: 1, title: "234", isCompleted: false))
         list.append(Todo(id: 1, title: "456", isCompleted: false))
         list.append(Todo(id: 1, title: "789", isCompleted: false))
-        list.append(Todo(id: 1, title: "101112", isCompleted: false))
         MyTableView.delegate = self
         MyTableView.dataSource = self
         MyTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
@@ -47,7 +49,13 @@ class ViewController: UIViewController{
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDelegate {
+    func switchIsChanged(index: Int) {
+        list[index].isCompleted = list[index].isCompleted ? false : true
+        self.MyTableView.reloadData()
+    }
+    
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
@@ -57,26 +65,24 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = MyTableView.dequeueReusableCell(withIdentifier: ToDoTableViewCell.identifier, for: indexPath) as! ToDoTableViewCell
         let target = list[indexPath.row]
         cell.Title.text = target.title
-        //cell Switch ON, OFF 만들어놓고
-        // ReloadData()
+        cell.index = indexPath.row
+        list[indexPath.row].id = indexPath.row
+        cell.delagate = self
+        if target.isCompleted == true {
+            cell.Title.attributedText = cell.Title.text?.strikeThrough()
+            cell.IsCompletedSwitch.setOn(true, animated: false)
+        }else{
+            cell.IsCompletedSwitch.setOn(false, animated: false)
+            if let text = cell.Title.text {
+                let attributedString = NSMutableAttributedString(string: text)
+                attributedString.removeAttribute(.strikethroughStyle, range: NSMakeRange(0, attributedString.length))
+                cell.Title.attributedText = attributedString
+            }
+        }
         return cell
     }
 }
 
-/*
-if (IsCompletedSwitch.isOn){
-    Title.attributedText = Title.text?.strikeThrough()
-}
- 
- if cell.IsCompletedSwitch.isOn {
-     cell.Title.attributedText = cell.Title.text?.strikeThrough()
- }else{
-     let originalString = cell.Title.text ?? ""
-     let attributedString = NSMutableAttributedString(string: originalString)
-     attributedString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributedString.length))
-     cell.Title.attributedText = attributedString
- }
-*/
 
 
 extension String {

@@ -39,6 +39,7 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         list.append(Todo(id: 1, title: "강의 듣기", isCompleted: false, isImportant: true))
         list.append(Todo(id: 1, title: "과제 1번 완성하기!", isCompleted: false, isImportant: false))
         list.append(Todo(id: 1, title: "강아지 산책하기", isCompleted: false, isImportant: false))
@@ -48,7 +49,9 @@ class ViewController: UIViewController{
         MyTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
         MyTableView.layer.cornerRadius = 20
         MyTableView.clipsToBounds = true
+        MyTableView.backgroundView = UIImageView(image: UIImage(named: "paper-texture"))
         LogoLabel.font = UIFont(name: font, size: 45)
+        
         // Do any additional setup after loading the view.
         
     }
@@ -57,7 +60,7 @@ class ViewController: UIViewController{
 extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDelegate {
    
     
-    func switchIsChanged(index: Int) {
+    func buttonIsClicked(index: Int) {
         list[index].isCompleted = list[index].isCompleted ? false : true
         self.MyTableView.reloadData()
     }
@@ -73,18 +76,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         let target = list[indexPath.row]
         
         cell.selectionStyle = .none
+        
+        
         cell.Title.font = UIFont(name: font, size: 15.0)
         cell.Title.text = target.title
         cell.index = indexPath.row
         list[indexPath.row].id = indexPath.row
         
+        cell.backgroundColor = .clear
         
         cell.delegate = self
         if target.isCompleted == true {
             cell.Title.attributedText = cell.Title.text?.strikeThrough()
-            cell.IsCompletedSwitch.setOn(true, animated: false)
+            cell.CheckBoxButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         }else{
-            cell.IsCompletedSwitch.setOn(false, animated: false)
+            cell.CheckBoxButton.setImage(UIImage(systemName: "square"), for: .normal)
             if let text = cell.Title.text {
                 let attributedString = NSMutableAttributedString(string: text)
                 attributedString.removeAttribute(.strikethroughStyle, range: NSMakeRange(0, attributedString.length))
@@ -94,9 +100,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         
         
         if target.isImportant == true {
-            cell.backgroundColor = .red
+            cell.Title.textColor = .red
         }else{
-            cell.backgroundColor = .white
+            cell.Title.textColor = .black
         }
         return cell
     }

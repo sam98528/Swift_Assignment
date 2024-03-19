@@ -5,7 +5,7 @@
 //  Created by Sam.Lee on 3/18/24.
 //
 protocol TableViewDelegate {
-    func switchIsChanged(index: Int)
+    func buttonIsClicked(index: Int)
     
 }
 
@@ -15,14 +15,17 @@ import UIKit
 class ToDoTableViewCell: UITableViewCell {
     static let identifier = "TodoTableViewCell"
     var index = 0
-    @IBOutlet weak var IsCompletedSwitch: UISwitch!
+    @IBOutlet weak var CheckBoxButton: UIButton!
     @IBOutlet weak var Title: UILabel!
+    
     
     var delegate : TableViewDelegate?
     
-    @IBAction func IsCompletedSwitchTouched(_ sender: UISwitch) {
-        self.delegate?.switchIsChanged(index: index)
+    @IBAction func CheckBoxButtonClicked(_ sender: UIButton) {
+        self.delegate?.buttonIsClicked(index: index)
     }
+    
+
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -31,7 +34,7 @@ class ToDoTableViewCell: UITableViewCell {
             attributedString.removeAttribute(.strikethroughStyle, range: NSMakeRange(0, attributedString.length))
             Title.attributedText = attributedString
         }
-        IsCompletedSwitch.setOn(false, animated: false)
+        CheckBoxButton.setImage(UIImage(named: "square"), for: .normal)
     }
     
     static func nib() -> UINib {

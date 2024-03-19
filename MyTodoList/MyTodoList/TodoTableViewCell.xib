@@ -21,35 +21,41 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOn-Dh-N0V">
-                        <rect key="frame" x="10" y="5" width="241" height="63"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" showsExpansionTextWhenTruncated="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOn-Dh-N0V">
+                        <rect key="frame" x="10" y="5" width="250" height="63"/>
                         <fontDescription key="fontDescription" name="SangSangYoungestDaughter" family="SangSangYoungestDaughter" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Rx0-4s-KB8">
-                        <rect key="frame" x="261" y="10" width="51" height="53"/>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whj-wo-f8b">
+                        <rect key="frame" x="261" y="10" width="49" height="53"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="square.fill" catalog="system"/>
                         <connections>
-                            <action selector="IsCompletedSwitchTouched:" destination="KGk-i7-Jjw" eventType="valueChanged" id="4xH-5w-WQS"/>
+                            <action selector="CheckBoxButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sOR-Na-eir"/>
                         </connections>
-                    </switch>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="Rx0-4s-KB8" secondAttribute="trailing" constant="10" id="MNV-Nw-lrN"/>
+                    <constraint firstAttribute="trailing" secondItem="NOn-Dh-N0V" secondAttribute="trailing" constant="60" id="5e6-Dl-tnb"/>
+                    <constraint firstAttribute="trailing" secondItem="whj-wo-f8b" secondAttribute="trailing" constant="10" id="7nC-eE-ieW"/>
+                    <constraint firstItem="whj-wo-f8b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="L5q-yj-lGn"/>
                     <constraint firstAttribute="bottom" secondItem="NOn-Dh-N0V" secondAttribute="bottom" constant="5" id="MRq-AU-W9s"/>
-                    <constraint firstItem="Rx0-4s-KB8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Q40-vH-goz"/>
                     <constraint firstItem="NOn-Dh-N0V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="RmU-nI-gfc"/>
-                    <constraint firstAttribute="bottom" secondItem="Rx0-4s-KB8" secondAttribute="bottom" constant="10" id="TOB-7G-buf"/>
-                    <constraint firstItem="Rx0-4s-KB8" firstAttribute="leading" secondItem="NOn-Dh-N0V" secondAttribute="trailing" constant="10" id="fvA-Oh-499"/>
+                    <constraint firstAttribute="bottom" secondItem="whj-wo-f8b" secondAttribute="bottom" constant="10" id="jHz-hz-sR9"/>
                     <constraint firstItem="NOn-Dh-N0V" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="n3L-4W-ozq"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="IsCompletedSwitch" destination="Rx0-4s-KB8" id="dqD-lH-J8E"/>
+                <outlet property="CheckBoxButton" destination="whj-wo-f8b" id="KLK-wJ-Nv3"/>
                 <outlet property="Title" destination="NOn-Dh-N0V" id="yy1-pM-Ghg"/>
             </connections>
             <point key="canvasLocation" x="45.801526717557252" y="30.633802816901412"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="square.fill" catalog="system" width="128" height="114"/>
+    </resources>
 </document>

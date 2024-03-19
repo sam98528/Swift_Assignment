@@ -7,6 +7,11 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="EF_Diary.ttf">
+            <string>EF_Diary</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -16,40 +21,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhm-x3-zw2">
-                                <rect key="frame" x="347" y="59" width="83" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhm-x3-zw2">
+                                <rect key="frame" x="347" y="59" width="83" height="57.666666666666657"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="추가하기"/>
+                                <buttonConfiguration key="configuration" style="plain" title="추가하기">
+                                    <fontDescription key="titleFontDescription" name="EF_Diary" family="EF_다이어리" pointSize="16"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="MybuttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2f6-j6-PaX"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oDr-lf-cko">
-                                <rect key="frame" x="0.0" y="94" width="430" height="755"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oDr-lf-cko">
+                                <rect key="frame" x="10" y="126.66666666666669" width="410" height="722.33333333333326"/>
+                                <color key="backgroundColor" red="0.19157574250000001" green="0.1982173894" blue="0.59921149289999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="ToDo List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaK-ry-e2Q">
+                                <rect key="frame" x="10" y="59" width="229.66666666666666" height="57.666666666666657"/>
+                                <fontDescription key="fontDescription" name="EF_Diary" family="EF_다이어리" pointSize="45"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oDr-lf-cko" secondAttribute="bottom" id="0Dj-oS-43i"/>
-                            <constraint firstItem="oDr-lf-cko" firstAttribute="top" secondItem="hhm-x3-zw2" secondAttribute="bottom" id="65I-uf-4iq"/>
-                            <constraint firstItem="oDr-lf-cko" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="B0P-yT-6Xy"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oDr-lf-cko" secondAttribute="trailing" id="Pa5-AI-sOL"/>
+                            <constraint firstItem="hhm-x3-zw2" firstAttribute="leading" relation="lessThanOrEqual" secondItem="GaK-ry-e2Q" secondAttribute="trailing" constant="107.33" id="4de-gp-uyL"/>
+                            <constraint firstItem="GaK-ry-e2Q" firstAttribute="width" secondItem="hhm-x3-zw2" secondAttribute="height" multiplier="227:57" id="64E-uF-vLG"/>
+                            <constraint firstItem="oDr-lf-cko" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="B0P-yT-6Xy"/>
+                            <constraint firstItem="GaK-ry-e2Q" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="IaB-9t-m8q"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oDr-lf-cko" secondAttribute="trailing" constant="10" id="Pa5-AI-sOL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hhm-x3-zw2" secondAttribute="trailing" id="QqB-uJ-rn7"/>
                             <constraint firstItem="hhm-x3-zw2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="XNR-rt-DNL"/>
+                            <constraint firstItem="oDr-lf-cko" firstAttribute="top" secondItem="GaK-ry-e2Q" secondAttribute="bottom" constant="10" id="gCW-a3-b1F"/>
+                            <constraint firstItem="hhm-x3-zw2" firstAttribute="height" secondItem="GaK-ry-e2Q" secondAttribute="height" id="nMp-NI-gy8"/>
+                            <constraint firstItem="GaK-ry-e2Q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="xsu-vS-1cL"/>
+                            <constraint firstItem="oDr-lf-cko" firstAttribute="top" secondItem="hhm-x3-zw2" secondAttribute="bottom" constant="10" id="yct-nK-QDB"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="LogoLabel" destination="GaK-ry-e2Q" id="NUi-jz-qax"/>
                         <outlet property="MyButton" destination="hhm-x3-zw2" id="4xV-Bb-z3C"/>
                         <outlet property="MyTableView" destination="oDr-lf-cko" id="knc-3V-GNb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="112.21374045801527" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="111.62790697674419" y="-2.5751072961373391"/>
         </scene>
     </scenes>
     <resources>

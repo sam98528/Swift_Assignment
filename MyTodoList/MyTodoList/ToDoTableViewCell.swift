@@ -32,16 +32,14 @@ class ToDoTableViewCell: UITableViewCell {
             Title.attributedText = attributedString
         }
         IsCompletedSwitch.setOn(false, animated: false)
-        
     }
+    
     static func nib() -> UINib {
         return UINib(nibName: "TodoTableViewCell", bundle: nil)
-        
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

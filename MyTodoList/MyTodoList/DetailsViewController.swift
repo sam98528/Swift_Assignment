@@ -7,12 +7,22 @@
 
 import UIKit
 
+protocol DataTransferDelegate: AnyObject {
+    func sendData(_ data: Todo)
+}
+
+
 class DetailsViewController: UIViewController {
 
     let font = "EF_Diary"
     
-
+    weak var dataTransferDelegate : DataTransferDelegate?
     
+    var temp : Int = 0
+    
+    var previousVC: ViewController?
+    
+    var list : [Todo] = []
     @IBOutlet weak var tagButton: UIButton!
     
     @IBOutlet weak var memoTextView: UITextView!
@@ -41,6 +51,7 @@ class DetailsViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(temp)
         /*
         let backgroundImage = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "paper-texture")
@@ -56,14 +67,37 @@ class DetailsViewController: UIViewController {
         
         titleTextField.font = UIFont(name: font, size: 20.0)
         titleTextField.backgroundColor = .clear
+        
+        
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: font, size: 20)!]
-        cancelButtonItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
-        addButtonItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
+        titleNavigationItem.leftBarButtonItem?.action = #selector(self.dismissLeftButton)
+        titleNavigationItem.rightBarButtonItem?.action = #selector(self.addRightBUtton)
+        titleNavigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
+        titleNavigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
         //titleNavigationItem.title = "Hello"
         // Do any additional setup after loading the view.
     }
     
-
+    @objc func dismissLeftButton(){
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func addRightBUtton(){
+        if self.titleTextField.text == ""{
+            let alert = UIAlertController(title: "오류", message: "제목을 입력해주세요!", preferredStyle: .alert)
+            let close = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+            alert.addAction(close)
+            present(alert, animated: true, completion: nil)
+        }else{
+            guard let nextVC = self.storyboard?.instantiateViewController(identifier: "ViewController") as? ViewController else { return }
+                nextVC.modalPresentationStyle = .overFullScreen
+                nextVC.modalTransitionStyle = .coverVertical
+                nextVC.list = self.list
+                nextVC.list.append(Todo(id: 1, title: self.titleTextField.text!, isCompleted: true, isImportant: true))
+                nextVC.nextVC = self
+                self.present(nextVC, animated: true, completion: nil)
+        }
+    }
     /*
     // MARK: - Navigation
 

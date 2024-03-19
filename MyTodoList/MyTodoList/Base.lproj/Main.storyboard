@@ -16,7 +16,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyTodoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="MyTodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +30,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="MybuttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2f6-j6-PaX"/>
-                                    <segue destination="UMc-Of-hjY" kind="presentation" id="rbX-9j-JeH"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oDr-lf-cko">
@@ -63,6 +62,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="2kJ-eT-efv"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="LogoLabel" destination="GaK-ry-e2Q" id="NUi-jz-qax"/>
@@ -77,26 +77,26 @@
         <!--Details View Controller-->
         <scene sceneID="cbt-1X-n8F">
             <objects>
-                <viewController id="UMc-Of-hjY" customClass="DetailsViewController" customModule="MyTodoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UMc-Of-hjY" customClass="DetailsViewController" customModule="MyTodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VHQ-bA-UVL">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="922"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="시작시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lk0-s2-uE5">
-                                <rect key="frame" x="9.9999999999999964" y="125.99999999999999" width="57.666666666666657" height="36.333333333333329"/>
+                                <rect key="frame" x="9.9999999999999964" y="173" width="57.666666666666657" height="36.333333333333343"/>
                                 <fontDescription key="fontDescription" name="EF_Diary" family="EF_다이어리" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="7Vr-7T-hwX">
-                                <rect key="frame" x="77.666666666666657" y="125.99999999999999" width="342.33333333333337" height="36.333333333333329"/>
+                                <rect key="frame" x="77.666666666666657" y="173" width="342.33333333333337" height="36.333333333333343"/>
                                 <date key="minimumDate" timeIntervalSinceReferenceDate="725727600">
                                     <!--2023-12-31 15:00:00 +0000-->
                                 </date>
                                 <locale key="locale" localeIdentifier="ko"/>
                             </datePicker>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKu-9h-LDB">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="56"/>
+                                <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                                 <color key="backgroundColor" red="0.9150597453" green="0.9150597453" blue="0.9150597453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <navigationItem title="새로운 투두 추가" id="qNQ-Vs-Iba">
@@ -108,7 +108,7 @@
                                 </items>
                             </navigationBar>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="제목" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Px3-av-XJ1">
-                                <rect key="frame" x="10" y="66" width="410" height="50"/>
+                                <rect key="frame" x="10" y="113" width="410" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="sEa-fP-vUK"/>
                                 </constraints>
@@ -116,23 +116,23 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="종료시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9k-SJ-4se">
-                                <rect key="frame" x="10.000000000000004" y="172.33333333333334" width="55.333333333333343" height="36.333333333333343"/>
+                                <rect key="frame" x="10.000000000000004" y="219.33333333333334" width="55.333333333333343" height="36.333333333333343"/>
                                 <fontDescription key="fontDescription" name="EF_Diary" family="EF_다이어리" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="중요도" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jN1-pv-Sdt">
-                                <rect key="frame" x="10" y="218.66666666666666" width="348" height="36.333333333333343"/>
+                                <rect key="frame" x="10" y="265.66666666666669" width="348" height="36.333333333333314"/>
                                 <fontDescription key="fontDescription" name="EF_Diary" family="EF_다이어리" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xeQ-uD-0qI">
-                                <rect key="frame" x="75.333333333333343" y="172.33333333333334" width="344.66666666666663" height="36.333333333333343"/>
+                                <rect key="frame" x="75.333333333333343" y="219.33333333333334" width="344.66666666666663" height="36.333333333333343"/>
                                 <locale key="locale" localeIdentifier="ko"/>
                             </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lZj-1F-dpg">
-                                <rect key="frame" x="368" y="218.66666666666666" width="52" height="36.333333333333343"/>
+                                <rect key="frame" x="368" y="265.66666666666669" width="52" height="36.333333333333314"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button" image="star" catalog="system">
@@ -151,27 +151,27 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="right" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZP-fD-l4E">
-                                <rect key="frame" x="47" y="265" width="368" height="36.333333333333314"/>
+                                <rect key="frame" x="47" y="312" width="368" height="36.333333333333314"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="태그" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tV-2C-TJl">
-                                <rect key="frame" x="10" y="265" width="27" height="36.333333333333314"/>
+                                <rect key="frame" x="10" y="312" width="27" height="36.333333333333314"/>
                                 <fontDescription key="fontDescription" name="EF_Diary" family="EF_다이어리" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="730-Sz-n9h">
-                                <rect key="frame" x="10" y="357.66666666666669" width="410" height="554.33333333333326"/>
+                                <rect key="frame" x="10" y="404.66666666666674" width="410" height="483.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="메모" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJu-Uk-N4d">
-                                <rect key="frame" x="10" y="311.33333333333331" width="410" height="36.333333333333314"/>
+                                <rect key="frame" x="10" y="358.33333333333331" width="410" height="36.333333333333314"/>
                                 <fontDescription key="fontDescription" name="EF_Diary" family="EF_다이어리" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -222,6 +222,7 @@
                             <constraint firstItem="lZj-1F-dpg" firstAttribute="height" secondItem="jN1-pv-Sdt" secondAttribute="height" id="wSl-D3-uEK"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="3xg-Y5-XWY"/>
                     <connections>
                         <outlet property="addButtonItem" destination="wcm-2V-1yl" id="xxp-0c-ZBI"/>
                         <outlet property="cancelButtonItem" destination="Qy7-c3-LRu" id="sQc-5S-C7r"/>
@@ -237,7 +238,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VEN-xY-SHG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860.93023255813955" y="-3.218884120171674"/>
+            <point key="canvasLocation" x="1095" y="-3"/>
         </scene>
     </scenes>
     <resources>

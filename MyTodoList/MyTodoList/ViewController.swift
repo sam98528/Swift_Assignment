@@ -16,11 +16,29 @@ class ViewController: UIViewController{
     @IBOutlet weak var LogoLabel: UILabel!
     var addButton: UIButton!
     
-    var list : [Todo] = []
+    var list : [Todo] = [Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true),
+                         Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false),
+                         Todo(id: 1, title: "강아지 산책하기!", isCompleted: false, isImportant: false),
+                         Todo(id: 1, title: "과제 마무리하기!", isCompleted: false, isImportant: false),
+                         ]
     
+    var nextVC: DetailsViewController?
     
     @IBAction func MybuttonClicked(_ sender: Any) {
+        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return }
+            nextVC.modalPresentationStyle = .overFullScreen
+            nextVC.modalTransitionStyle = .coverVertical
+            nextVC.list = self.list
+            nextVC.previousVC = self
+            self.present(nextVC, animated: true, completion: nil)
+        
         /*
+        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return }
+            nextVC.modalPresentationStyle = .overFullScreen
+            nextVC.modalTransitionStyle = .coverVertical
+            self.present(nextVC, animated: true, completion: nil)
+         
+         
         let alert = UIAlertController(title: "할 일 추가", message: "입력해주세요!", preferredStyle: .alert)
         alert.addTextField()
         
@@ -42,20 +60,31 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        list.append(Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true))
-        list.append(Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false))
-        list.append(Todo(id: 1, title: "강아지 산책하기", isCompleted: false, isImportant: false))
-        list.append(Todo(id: 1, title: "어제 못본 나는 솔로보기", isCompleted: false, isImportant: false))
+        
+        
+        print(list)
+        MyTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
+        
         MyTableView.delegate = self
         MyTableView.dataSource = self
-        MyTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
+       
         MyTableView.layer.cornerRadius = 20
         MyTableView.clipsToBounds = true
         MyTableView.backgroundView = UIImageView(image: UIImage(named: "paper-texture"))
         LogoLabel.font = UIFont(name: font, size: 45)
         
+        //let detailsViewController = DetailsViewController()
+        //detailsViewController.dataTransferDelegate = self
         // Do any additional setup after loading the view.
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetails"{
+            if let destinationVC = segue.destination as? DetailsViewController {
+                destinationVC.temp = 10
+            }
+        }
     }
 }
 
@@ -140,9 +169,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         print(list[indexPath.row])
     }
 }
-
-
-
+/*
+extension ViewController : DataTransferDelegate {
+    func sendData(_ data: Todo) {
+        print(data)
+    }
+}
+*/
 extension String {
     // 블로그 참고
     func strikeThrough() -> NSAttributedString {

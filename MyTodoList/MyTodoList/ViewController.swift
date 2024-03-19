@@ -20,6 +20,7 @@ class ViewController: UIViewController{
     
     
     @IBAction func MybuttonClicked(_ sender: Any) {
+        /*
         let alert = UIAlertController(title: "할 일 추가", message: "입력해주세요!", preferredStyle: .alert)
         alert.addTextField()
         
@@ -34,14 +35,15 @@ class ViewController: UIViewController{
         alert.addAction(confirm)
         alert.addAction(close)
         present(alert, animated: true, completion: nil)
+         */
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        list.append(Todo(id: 1, title: "강의 듣기", isCompleted: false, isImportant: true))
-        list.append(Todo(id: 1, title: "과제 1번 완성하기!", isCompleted: false, isImportant: false))
+        list.append(Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true))
+        list.append(Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false))
         list.append(Todo(id: 1, title: "강아지 산책하기", isCompleted: false, isImportant: false))
         list.append(Todo(id: 1, title: "어제 못본 나는 솔로보기", isCompleted: false, isImportant: false))
         MyTableView.delegate = self

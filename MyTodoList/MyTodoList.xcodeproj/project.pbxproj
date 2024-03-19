@@ -21,7 +21,8 @@
 		14974C472BA8388200228294 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14974C462BA8388200228294 /* Todo.swift */; };
 		14A452AA2BA9266E002468E4 /* BM-JUA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14A452A92BA9265D002468E4 /* BM-JUA.ttf */; };
 		14A452AC2BA9303B002468E4 /* SSYoungestDaughter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14A452AB2BA92F78002468E4 /* SSYoungestDaughter.ttf */; };
-		14A452AE2BA93203002468E4 /* EF_Diary.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14A452AD2BA93203002468E4 /* EF_Diary.ttf */; };
+		14A452EC2BA9A39C002468E4 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A452EB2BA9A39C002468E4 /* DetailsViewController.swift */; };
+		14A5071E2BA9BAE900AC43DD /* EF_Diary.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14A452AD2BA93203002468E4 /* EF_Diary.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		14A452A92BA9265D002468E4 /* BM-JUA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BM-JUA.ttf"; sourceTree = "<group>"; };
 		14A452AB2BA92F78002468E4 /* SSYoungestDaughter.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SSYoungestDaughter.ttf; sourceTree = "<group>"; };
 		14A452AD2BA93203002468E4 /* EF_Diary.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EF_Diary.ttf; sourceTree = "<group>"; };
+		14A452EB2BA9A39C002468E4 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				144818932BA831200031D234 /* Assets.xcassets */,
 				144818952BA831200031D234 /* LaunchScreen.storyboard */,
 				144818982BA831200031D234 /* Info.plist */,
+				14A452EB2BA9A39C002468E4 /* DetailsViewController.swift */,
 			);
 			path = MyTodoList;
 			sourceTree = "<group>";
@@ -257,11 +260,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14A5071E2BA9BAE900AC43DD /* EF_Diary.ttf in Resources */,
 				14A452AC2BA9303B002468E4 /* SSYoungestDaughter.ttf in Resources */,
 				14A452AA2BA9266E002468E4 /* BM-JUA.ttf in Resources */,
 				144818942BA831200031D234 /* Assets.xcassets in Resources */,
 				144818972BA831200031D234 /* Base in Resources */,
-				14A452AE2BA93203002468E4 /* EF_Diary.ttf in Resources */,
 				144818922BA8311E0031D234 /* Base in Resources */,
 				14974C452BA837D300228294 /* TodoTableViewCell.xib in Resources */,
 			);
@@ -293,6 +296,7 @@
 				1448188B2BA8311E0031D234 /* AppDelegate.swift in Sources */,
 				1448188D2BA8311E0031D234 /* SceneDelegate.swift in Sources */,
 				14974C442BA837D300228294 /* ToDoTableViewCell.swift in Sources */,
+				14A452EC2BA9A39C002468E4 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

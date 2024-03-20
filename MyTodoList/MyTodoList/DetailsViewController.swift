@@ -51,6 +51,35 @@ class DetailsViewController: UIViewController {
     
     var important = false
     
+    @IBAction func TagCollectionButtonTouched(_ sender: Any) {
+        var temp = ""
+        let alert = UIAlertController(title: "태그 추가", message: "", preferredStyle: .alert)
+                alert.addTextField()
+                
+                let confirm = UIAlertAction(title: "추가", style: .default){action in
+                    if let textField = alert.textFields?.first {
+                        if textField.text != "" {
+                            if textField.text!.first != "#" {
+                                temp = "#" + textField.text!
+                            }else{
+                                temp = textField.text!
+                            }
+                            if self.currentTodo != nil {
+                                self.currentTodo?.tag.append(temp)
+                            }else {
+                                self.newTodo.tag.append(temp)
+                            }
+                        }
+                        
+                        self.tagCollectionView.reloadData()
+                    }
+                }
+                let close = UIAlertAction(title: "닫기", style: .destructive, handler: nil)
+                        
+                alert.addAction(confirm)
+                alert.addAction(close)
+                present(alert, animated: true, completion: nil)
+    }
     @IBAction func importantButtonTouched(_ sender: Any) {
         important = important ? false : true
         if important {
@@ -90,14 +119,16 @@ class DetailsViewController: UIViewController {
             tagButton.isEnabled = isEnabled
             
             importantButton.isEnabled = isEnabled
-            titleNavigationItem.title = "투두 상세페이지"
+            
             if isEnabled{
+                titleNavigationItem.title = "투두 변경 중.."
                 titleNavigationItem.rightBarButtonItem?.title = "저장"
                 memoTextView.text = currentTodo?.memo
                 memoTextView.textColor = .black
                 memoTextView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
                 memoTextView.textAlignment = .natural
             }else{
+                titleNavigationItem.title = "투두 상세페이지"
                 memoTextView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
                 memoTextView.textAlignment = .center
                 memoTextView.text = currentTodo?.memo
@@ -105,6 +136,7 @@ class DetailsViewController: UIViewController {
                 titleNavigationItem.rightBarButtonItem?.title = "수정하기"
             }
             memoTextView.isEditable = isEnabled
+            
             
             //memoTextView.textAlignment = .natural
             //memoTextView.textContainerInset = .init(top: 10, left: 5, bottom: 0, right: 0)
@@ -191,8 +223,9 @@ class DetailsViewController: UIViewController {
                     list[index!].startDate = startConvertedDate!
                     list[index!].endDate = endConvertedDate!
                     list[index!].memo = memoTextView.text
+                    list[index!].tag = (currentTodo?.tag)!
                 }else{
-                    newTodo = Todo(id: 1, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startConvertedDate!, endDate: endConvertedDate! ,memo: memoTextView.text!, tag: [])
+                    newTodo = Todo(id: 1, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startConvertedDate!, endDate: endConvertedDate! ,memo: memoTextView.text!, tag: newTodo.tag)
                     list.append(newTodo)
                 }
                 
@@ -292,7 +325,14 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print((currentTodo?.tag[indexPath.row])!)
+        if isEnabled {
+            if currentTodo != nil {
+                currentTodo?.tag.remove(at: indexPath.row)
+            }else{
+                newTodo.tag.remove(at: indexPath.row)
+            }
+            self.tagCollectionView.reloadData()
+        }
     }
     
     

@@ -24,6 +24,8 @@
 		14A452EC2BA9A39C002468E4 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A452EB2BA9A39C002468E4 /* DetailsViewController.swift */; };
 		14A5071E2BA9BAE900AC43DD /* EF_Diary.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14A452AD2BA93203002468E4 /* EF_Diary.ttf */; };
 		14E354B12BAA84190076D2BE /* DetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14E354AF2BAA84190076D2BE /* DetailsViewController.xib */; };
+		14E354B42BAADA800076D2BE /* TagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14E354B32BAADA800076D2BE /* TagCollectionViewCell.xib */; };
+		14E354B52BAADA800076D2BE /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E354B22BAADA800076D2BE /* TagCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		14A452AD2BA93203002468E4 /* EF_Diary.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EF_Diary.ttf; sourceTree = "<group>"; };
 		14A452EB2BA9A39C002468E4 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		14E354AF2BAA84190076D2BE /* DetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailsViewController.xib; sourceTree = "<group>"; };
+		14E354B22BAADA800076D2BE /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		14E354B32BAADA800076D2BE /* TagCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 				144818952BA831200031D234 /* LaunchScreen.storyboard */,
 				144818982BA831200031D234 /* Info.plist */,
 				14A452EB2BA9A39C002468E4 /* DetailsViewController.swift */,
+				14E354B22BAADA800076D2BE /* TagCollectionViewCell.swift */,
+				14E354B32BAADA800076D2BE /* TagCollectionViewCell.xib */,
 				14E354AF2BAA84190076D2BE /* DetailsViewController.xib */,
 			);
 			path = MyTodoList;
@@ -269,6 +275,7 @@
 				14A452AA2BA9266E002468E4 /* BM-JUA.ttf in Resources */,
 				144818942BA831200031D234 /* Assets.xcassets in Resources */,
 				144818972BA831200031D234 /* Base in Resources */,
+				14E354B42BAADA800076D2BE /* TagCollectionViewCell.xib in Resources */,
 				144818922BA8311E0031D234 /* Base in Resources */,
 				14974C452BA837D300228294 /* TodoTableViewCell.xib in Resources */,
 			);
@@ -298,6 +305,7 @@
 				14974C472BA8388200228294 /* Todo.swift in Sources */,
 				1448188F2BA8311E0031D234 /* ViewController.swift in Sources */,
 				1448188B2BA8311E0031D234 /* AppDelegate.swift in Sources */,
+				14E354B52BAADA800076D2BE /* TagCollectionViewCell.swift in Sources */,
 				1448188D2BA8311E0031D234 /* SceneDelegate.swift in Sources */,
 				14974C442BA837D300228294 /* ToDoTableViewCell.swift in Sources */,
 				14A452EC2BA9A39C002468E4 /* DetailsViewController.swift in Sources */,

@@ -11,49 +11,15 @@ import UIKit
 
 class ViewController: UIViewController{
     let font = "EF_Diary"
-    @IBOutlet weak var MyButton: UIButton!
     @IBOutlet weak var MyTableView: UITableView!
     @IBOutlet weak var LogoLabel: UILabel!
    
     
-    var list : [Todo] = [Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
-                         Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
-                         Todo(id: 1, title: "강아지 산책하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
-                         Todo(id: 1, title: "과제 마무리하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
+    var list : [Todo] = [Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST", tag: ["#테스트"]),
+                         Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#테스트1"]),
+                         Todo(id: 1, title: "강아지 산책하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#테스트2","#sdas","#123"]),
+                         Todo(id: 1, title: "과제 마무리하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#테스트","#123","#123"]),
                          ]
-    
-    @IBAction func MybuttonClicked(_ sender: Any) {
-        let detailsViewController = DetailsViewController()
-        detailsViewController.modalPresentationStyle = .automatic
-        detailsViewController.modalTransitionStyle = .coverVertical
-        detailsViewController.dataTransferDelegate = self
-        detailsViewController.list = self.list
-        self.present(detailsViewController, animated: true, completion: nil)
-        
-        /*
-        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return }
-            nextVC.modalPresentationStyle = .overFullScreen
-            nextVC.modalTransitionStyle = .coverVertical
-            self.present(nextVC, animated: true, completion: nil)
-         
-         
-        let alert = UIAlertController(title: "할 일 추가", message: "입력해주세요!", preferredStyle: .alert)
-        alert.addTextField()
-        
-        let confirm = UIAlertAction(title: "추가", style: .default){action in
-            if let textField = alert.textFields?.first {
-                self.list.append(Todo(id: 1, title: textField.text!, isCompleted: false, isImportant: false))
-                self.MyTableView.reloadData()
-            }
-        }
-        let close = UIAlertAction(title: "닫기", style: .destructive, handler: nil)
-                
-        alert.addAction(confirm)
-        alert.addAction(close)
-        present(alert, animated: true, completion: nil)
-         */
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,7 +93,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         cell.selectionStyle = .none
         
         
-        cell.Title.font = UIFont(name: font, size: 15.0)
+        cell.Title.font = UIFont(name: font, size: 16.0)
         cell.Title.text = target.title
         cell.index = indexPath.row
         list[indexPath.row].id = indexPath.row

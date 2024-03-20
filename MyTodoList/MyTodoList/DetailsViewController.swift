@@ -13,7 +13,7 @@ protocol DataTransferDelegate: AnyObject {
 
 
 class DetailsViewController: UIViewController {
-
+    var tagTemp : [String] = ["#공부","#테스트","#강아지","#장보기","#맥북", "#sda", "#$$$"]
     let font = "EF_Diary"
     
     let textViewPlaceHolder = "텍스트를 입력하세요"
@@ -23,6 +23,8 @@ class DetailsViewController: UIViewController {
     weak var dataTransferDelegate : DataTransferDelegate?
     
     var currentTodo : Todo?
+    var newTodo = Todo(id: 1, title: "", isCompleted: false, isImportant: false, startDate: nil, endDate: nil, memo: "", tag: [])
+    
     var index : Int?
     
     var list : [Todo] = []
@@ -42,6 +44,7 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var titleTextField: UITextField!
     
+    @IBOutlet weak var tagCollectionView: UICollectionView!
     
     let currentCalendar = Calendar.current
     let currentTimeZone = TimeZone.current
@@ -56,8 +59,16 @@ class DetailsViewController: UIViewController {
             self.importantButton.setImage(UIImage(systemName: "star"), for: .normal)
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tagCollectionView.delegate = self
+        self.tagCollectionView.dataSource = self
+        tagCollectionView.register(TagCollectionViewCell.nib(), forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
+        
+        //tagCollectionView.layer.cornerRadius = 10
+        //tagCollectionView.layer.borderWidth = 1
+        //tagCollectionView.layer.borderColor = UIColor.black.cgColor
         
         if currentTodo != nil {
             
@@ -76,6 +87,7 @@ class DetailsViewController: UIViewController {
             }else{
                 self.importantButton.setImage(UIImage(systemName: "star"), for: .normal)
             }
+            tagButton.isEnabled = isEnabled
             
             importantButton.isEnabled = isEnabled
             titleNavigationItem.title = "투두 상세페이지"
@@ -103,6 +115,13 @@ class DetailsViewController: UIViewController {
             memoTextView.textAlignment = .center
             memoTextView.textColor = .lightGray
             memoTextView.delegate = self
+            tagButton.setImage(UIImage(systemName: "plus"), for: .normal)
+            
+            let startDate = startTimeDatePicker.date
+            let endDate = endTimeDatePicker.date
+            let startConvertedDate = currentCalendar.date(byAdding: .second, value: currentTimeZone.secondsFromGMT(), to: startDate)
+            let endConvertedDate = currentCalendar.date(byAdding: .second, value: currentTimeZone.secondsFromGMT(), to: endDate)
+            
         }
         
         memoTextView.font = UIFont(name: font, size: 15.0)
@@ -173,7 +192,8 @@ class DetailsViewController: UIViewController {
                     list[index!].endDate = endConvertedDate!
                     list[index!].memo = memoTextView.text
                 }else{
-                    list.append(Todo(id: 1, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startConvertedDate!, endDate: endConvertedDate! ,memo: memoTextView.text!))
+                    newTodo = Todo(id: 1, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startConvertedDate!, endDate: endConvertedDate! ,memo: memoTextView.text!, tag: [])
+                    list.append(newTodo)
                 }
                 
                 
@@ -213,4 +233,68 @@ extension DetailsViewController : UITextViewDelegate {
             textView.textContainerInset = UIEdgeInsets(top: (textView.bounds.height - textView.contentSize.height) / 2 - 10, left: 0, bottom: 0, right: 0)
         }
     }
+}
+
+extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if currentTodo != nil {
+            return (currentTodo?.tag.count)!
+        }else{
+            if newTodo.tag.count == 0 {
+                return 0
+            }else{
+                return newTodo.tag.count
+            }
+        }
+       
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
+        if currentTodo != nil {
+            cell.tagLabel.text = currentTodo?.tag[indexPath.row]
+        }else{
+            cell.tagLabel.text = newTodo.tag[indexPath.row]
+        }
+        
+        cell.tagLabel.font = UIFont(name: font, size: 14)
+        cell.tagLabel.layer.cornerRadius = 10
+        cell.tagLabel.layer.borderColor = UIColor.black.cgColor
+        cell.tagLabel.layer.borderWidth = 1.0
+        //cell.tagLabel.backgroundColor = .gray
+        cell.tagLabel.clipsToBounds = true
+        cell.tagLabel.textAlignment = .center
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+        }
+
+        // 옆 간격
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+
+        // cell 사이즈( 옆 라인을 고려하여 설정 )
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var tag : String
+        if currentTodo != nil {
+            tag = (self.currentTodo?.tag[indexPath.row])!
+        }else{
+            tag = self.newTodo.tag[indexPath.row]
+        }
+        
+        let attributes = [NSAttributedString.Key.font: UIFont(name: font, size: 14)]
+
+        let tagSize = (tag as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])
+        return CGSize(width: tagSize.width + 20, height: 30)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print((currentTodo?.tag[indexPath.row])!)
+    }
+    
+    
+    
 }

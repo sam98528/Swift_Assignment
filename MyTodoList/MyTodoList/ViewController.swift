@@ -14,18 +14,13 @@ class ViewController: UIViewController{
     @IBOutlet weak var MyButton: UIButton!
     @IBOutlet weak var MyTableView: UITableView!
     @IBOutlet weak var LogoLabel: UILabel!
-    var addButton: UIButton!
-    
-    
-    
-    
+   
     
     var list : [Todo] = [Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
                          Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
                          Todo(id: 1, title: "강아지 산책하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
                          Todo(id: 1, title: "과제 마무리하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
                          ]
-    
     
     @IBAction func MybuttonClicked(_ sender: Any) {
         let detailsViewController = DetailsViewController()
@@ -74,15 +69,40 @@ class ViewController: UIViewController{
         MyTableView.layer.borderColor = UIColor.black.cgColor
         //MyTableView.backgroundView = UIImageView(image: UIImage(named: "paper-texture"))
         LogoLabel.font = UIFont(name: font, size: 45)
-    
         
+        
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        
+        button.backgroundColor = .black
+        button.tintColor = .white
+        button.layer.cornerRadius = 40
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 5
+        button.layer.masksToBounds = true
+        view.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        // 버튼의 leading, top 제약 추가
+        button.trailingAnchor.constraint(equalTo: MyTableView.trailingAnchor, constant: -30).isActive = true
+        button.bottomAnchor.constraint(equalTo: MyTableView.bottomAnchor, constant: -50).isActive = true
+        // 버튼의 너비, 높이 제약 추가
+        button.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+
         // Do any additional setup after loading the view.
         
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print("disappear")
+    @objc func buttonTapped() {
+        let detailsViewController = DetailsViewController()
+        detailsViewController.modalPresentationStyle = .automatic
+        detailsViewController.modalTransitionStyle = .coverVertical
+        detailsViewController.dataTransferDelegate = self
+        detailsViewController.list = self.list
+        self.present(detailsViewController, animated: true, completion: nil)
     }
 }
 

@@ -90,7 +90,7 @@ class DetailsViewController: UIViewController {
                 memoTextView.textAlignment = .center
                 memoTextView.text = currentTodo?.memo
                 memoTextView.textColor = .black
-                titleNavigationItem.rightBarButtonItem?.title = "변경"
+                titleNavigationItem.rightBarButtonItem?.title = "수정하기"
             }
             memoTextView.isEditable = isEnabled
             

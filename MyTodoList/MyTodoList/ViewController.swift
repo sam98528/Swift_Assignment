@@ -16,21 +16,24 @@ class ViewController: UIViewController{
     @IBOutlet weak var LogoLabel: UILabel!
     var addButton: UIButton!
     
-    var list : [Todo] = [Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true),
-                         Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false),
-                         Todo(id: 1, title: "강아지 산책하기!", isCompleted: false, isImportant: false),
-                         Todo(id: 1, title: "과제 마무리하기!", isCompleted: false, isImportant: false),
+    
+    
+    
+    
+    var list : [Todo] = [Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
+                         Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
+                         Todo(id: 1, title: "강아지 산책하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
+                         Todo(id: 1, title: "과제 마무리하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST"),
                          ]
     
-    var nextVC: DetailsViewController?
     
     @IBAction func MybuttonClicked(_ sender: Any) {
-        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return }
-            nextVC.modalPresentationStyle = .overFullScreen
-            nextVC.modalTransitionStyle = .coverVertical
-            nextVC.list = self.list
-            nextVC.previousVC = self
-            self.present(nextVC, animated: true, completion: nil)
+        let detailsViewController = DetailsViewController()
+        detailsViewController.modalPresentationStyle = .automatic
+        detailsViewController.modalTransitionStyle = .coverVertical
+        detailsViewController.dataTransferDelegate = self
+        detailsViewController.list = self.list
+        self.present(detailsViewController, animated: true, completion: nil)
         
         /*
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return }
@@ -60,9 +63,6 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        print(list)
         MyTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
         
         MyTableView.delegate = self
@@ -70,21 +70,19 @@ class ViewController: UIViewController{
        
         MyTableView.layer.cornerRadius = 20
         MyTableView.clipsToBounds = true
-        MyTableView.backgroundView = UIImageView(image: UIImage(named: "paper-texture"))
+        MyTableView.layer.borderWidth = 5
+        MyTableView.layer.borderColor = UIColor.black.cgColor
+        //MyTableView.backgroundView = UIImageView(image: UIImage(named: "paper-texture"))
         LogoLabel.font = UIFont(name: font, size: 45)
+    
         
-        //let detailsViewController = DetailsViewController()
-        //detailsViewController.dataTransferDelegate = self
         // Do any additional setup after loading the view.
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetails"{
-            if let destinationVC = segue.destination as? DetailsViewController {
-                destinationVC.temp = 10
-            }
-        }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("disappear")
     }
 }
 
@@ -166,16 +164,28 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentTodo = list[indexPath.row]
+        let detailsViewController = DetailsViewController()
+        detailsViewController.modalPresentationStyle = .automatic
+        detailsViewController.modalTransitionStyle = .coverVertical
+        detailsViewController.dataTransferDelegate = self
+        detailsViewController.list = self.list
+        detailsViewController.currentTodo = currentTodo
+        detailsViewController.index = indexPath.row
+        self.present(detailsViewController, animated: true, completion: nil)
         print(list[indexPath.row])
     }
 }
-/*
+
 extension ViewController : DataTransferDelegate {
-    func sendData(_ data: Todo) {
+    func sendData(_ data: [Todo]) {
         print(data)
+        self.list = data
+        self.MyTableView.reloadData()
     }
+    
 }
-*/
+
 extension String {
     // 블로그 참고
     func strikeThrough() -> NSAttributedString {

@@ -12,6 +12,8 @@ struct Todo{
     var title : String
     var isCompleted : Bool
     var isImportant : Bool
-
+    var startDate : Date
+    var endDate : Date
+    var memo : String
 }
 

@@ -15,10 +15,12 @@ class ViewController: UIViewController{
     @IBOutlet weak var LogoLabel: UILabel!
    
     
-    var list : [Todo] = [Todo(id: 1, title: "왼쪽 스와이프로 강조하기!", isCompleted: false, isImportant: true,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST", tag: ["#테스트"]),
-                         Todo(id: 1, title: "오른쪽 스와이프로 삭제하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#테스트1"]),
-                         Todo(id: 1, title: "강아지 산책하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#테스트2","#sdas","#123"]),
-                         Todo(id: 1, title: "과제 마무리하기!", isCompleted: false, isImportant: false,startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#테스트","#123","#123"]),
+    var list : [Todo] = [Todo(id: 1, title: "👇🏻 투두 눌러서 펼쳐보기!", startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#투두","#펼쳐보기","#iOS"],isOpen : true),
+                         Todo(id: 1, title: "✂️ 왼쪽 스와이프로 수정하기!",startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST", tag: ["#수정하기"]),
+                         Todo(id: 1, title: "🗑️ 오른쪽 스와이프로 삭제하기!",startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#삭제하기"]),
+                         Todo(id: 1, title: "⭐️ 별 표시 눌러서 강조하기!",isImportant: true, startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#별 꾸욱","#강조","#중요!"]),
+                         Todo(id: 1, title: "✅ 체크박스 눌러서 완료 표시하기!",isCompleted: true,startDate:Date(),endDate: Date(timeIntervalSinceNow: 300), memo: "TEST" ,tag: ["#체크박스","#완료!"]),
+                         Todo(id: 1, title: "➕ 아래 + 버튼 눌러서 새로운 투두 추가하기",startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#새로운투두","#추가하기"]),
                          ]
     
     override func viewDidLoad() {
@@ -94,14 +96,19 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         let target = list[indexPath.row]
         
         cell.selectionStyle = .none
-        
-        
         cell.Title.font = UIFont(name: font, size: 16.0)
         cell.Title.text = target.title
         cell.index = indexPath.row
         list[indexPath.row].id = indexPath.row
         
-        cell.backgroundColor = .clear
+        cell.todo = target
+    
+        if target.isOpen {
+            cell.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+        }else{
+            cell.backgroundColor = .clear
+        }
+        //cell.backgroundColor = .clear
         
         cell.delegate = self
         if target.isCompleted == true {
@@ -128,49 +135,54 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-       let action = UIContextualAction(style: .normal, title: "", handler: {(action, view, completionHandler) in
-           self.list[indexPath.row].isImportant = self.list[indexPath.row].isImportant ? false : true
-           tableView.reloadRows(at: [indexPath], with: .automatic)
-           tableView.reloadData()
-           completionHandler(true)
-       })
-        action.backgroundColor = .black
-        action.image = UIImage(systemName: "star.fill")
-       return UISwipeActionsConfiguration(actions: [action])
+        let info = UIContextualAction(style: .destructive, title: "", handler: {(action, view, completionHandler) in
+            let currentTodo = self.list[indexPath.row]
+            let detailsViewController = DetailsViewController()
+            detailsViewController.modalPresentationStyle = .automatic
+            detailsViewController.modalTransitionStyle = .coverVertical
+            detailsViewController.dataTransferDelegate = self
+            detailsViewController.list = self.list
+            detailsViewController.currentTodo = currentTodo
+            detailsViewController.index = indexPath.row
+            self.present(detailsViewController, animated: true, completion: nil)
+            completionHandler(true)
+        })
+        info.image = UIImage(systemName: "info.circle")
+        info.backgroundColor = .gray
+       return UISwipeActionsConfiguration(actions: [info])
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "", handler: {(action, view, completionHandler) in
+        let del = UIContextualAction(style: .destructive, title: "", handler: {(action, view, completionHandler) in
             self.list.remove(at: indexPath.row)
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
             tableView.reloadData()
             completionHandler(true)
         })
-        action.image = UIImage(systemName: "trash.fill")
-        return UISwipeActionsConfiguration(actions: [action])
+        del.image = UIImage(systemName: "trash.fill")
+        return UISwipeActionsConfiguration(actions: [del])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        if list[indexPath.row].isOpen{
+            return 150
+        }else{
+            return 50
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currentTodo = list[indexPath.row]
-        let detailsViewController = DetailsViewController()
-        detailsViewController.modalPresentationStyle = .automatic
-        detailsViewController.modalTransitionStyle = .coverVertical
-        detailsViewController.dataTransferDelegate = self
-        detailsViewController.list = self.list
-        detailsViewController.currentTodo = currentTodo
-        detailsViewController.index = indexPath.row
-        self.present(detailsViewController, animated: true, completion: nil)
+        list[indexPath.row].isOpen.toggle()
+        tableView.reloadRows(at: [indexPath], with: .automatic)
         print(list[indexPath.row])
     }
 }
 
 extension ViewController : DataTransferDelegate {
     func sendData(_ data: [Todo]) {
-        print(data)
         self.list = data
         self.MyTableView.reloadData()
     }

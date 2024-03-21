@@ -54,7 +54,6 @@ class DetailsViewController: UIViewController {
         var temp = ""
         let alert = UIAlertController(title: "태그 추가", message: "", preferredStyle: .alert)
                 alert.addTextField()
-                
                 let confirm = UIAlertAction(title: "추가", style: .default){action in
                     if let textField = alert.textFields?.first {
                         if textField.text != "" {

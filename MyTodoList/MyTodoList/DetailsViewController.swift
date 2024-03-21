@@ -98,7 +98,6 @@ class DetailsViewController: UIViewController {
         //tagCollectionView.layer.cornerRadius = 10
         //tagCollectionView.layer.borderWidth = 1
         //tagCollectionView.layer.borderColor = UIColor.black.cgColor
-        
         if currentTodo != nil {
             
             titleTextField.text = currentTodo?.title
@@ -149,10 +148,6 @@ class DetailsViewController: UIViewController {
             memoTextView.delegate = self
             tagButton.setImage(UIImage(systemName: "plus"), for: .normal)
             
-            let startDate = startTimeDatePicker.date
-            let endDate = endTimeDatePicker.date
-            let startConvertedDate = currentCalendar.date(byAdding: .second, value: currentTimeZone.secondsFromGMT(), to: startDate)
-            let endConvertedDate = currentCalendar.date(byAdding: .second, value: currentTimeZone.secondsFromGMT(), to: endDate)
             
         }
         
@@ -317,7 +312,6 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
         }else{
             tag = self.newTodo.tag[indexPath.row]
         }
-        
         let attributes = [NSAttributedString.Key.font: UIFont(name: font, size: 14)]
 
         let tagSize = (tag as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])

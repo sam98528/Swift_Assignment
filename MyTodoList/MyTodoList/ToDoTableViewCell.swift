@@ -15,6 +15,7 @@ import UIKit
 class ToDoTableViewCell: UITableViewCell {
     static let identifier = "TodoTableViewCell"
     var index = 0
+    @IBOutlet weak var ImportantFlagImageView: UIImageView!
     @IBOutlet weak var CheckBoxButton: UIButton!
     @IBOutlet weak var Title: UILabel!
     

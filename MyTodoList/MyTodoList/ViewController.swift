@@ -116,8 +116,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         
         if target.isImportant == true {
             cell.Title.textColor = .red
+            cell.ImportantFlagImageView.image = UIImage(systemName: "star.fill" )
         }else{
             cell.Title.textColor = .black
+            cell.ImportantFlagImageView.image = nil
         }
         return cell
     }
@@ -129,7 +131,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
            tableView.reloadData()
            completionHandler(true)
        })
-        action.backgroundColor = .systemBlue
+        action.backgroundColor = .black
         action.image = UIImage(systemName: "star.fill")
        return UISwipeActionsConfiguration(actions: [action])
     }

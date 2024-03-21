@@ -6,7 +6,7 @@
 //
 protocol TableViewDelegate {
     func buttonIsClicked(index: Int)
-    
+    func importantFlagClicked(index : Int)
 }
 
 
@@ -26,6 +26,7 @@ class ToDoTableViewCell: UITableViewCell {
         self.delegate?.buttonIsClicked(index: index)
     }
     
+    
 
     
     override func prepareForReuse() {
@@ -40,10 +41,18 @@ class ToDoTableViewCell: UITableViewCell {
     
     static func nib() -> UINib {
         return UINib(nibName: "TodoTableViewCell", bundle: nil)
+        
+    }
+    
+    @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
+        self.delegate?.importantFlagClicked(index: index)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped(_:)))
+        ImportantFlagImageView.isUserInteractionEnabled = true
+        ImportantFlagImageView.addGestureRecognizer(tapGesture)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

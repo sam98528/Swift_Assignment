@@ -73,7 +73,10 @@ class ViewController: UIViewController{
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDelegate {
-   
+    func importantFlagClicked(index: Int) {
+        list[index].isImportant = list[index].isImportant ? false : true
+        self.MyTableView.reloadData()
+    }
     
     func buttonIsClicked(index: Int) {
         list[index].isCompleted = list[index].isCompleted ? false : true
@@ -119,7 +122,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
             cell.ImportantFlagImageView.image = UIImage(systemName: "star.fill" )
         }else{
             cell.Title.textColor = .black
-            cell.ImportantFlagImageView.image = nil
+            cell.ImportantFlagImageView.image = UIImage(systemName: "star" )
         }
         return cell
     }

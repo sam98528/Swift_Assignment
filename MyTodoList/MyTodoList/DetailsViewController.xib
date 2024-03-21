@@ -45,7 +45,7 @@
                     <date key="minimumDate" timeIntervalSinceReferenceDate="725727600">
                         <!--2023-12-31 15:00:00 +0000-->
                     </date>
-                    <locale key="locale" localeIdentifier="ko"/>
+                    <locale key="locale" localeIdentifier="ko_KR"/>
                 </datePicker>
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b8Z-rg-9CZ">
                     <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -81,7 +81,7 @@
                 </label>
                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="nLB-SI-qdn">
                     <rect key="frame" x="89" y="219.33333333333334" width="294" height="36.333333333333343"/>
-                    <locale key="locale" localeIdentifier="ko"/>
+                    <locale key="locale" localeIdentifier="ko_KR"/>
                 </datePicker>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vrb-1F-Bho">
                     <rect key="frame" x="331" y="265.66666666666669" width="52" height="36.333333333333314"/>

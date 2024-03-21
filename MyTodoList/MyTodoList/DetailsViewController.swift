@@ -48,7 +48,6 @@ class DetailsViewController: UIViewController {
     
     let currentCalendar = Calendar.current
     let currentTimeZone = TimeZone.current
-    
     var important = false
     
     @IBAction func TagCollectionButtonTouched(_ sender: Any) {
@@ -150,7 +149,6 @@ class DetailsViewController: UIViewController {
             
             
         }
-        
         memoTextView.font = UIFont(name: font, size: 15.0)
         memoTextView.layer.borderWidth = 5
         memoTextView.layer.cornerRadius = 20
@@ -205,22 +203,17 @@ class DetailsViewController: UIViewController {
                 alert.addAction(close)
                 present(alert, animated: true, completion: nil)
             }else{
-                let startDate = startTimeDatePicker.date
-                let endDate = endTimeDatePicker.date
                 
-                let startConvertedDate = currentCalendar.date(byAdding: .second, value: currentTimeZone.secondsFromGMT(), to: startDate)
-                
-                let endConvertedDate = currentCalendar.date(byAdding: .second, value: currentTimeZone.secondsFromGMT(), to: endDate)
                 
                 if currentTodo != nil {
                     list[index!].title = titleTextField.text!
                     list[index!].isImportant = important
-                    list[index!].startDate = startConvertedDate!
-                    list[index!].endDate = endConvertedDate!
+                    list[index!].startDate = startTimeDatePicker.date
+                    list[index!].endDate = endTimeDatePicker.date
                     list[index!].memo = memoTextView.text
                     list[index!].tag = (currentTodo?.tag)!
                 }else{
-                    newTodo = Todo(id: 1, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startConvertedDate!, endDate: endConvertedDate! ,memo: memoTextView.text!, tag: newTodo.tag)
+                    newTodo = Todo(id: 1, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startTimeDatePicker.date, endDate: endTimeDatePicker.date ,memo: memoTextView.text!, tag: newTodo.tag)
                     list.append(newTodo)
                 }
                 
@@ -328,7 +321,5 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
             self.tagCollectionView.reloadData()
         }
     }
-    
-    
-    
 }
+

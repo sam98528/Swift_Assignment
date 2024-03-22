@@ -105,8 +105,9 @@ extension ToDoTableViewCell : UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         cell.tagLabel.font = UIFont(name: font, size: 13)
+        //cell.tagLabel.textColor = UIColor.label
         cell.tagLabel.layer.cornerRadius = 10
-        cell.tagLabel.layer.borderColor = UIColor.black.cgColor
+        cell.tagLabel.layer.borderColor = UIColor.label.cgColor
         cell.tagLabel.layer.borderWidth = 1.0
         cell.tagLabel.clipsToBounds = true
         cell.tagLabel.textAlignment = .center

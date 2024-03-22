@@ -9,11 +9,15 @@
 
 import UIKit
 
-class ViewController: UIViewController{
+class TodoViewController: UIViewController{
     let font = "EF_Diary"
     @IBOutlet weak var toDoTableView: UITableView!
     @IBOutlet weak var logoLabel: UILabel!
    
+    @IBAction func TestClicked(_ sender: Any) {
+        present(MainViewController(), animated: true)
+    }
+    @IBOutlet weak var test: UIButton!
     //var list = Todo.list
 
     
@@ -27,7 +31,7 @@ class ViewController: UIViewController{
         toDoTableView.layer.cornerRadius = 20
         toDoTableView.clipsToBounds = true
         toDoTableView.layer.borderWidth = 5
-        toDoTableView.layer.borderColor = UIColor.black.cgColor
+        toDoTableView.layer.borderColor = UIColor.label.cgColor
         
         logoLabel.font = UIFont(name: font, size: 45)
         
@@ -36,10 +40,10 @@ class ViewController: UIViewController{
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
-        button.backgroundColor = .black
-        button.tintColor = .white
+        button.backgroundColor = UIColor.label
+        button.tintColor = UIColor.systemBackground
         button.layer.cornerRadius = 40
-        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderColor = UIColor.label.cgColor
         button.layer.borderWidth = 5
         button.layer.masksToBounds = true
         view.addSubview(button)
@@ -63,7 +67,7 @@ class ViewController: UIViewController{
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDelegate {
+extension TodoViewController: UITableViewDelegate, UITableViewDataSource,TableViewDelegate {
     func importantFlagClicked(index: Int) {
         Todo.list[index].isImportant = Todo.list[index].isImportant ? false : true
         self.toDoTableView.reloadData()
@@ -95,12 +99,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         cell.delegate = self
         cell.todo = target
         cell.tagCollectionView.reloadData()
+        cell.tagCollectionView.backgroundColor = .clear
         //cell.tagDic = self.tagDic
-        
+        cell.CheckBoxButton.tintColor = UIColor.label
         if target.isOpen {
-            cell.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+            cell.backgroundColor = .lightGray
         }else{
-            cell.backgroundColor = .clear
+            cell.backgroundColor = UIColor.systemBackground
         }
         //cell.backgroundColor = .clear
         
@@ -122,7 +127,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
             cell.Title.textColor = .red
             cell.ImportantFlagImageView.image = UIImage(systemName: "star.fill" )
         }else{
-            cell.Title.textColor = .black
+            cell.Title.textColor = UIColor.label
             cell.ImportantFlagImageView.image = UIImage(systemName: "star" )
         }
         return cell
@@ -174,7 +179,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
     }
 }
 
-extension ViewController : DataTransferDelegate {
+extension TodoViewController : DataTransferDelegate {
     func finishedEditing() {
         self.toDoTableView.reloadData()
     }

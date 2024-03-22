@@ -60,10 +60,6 @@ extension Todo {
         let previousTags = Set(oldValue)
         let newTags = Set(tag)
         let removedTags = previousTags.subtracting(newTags)
-        let addedTags = newTags.subtracting(previousTags)
-        for addedTag in addedTags {
-          
-        }
         for removedTag in removedTags {
             Tag.tagDic[removedTag]!.todo.removeAll{ $0.id == self.id}
             if Tag.tagDic[removedTag]!.todo.isEmpty {

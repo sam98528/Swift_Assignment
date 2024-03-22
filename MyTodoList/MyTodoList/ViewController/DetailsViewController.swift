@@ -13,7 +13,6 @@ protocol DataTransferDelegate: AnyObject {
 
 
 class DetailsViewController: UIViewController {
-    var tagTemp : [String] = ["#공부","#테스트","#강아지","#장보기","#맥북", "#sda", "#$$$"]
     let font = "EF_Diary"
     
     let textViewPlaceHolder = "텍스트를 입력하세요"
@@ -133,7 +132,7 @@ class DetailsViewController: UIViewController {
                 memoTextView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
                 memoTextView.textAlignment = .center
                 memoTextView.text = currentTodo?.memo
-                memoTextView.textColor = .black
+                memoTextView.textColor = UIColor.label
                 titleNavigationItem.rightBarButtonItem?.title = "수정하기"
             }
             memoTextView.isEditable = isEnabled
@@ -165,6 +164,7 @@ class DetailsViewController: UIViewController {
         titleTextField.backgroundColor = .clear
         titleTextField.layer.cornerRadius = 20
         titleTextField.layer.borderWidth = 5
+        titleTextField.clipsToBounds = true
         
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: font, size: 20)!]
         titleNavigationItem.leftBarButtonItem?.action = #selector(self.dismissLeftButton)
@@ -248,7 +248,7 @@ extension DetailsViewController : UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == textViewPlaceHolder{
             textView.text = nil
-            textView.textColor = .black
+            textView.textColor = UIColor.label
             textView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
         }
     }

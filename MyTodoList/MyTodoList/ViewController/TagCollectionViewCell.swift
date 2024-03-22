@@ -12,7 +12,6 @@ class TagCollectionViewCell: UICollectionViewCell {
     let font = "EF_Diary"
     
     @IBOutlet weak var tagLabel: UILabel!
-    
     static let identifier = "TagCollectionViewCell"
     static func nib() -> UINib {
         return UINib(nibName: "TagCollectionViewCell", bundle: nil)

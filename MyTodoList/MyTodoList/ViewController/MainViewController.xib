@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="MyTodoList" customModuleProvider="target">
+            <connections>
+                <outlet property="navigationBar" destination="hef-1N-Xed" id="Ktf-fY-uqG"/>
+                <outlet property="tagCollectionView" destination="obf-8p-xUP" id="Kc9-1u-JQK"/>
+                <outlet property="titleNavigationItem" destination="iWr-M9-tDp" id="7NF-Sr-Kaq"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="obf-8p-xUP">
+                    <rect key="frame" x="20" y="113" width="353" height="300"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="aGQ-Wd-ZD0"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bRT-AT-30U">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hef-1N-Xed">
+                    <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <items>
+                        <navigationItem title="태그 변경 중.." id="iWr-M9-tDp">
+                            <barButtonItem key="leftBarButtonItem" title="취소" id="6sH-8f-H5t"/>
+                            <barButtonItem key="rightBarButtonItem" title="변경" id="KkK-12-Qtb">
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="hef-1N-Xed" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="6kd-AP-ORd"/>
+                <constraint firstItem="hef-1N-Xed" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Mha-e0-lc2"/>
+                <constraint firstItem="obf-8p-xUP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="PlX-Zh-NEj"/>
+                <constraint firstItem="obf-8p-xUP" firstAttribute="top" secondItem="hef-1N-Xed" secondAttribute="bottom" constant="10" id="Uq4-BE-2DK"/>
+                <constraint firstItem="hef-1N-Xed" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Wlc-1O-A8p"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="obf-8p-xUP" secondAttribute="trailing" constant="20" id="Z4M-jD-gdW"/>
+            </constraints>
+            <point key="canvasLocation" x="-434.35114503816794" y="41.549295774647888"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

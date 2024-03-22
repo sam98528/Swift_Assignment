@@ -23,7 +23,11 @@ class Todo : CustomStringConvertible{
     var startDate : Date?
     var endDate : Date?
     var memo : String
-    var tag : [String]
+    var tag : [String] {
+        didSet {
+            updateTagDictionary(oldValue)
+        }
+    }
     var isOpen : Bool = false
     
     init(id: Int, title: String, isCompleted: Bool, isImportant: Bool, startDate: Date? = nil, endDate: Date? = nil, memo: String, tag: [String], isOpen: Bool) {
@@ -53,6 +57,18 @@ extension Todo {
                        Todo(id: 4, title: "✅ 체크박스 눌러서 완료 표시하기!",isCompleted: true,isImportant: false,startDate:Date(),endDate: Date(timeIntervalSinceNow: 300), memo: "TEST" ,tag: ["#체크박스","#완료!"], isOpen: false),
                        Todo(id: 5, title: "➕ 아래 + 버튼 눌러서 새로운 투두 추가하기",isCompleted: false,isImportant: false, startDate:Date(), endDate: Date(timeIntervalSinceNow: 300),memo: "TEST" ,tag: ["#새로운투두","#추가하기"], isOpen: false),
     ]
+    
+    private func updateTagDictionary(_ oldValue : [String]) {
+        let previousTags = Set(oldValue)
+        let newTags = Set(tag)
+        let removedTags = previousTags.subtracting(newTags)
+        for removedTag in removedTags {
+            Tag.tagDic[removedTag]!.todo.removeAll{ $0.id == self.id}
+            if Tag.tagDic[removedTag]!.todo.isEmpty {
+                Tag.tagDic[removedTag] = nil
+            }
+        }
+    }
 }
 
 extension UIColor {

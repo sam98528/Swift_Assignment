@@ -24,6 +24,7 @@ class DetailsViewController: UIViewController {
     
     var currentTodo : Todo?
     var newTodo = Todo(id: 1, title: "", isCompleted: false, isImportant: false, startDate: nil, endDate: nil, memo: "", tag: [], isOpen: false)
+    var tempTodo = Todo(id: 0, title: "temp", isCompleted: true, isImportant: true, memo: "temp", tag: [], isOpen: false)
     
     var index : Int?
     
@@ -56,7 +57,7 @@ class DetailsViewController: UIViewController {
                                 temp = textField.text!
                             }
                             if self.currentTodo != nil {
-                                self.currentTodo?.tag.append(temp)
+                                self.tempTodo.tag.append(temp)
                             }else {
                                 self.newTodo.tag.append(temp)
                             }
@@ -82,6 +83,8 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         self.tagCollectionView.delegate = self
         self.tagCollectionView.dataSource = self
         tagCollectionView.register(TagCollectionViewCell.nib(), forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
@@ -92,7 +95,7 @@ class DetailsViewController: UIViewController {
         
         
         if currentTodo != nil {
-            
+            tempTodo.tag = (currentTodo?.tag)!
             titleTextField.text = currentTodo?.title
             titleTextField.isEnabled = isEnabled
             titleTextField.textAlignment = .center
@@ -207,7 +210,7 @@ class DetailsViewController: UIViewController {
                     Todo.list[index!].startDate = startTimeDatePicker.date
                     Todo.list[index!].endDate = endTimeDatePicker.date
                     Todo.list[index!].memo = memoTextView.text
-                    Todo.list[index!].tag = (currentTodo?.tag)!
+                    Todo.list[index!].tag = tempTodo.tag
                     // 여기
                 }else{
                     Todo.todoID += 1
@@ -216,7 +219,7 @@ class DetailsViewController: UIViewController {
                     Todo.list.append(newTodo)
                 }
                 
-                
+                //Tag.convertToTagDic(todos: <#T##[Todo]#>)
                 self.dataTransferDelegate?.finishedEditing()
                 self.dismiss(animated: true, completion: nil)
             }
@@ -257,7 +260,7 @@ extension DetailsViewController : UITextViewDelegate {
 extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if currentTodo != nil {
-            return (currentTodo?.tag.count)!
+            return tempTodo.tag.count
         }else{
             if newTodo.tag.count == 0 {
                 return 0
@@ -271,16 +274,19 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
         if currentTodo != nil {
-            cell.tagLabel.text = currentTodo?.tag[indexPath.row]
+            cell.tagLabel.text = tempTodo.tag[indexPath.row]
         }else{
             cell.tagLabel.text = newTodo.tag[indexPath.row]
         }
-        if Tag.tagDic[cell.tagLabel.text!] == nil{
-            Tag.tagDic.updateValue(Tag(tagName: cell.tagLabel.text!, color: UIColor.black,todo: []), forKey: cell.tagLabel.text!)
+        if Tag.tagDic[cell.tagLabel.text!] != nil{
+            let tag = Tag.tagDic[cell.tagLabel.text!]!
+            cell.tagLabel.backgroundColor = tag.color
+            
+        }else{
+            //Tag.tagDic.updateValue(Tag(tagName: cell.tagLabel.text!, color: UIColor.black,todo: []), forKey: cell.tagLabel.text!)
         }
         
-        let tag = Tag.tagDic[cell.tagLabel.text!]!
-        cell.tagLabel.backgroundColor = tag.color
+        
         
         cell.tagLabel.font = UIFont(name: font, size: 14)
         cell.tagLabel.layer.cornerRadius = 10
@@ -305,7 +311,7 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var tag : String
         if currentTodo != nil {
-            tag = (self.currentTodo?.tag[indexPath.row])!
+            tag = self.tempTodo.tag[indexPath.row]
         }else{
             tag = self.newTodo.tag[indexPath.row]
         }
@@ -318,8 +324,9 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isEnabled {
             if currentTodo != nil {
-                currentTodo?.tag.remove(at: indexPath.row)
+                tempTodo.tag.remove(at: indexPath.row)
             }else{
+                print(newTodo.id)
                 newTodo.tag.remove(at: indexPath.row)
             }
             self.tagCollectionView.reloadData()

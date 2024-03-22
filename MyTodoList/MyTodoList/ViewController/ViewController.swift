@@ -19,8 +19,9 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         Tag.convertToTagDic(todos: Todo.list)
-
+        //Tag.printTagDictionary()
         toDoTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
@@ -81,6 +82,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        Tag.convertToTagDic(todos: Todo.list)
+        
+        
         let cell = toDoTableView.dequeueReusableCell(withIdentifier: ToDoTableViewCell.identifier, for: indexPath) as! ToDoTableViewCell
         let target = Todo.list[indexPath.row]
         
@@ -145,6 +149,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let del = UIContextualAction(style: .destructive, title: "", handler: {(action, view, completionHandler) in
+            Tag.updateTagsAfterTodoDeletion(deletedTodoID: Todo.list[indexPath.row].id)
             Todo.list.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
@@ -164,6 +169,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Tag.printTagDictionary()
         Todo.list[indexPath.row].isOpen.toggle()
         tableView.reloadRows(at: [indexPath], with: .automatic)
         //print(Todo.list[indexPath.row].description)

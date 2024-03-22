@@ -16,7 +16,6 @@ class ToDoTableViewCell: UITableViewCell {
     
     var todo : Todo?
     let font = "EF_Diary"
-    
     static let identifier = "TodoTableViewCell"
     var index = 0
     
@@ -45,7 +44,7 @@ class ToDoTableViewCell: UITableViewCell {
             Title.attributedText = attributedString
         }
         CheckBoxButton.setImage(UIImage(named: "square"), for: .normal)
-        tagCollectionView.reloadData()
+        
     }
     
     static func nib() -> UINib {
@@ -99,6 +98,12 @@ extension ToDoTableViewCell : UICollectionViewDelegate, UICollectionViewDataSour
         }else{
             cell.tagLabel.text = self.todo?.tag[indexPath.row]
         }
+        
+        if  Tag.tagDic[cell.tagLabel.text!] != nil{
+            let tag = Tag.tagDic[cell.tagLabel.text!]!
+            cell.tagLabel.backgroundColor = tag.color
+        }
+        
         cell.tagLabel.font = UIFont(name: font, size: 13)
         cell.tagLabel.layer.cornerRadius = 10
         cell.tagLabel.layer.borderColor = UIColor.black.cgColor

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DataTransferDelegate: AnyObject {
-    func sendData(_ data: [Todo])
+    func finishedEditing()
 }
 
 
@@ -23,31 +23,24 @@ class DetailsViewController: UIViewController {
     weak var dataTransferDelegate : DataTransferDelegate?
     
     var currentTodo : Todo?
-    var newTodo = Todo(id: 1, title: "", isCompleted: false, isImportant: false, startDate: nil, endDate: nil, memo: "", tag: [])
+    var newTodo = Todo(id: 1, title: "", isCompleted: false, isImportant: false, startDate: nil, endDate: nil, memo: "", tag: [], isOpen: false)
     
     var index : Int?
     
-    var list : [Todo] = []
+    //var list : [Todo] = []
     @IBOutlet weak var tagButton: UIButton!
-    
     @IBOutlet weak var memoTextView: UITextView!
-    
     @IBOutlet weak var importantButton: UIButton!
-    
     @IBOutlet weak var cancelButtonItem: UIBarButtonItem!
     @IBOutlet weak var titleNavigationItem: UINavigationItem!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var addButtonItem: UIBarButtonItem!
-    
     @IBOutlet weak var endTimeDatePicker: UIDatePicker!
     @IBOutlet weak var startTimeDatePicker: UIDatePicker!
-    
     @IBOutlet weak var titleTextField: UITextField!
-    
     @IBOutlet weak var tagCollectionView: UICollectionView!
     
-    let currentCalendar = Calendar.current
-    let currentTimeZone = TimeZone.current
+    
     var important = false
     
     @IBAction func TagCollectionButtonTouched(_ sender: Any) {
@@ -96,11 +89,14 @@ class DetailsViewController: UIViewController {
         //tagCollectionView.layer.cornerRadius = 10
         //tagCollectionView.layer.borderWidth = 1
         //tagCollectionView.layer.borderColor = UIColor.black.cgColor
+        
+        
         if currentTodo != nil {
             
             titleTextField.text = currentTodo?.title
             titleTextField.isEnabled = isEnabled
             titleTextField.textAlignment = .center
+            
             
             startTimeDatePicker.date = (currentTodo?.startDate)!
             startTimeDatePicker.isEnabled = isEnabled
@@ -148,6 +144,7 @@ class DetailsViewController: UIViewController {
             
             
         }
+        
         memoTextView.font = UIFont(name: font, size: 15.0)
         memoTextView.layer.borderWidth = 5
         memoTextView.layer.cornerRadius = 20
@@ -205,23 +202,25 @@ class DetailsViewController: UIViewController {
                 
                 
                 if currentTodo != nil {
-                    list[index!].title = titleTextField.text!
-                    list[index!].isImportant = important
-                    list[index!].startDate = startTimeDatePicker.date
-                    list[index!].endDate = endTimeDatePicker.date
-                    list[index!].memo = memoTextView.text
-                    list[index!].tag = (currentTodo?.tag)!
+                    Todo.list[index!].title = titleTextField.text!
+                    Todo.list[index!].isImportant = important
+                    Todo.list[index!].startDate = startTimeDatePicker.date
+                    Todo.list[index!].endDate = endTimeDatePicker.date
+                    Todo.list[index!].memo = memoTextView.text
+                    Todo.list[index!].tag = (currentTodo?.tag)!
+                    // 여기
                 }else{
-                    newTodo = Todo(id: 1, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startTimeDatePicker.date, endDate: endTimeDatePicker.date ,memo: memoTextView.text!, tag: newTodo.tag)
-                    list.append(newTodo)
+                    Todo.todoID += 1
+                    let currentTodoID = Todo.todoID
+                    newTodo = Todo(id: currentTodoID, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startTimeDatePicker.date, endDate: endTimeDatePicker.date ,memo: memoTextView.text!, tag: newTodo.tag, isOpen: false)
+                    Todo.list.append(newTodo)
                 }
                 
                 
-                self.dataTransferDelegate?.sendData(list)
+                self.dataTransferDelegate?.finishedEditing()
                 self.dismiss(animated: true, completion: nil)
             }
         }else{
-            print("Changed")
             isEnabled.toggle()
             viewDidLoad()
         }
@@ -276,6 +275,12 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
         }else{
             cell.tagLabel.text = newTodo.tag[indexPath.row]
         }
+        if Tag.tagDic[cell.tagLabel.text!] == nil{
+            Tag.tagDic.updateValue(Tag(tagName: cell.tagLabel.text!, color: UIColor.black,todo: []), forKey: cell.tagLabel.text!)
+        }
+        
+        let tag = Tag.tagDic[cell.tagLabel.text!]!
+        cell.tagLabel.backgroundColor = tag.color
         
         cell.tagLabel.font = UIFont(name: font, size: 14)
         cell.tagLabel.layer.cornerRadius = 10
@@ -322,3 +327,19 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     }
 }
 
+extension Date {
+    var convertedDate:Date {
+        let dateFormatter = DateFormatter()
+        let dateFormat = "yyyy.MM.dd HH:mm"
+        dateFormatter.dateFormat = dateFormat
+        let formattedDate = dateFormatter.string(from: self)
+
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00")
+
+        dateFormatter.dateFormat = dateFormat
+        let sourceDate = dateFormatter.date(from: formattedDate)
+
+        return sourceDate!
+    }
+}

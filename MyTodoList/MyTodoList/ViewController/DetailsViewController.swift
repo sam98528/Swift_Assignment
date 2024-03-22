@@ -24,7 +24,7 @@ class DetailsViewController: UIViewController {
     
     var currentTodo : Todo?
     var newTodo = Todo(id: 1, title: "", isCompleted: false, isImportant: false, startDate: nil, endDate: nil, memo: "", tag: [], isOpen: false)
-    var tempTodo = Todo(id: 0, title: "temp", isCompleted: true, isImportant: true, memo: "temp", tag: [], isOpen: false)
+    var tempTag : [String] = []
     
     var index : Int?
     
@@ -57,9 +57,14 @@ class DetailsViewController: UIViewController {
                                 temp = textField.text!
                             }
                             if self.currentTodo != nil {
-                                self.tempTodo.tag.append(temp)
+                                if !self.tempTag.contains(temp){
+                                    self.tempTag.append(temp)
+                                }
                             }else {
-                                self.newTodo.tag.append(temp)
+                                if !self.newTodo.tag.contains(temp){
+                                    self.newTodo.tag.append(temp)
+                                }
+                               
                             }
                         }
                         
@@ -95,7 +100,7 @@ class DetailsViewController: UIViewController {
         
         
         if currentTodo != nil {
-            tempTodo.tag = (currentTodo?.tag)!
+            tempTag = (currentTodo?.tag)!
             titleTextField.text = currentTodo?.title
             titleTextField.isEnabled = isEnabled
             titleTextField.textAlignment = .center
@@ -210,7 +215,7 @@ class DetailsViewController: UIViewController {
                     Todo.list[index!].startDate = startTimeDatePicker.date
                     Todo.list[index!].endDate = endTimeDatePicker.date
                     Todo.list[index!].memo = memoTextView.text
-                    Todo.list[index!].tag = tempTodo.tag
+                    Todo.list[index!].tag = tempTag
                     // 여기
                 }else{
                     Todo.todoID += 1
@@ -260,7 +265,7 @@ extension DetailsViewController : UITextViewDelegate {
 extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if currentTodo != nil {
-            return tempTodo.tag.count
+            return tempTag.count
         }else{
             if newTodo.tag.count == 0 {
                 return 0
@@ -274,7 +279,7 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
         if currentTodo != nil {
-            cell.tagLabel.text = tempTodo.tag[indexPath.row]
+            cell.tagLabel.text = tempTag[indexPath.row]
         }else{
             cell.tagLabel.text = newTodo.tag[indexPath.row]
         }
@@ -311,7 +316,7 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var tag : String
         if currentTodo != nil {
-            tag = self.tempTodo.tag[indexPath.row]
+            tag = tempTag[indexPath.row]
         }else{
             tag = self.newTodo.tag[indexPath.row]
         }
@@ -324,9 +329,8 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isEnabled {
             if currentTodo != nil {
-                tempTodo.tag.remove(at: indexPath.row)
+                tempTag.remove(at: indexPath.row)
             }else{
-                print(newTodo.id)
                 newTodo.tag.remove(at: indexPath.row)
             }
             self.tagCollectionView.reloadData()

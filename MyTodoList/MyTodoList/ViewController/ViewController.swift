@@ -21,7 +21,6 @@ class ViewController: UIViewController{
         super.viewDidLoad()
         
         Tag.convertToTagDic(todos: Todo.list)
-        //Tag.printTagDictionary()
         toDoTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
@@ -172,7 +171,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource,TableViewDe
         Tag.printTagDictionary()
         Todo.list[indexPath.row].isOpen.toggle()
         tableView.reloadRows(at: [indexPath], with: .automatic)
-        //print(Todo.list[indexPath.row].description)
     }
 }
 

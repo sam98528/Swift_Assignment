@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-typealias TagDictionary = [String: Tag]
-
 class Todo : CustomStringConvertible{
     
     var description: String {
@@ -43,7 +41,7 @@ class Todo : CustomStringConvertible{
     }
     
     deinit{
-        print("deinit 성공")
+        print("deinit")
     }
 }
 
@@ -62,22 +60,15 @@ extension Todo {
         let previousTags = Set(oldValue)
         let newTags = Set(tag)
         let removedTags = previousTags.subtracting(newTags)
+        let addedTags = newTags.subtracting(previousTags)
+        for addedTag in addedTags {
+          
+        }
         for removedTag in removedTags {
             Tag.tagDic[removedTag]!.todo.removeAll{ $0.id == self.id}
             if Tag.tagDic[removedTag]!.todo.isEmpty {
                 Tag.tagDic[removedTag] = nil
             }
         }
-    }
-}
-
-extension UIColor {
-    static func random() -> UIColor {
-        return UIColor(
-            red: .random(in: 0...1),
-            green: .random(in: 0...1),
-            blue: .random(in: 0...1),
-            alpha: 1.0
-        )
     }
 }

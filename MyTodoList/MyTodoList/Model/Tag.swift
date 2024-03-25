@@ -8,10 +8,15 @@
 import Foundation
 import UIKit
 
-struct Tag {
+class Tag {
     var tagName : String
     var color : UIColor
     var todo : [Todo]
+    init(tagName: String, color: UIColor, todo: [Todo]) {
+        self.tagName = tagName
+        self.color = color
+        self.todo = todo
+    }
 }
 
 extension Tag {
@@ -47,7 +52,7 @@ extension Tag {
             }
         }
     }
-    mutating func remove(todoID: Int) {
+    func remove(todoID: Int) {
         // 해당 Todo를 사용하고 있는 Tag들을 찾아 업데이트합니다.
         for (index, _) in self.todo.enumerated() {
             if self.todo[index].id == todoID {

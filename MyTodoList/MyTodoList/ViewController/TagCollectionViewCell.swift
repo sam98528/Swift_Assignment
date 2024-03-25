@@ -13,6 +13,7 @@ class TagCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var tagLabel: UILabel!
     static let identifier = "TagCollectionViewCell"
+    
     static func nib() -> UINib {
         return UINib(nibName: "TagCollectionViewCell", bundle: nil)
     }
@@ -23,9 +24,6 @@ class TagCollectionViewCell: UICollectionViewCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        
-        // Initialization code
     }
 
 }

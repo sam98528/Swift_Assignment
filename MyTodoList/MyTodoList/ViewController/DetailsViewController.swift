@@ -11,13 +11,104 @@ protocol DataTransferDelegate: AnyObject {
     func finishedEditing()
 }
 
+extension DetailsViewController : UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceHolder{
+            textView.text = nil
+            textView.textColor = UIColor.label
+            textView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceHolder
+            textView.textColor = .lightGray
+            textView.textContainerInset = UIEdgeInsets(top: (textView.bounds.height - textView.contentSize.height) / 2 - 10, left: 0, bottom: 0, right: 0)
+        }
+    }
+}
+
+extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if currentTodo != nil {
+            return tempTag.count
+        }else{
+            if newTodo.tag.count == 0 {
+                return 0
+            }else{
+                return newTodo.tag.count
+            }
+        }
+       
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
+        if currentTodo != nil {
+            cell.tagLabel.text = tempTag[indexPath.row]
+        }else{
+            cell.tagLabel.text = newTodo.tag[indexPath.row]
+        }
+        if Tag.tagDic[cell.tagLabel.text!] != nil{
+            let tag = Tag.tagDic[cell.tagLabel.text!]!
+            cell.tagLabel.backgroundColor = tag.color
+            
+        }else{
+            //Tag.tagDic.updateValue(Tag(tagName: cell.tagLabel.text!, color: UIColor.black,todo: []), forKey: cell.tagLabel.text!)
+        }
+        
+        
+        
+        cell.tagLabel.font = UIFont(name: font, size: 14)
+        cell.tagLabel.layer.cornerRadius = 10
+        cell.tagLabel.layer.borderColor = UIColor.black.cgColor
+        cell.tagLabel.layer.borderWidth = 1.0
+        //cell.tagLabel.backgroundColor = .gray
+        cell.tagLabel.clipsToBounds = true
+        cell.tagLabel.textAlignment = .center
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+        }
+
+        // 옆 간격
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+
+        // cell 사이즈( 옆 라인을 고려하여 설정 )
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var tag : String
+        if currentTodo != nil {
+            tag = tempTag[indexPath.row]
+        }else{
+            tag = self.newTodo.tag[indexPath.row]
+        }
+        let attributes = [NSAttributedString.Key.font: UIFont(name: font, size: 14)]
+
+        let tagSize = (tag as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])
+        return CGSize(width: tagSize.width + 20, height: 30)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if isEnabled {
+            if currentTodo != nil {
+                tempTag.remove(at: indexPath.row)
+            }else{
+                newTodo.tag.remove(at: indexPath.row)
+            }
+            self.tagCollectionView.deleteItems(at: [indexPath])
+        }
+    }
+}
+
 
 class DetailsViewController: UIViewController {
     let font = "EF_Diary"
-    
     let textViewPlaceHolder = "텍스트를 입력하세요"
-    
-    var isEnabled = false
     
     weak var dataTransferDelegate : DataTransferDelegate?
     
@@ -26,8 +117,9 @@ class DetailsViewController: UIViewController {
     var tempTag : [String] = []
     
     var index : Int?
+    var important = false
+    var isEnabled = false
     
-    //var list : [Todo] = []
     @IBOutlet weak var tagButton: UIButton!
     @IBOutlet weak var memoTextView: UITextView!
     @IBOutlet weak var importantButton: UIButton!
@@ -40,8 +132,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var tagCollectionView: UICollectionView!
     
-    
-    var important = false
     
     @IBAction func TagCollectionButtonTouched(_ sender: Any) {
         var temp = ""
@@ -233,124 +323,5 @@ class DetailsViewController: UIViewController {
             viewDidLoad()
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
-extension DetailsViewController : UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == textViewPlaceHolder{
-            textView.text = nil
-            textView.textColor = UIColor.label
-            textView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = textViewPlaceHolder
-            textView.textColor = .lightGray
-            textView.textContainerInset = UIEdgeInsets(top: (textView.bounds.height - textView.contentSize.height) / 2 - 10, left: 0, bottom: 0, right: 0)
-        }
-    }
-}
-
-extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if currentTodo != nil {
-            return tempTag.count
-        }else{
-            if newTodo.tag.count == 0 {
-                return 0
-            }else{
-                return newTodo.tag.count
-            }
-        }
-       
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
-        if currentTodo != nil {
-            cell.tagLabel.text = tempTag[indexPath.row]
-        }else{
-            cell.tagLabel.text = newTodo.tag[indexPath.row]
-        }
-        if Tag.tagDic[cell.tagLabel.text!] != nil{
-            let tag = Tag.tagDic[cell.tagLabel.text!]!
-            cell.tagLabel.backgroundColor = tag.color
-            
-        }else{
-            //Tag.tagDic.updateValue(Tag(tagName: cell.tagLabel.text!, color: UIColor.black,todo: []), forKey: cell.tagLabel.text!)
-        }
-        
-        
-        
-        cell.tagLabel.font = UIFont(name: font, size: 14)
-        cell.tagLabel.layer.cornerRadius = 10
-        cell.tagLabel.layer.borderColor = UIColor.black.cgColor
-        cell.tagLabel.layer.borderWidth = 1.0
-        //cell.tagLabel.backgroundColor = .gray
-        cell.tagLabel.clipsToBounds = true
-        cell.tagLabel.textAlignment = .center
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-        }
-
-        // 옆 간격
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-
-        // cell 사이즈( 옆 라인을 고려하여 설정 )
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var tag : String
-        if currentTodo != nil {
-            tag = tempTag[indexPath.row]
-        }else{
-            tag = self.newTodo.tag[indexPath.row]
-        }
-        let attributes = [NSAttributedString.Key.font: UIFont(name: font, size: 14)]
-
-        let tagSize = (tag as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])
-        return CGSize(width: tagSize.width + 20, height: 30)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if isEnabled {
-            if currentTodo != nil {
-                tempTag.remove(at: indexPath.row)
-            }else{
-                newTodo.tag.remove(at: indexPath.row)
-            }
-            self.tagCollectionView.reloadData()
-        }
-    }
-}
-
-extension Date {
-    var convertedDate:Date {
-        let dateFormatter = DateFormatter()
-        let dateFormat = "yyyy.MM.dd HH:mm"
-        dateFormatter.dateFormat = dateFormat
-        let formattedDate = dateFormatter.string(from: self)
-
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00")
-
-        dateFormatter.dateFormat = dateFormat
-        let sourceDate = dateFormatter.date(from: formattedDate)
-
-        return sourceDate!
-    }
-}

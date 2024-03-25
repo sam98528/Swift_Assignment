@@ -30,58 +30,67 @@ class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
 }
 
+extension MainViewController : UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //tagArray.remove(at: indexPath.row)
+        //self.tagCollectionView.reloadData()
+        print(tagArray[indexPath.row])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tagArray.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagListCollectionViewCell.identifier, for: indexPath) as! TagListCollectionViewCell
+        
+        let tag = tagArray[indexPath.row]
+        cell.tagLabel.text = tag.tagName
+        cell.index = indexPath.row
+        cell.delegate = self
+        if  Tag.tagDic[cell.tagLabel.text!] != nil{
+            let tag = Tag.tagDic[cell.tagLabel.text!]!
+            cell.viewList.backgroundColor = tag.color
+            cell.currentColor = tag.color
+        }
+        cell.delButton.isEnabled = true
+        cell.tagLabel.font = UIFont(name: font, size: 12)
+        cell.viewList.layer.cornerRadius = 10
+        cell.viewList.layer.borderColor = UIColor.black.cgColor
+        cell.viewList.layer.borderWidth = 1.0
+        cell.viewList.clipsToBounds = true
+        cell.tagLabel.textAlignment = .center
+        return cell
+    }
+}
 
-class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+
+extension MainViewController : TagList {
+    func delButtonClicked(index : Int) {
+        print("Clicked")
+        print(index)
+        self.tagArray.remove(at: index)
+        self.tagCollectionView.reloadData()
+    }
+    
+}
+
+
+class MainViewController: UIViewController {
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var titleNavigationItem: UINavigationItem!
     
     let font = "EF_Diary"
     var tagArray = Array(Tag.tagDic.values)
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
-    }
-    
-    
-  
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            print(tagArray[indexPath.row])
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Tag.tagDic.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagListCollectionViewCell.identifier, for: indexPath) as! TagListCollectionViewCell
-        
-        //let tagArray = Array(Tag.tagDic.values)
-        let tag = tagArray[indexPath.row]
-        cell.tagLabel.text = tag.tagName
-        
-        
-        if  Tag.tagDic[cell.tagLabel.text!] != nil{
-            let tag = Tag.tagDic[cell.tagLabel.text!]!
-            cell.viewList.backgroundColor = tag.color
-        }
-        cell.tagLabel.font = UIFont(name: font, size: 12)
-        //cell.exitButton.contentMode = .scaleToFill
-        //cell.exitButton.imageEdgeInsets = .init(top: 0, left: 30, bottom: 0, right: 0)
-        //cell.tagLabel.backgroundColor = UIColor.blue
-        cell.viewList.layer.cornerRadius = 10
-        cell.viewList.layer.borderColor = UIColor.black.cgColor
-        cell.viewList.layer.borderWidth = 1.0
-        cell.viewList.clipsToBounds = true
-        cell.tagLabel.textAlignment = .center
-        
-        return cell
-    }
     
 
     @IBOutlet weak var tagCollectionView: UICollectionView!
@@ -92,8 +101,16 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         tagCollectionView.delegate = self
         tagCollectionView.layer.cornerRadius = 20
         tagCollectionView.layer.borderWidth = 5
+        tagCollectionView.clipsToBounds = true
         tagCollectionView.register(TagListCollectionViewCell.nib(), forCellWithReuseIdentifier: TagListCollectionViewCell.identifier)
-        tagCollectionView.collectionViewLayout = LeftAlignedCollectionViewFlowLayout()
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 1
+        layout.sectionInset.top = 10
+        layout.sectionInset.left = 5
+        layout.sectionInset.right = 6
+        tagCollectionView.collectionViewLayout = layout
+        tagCollectionView.allowsMultipleSelection = true
         // Do any additional setup after loading the view.
         
         titleNavigationItem.title = "태그 수정 중.."
@@ -114,3 +131,4 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         print("click")
     }
 }
+

@@ -9,64 +9,6 @@
 
 import UIKit
 
-class TodoViewController: UIViewController{
-    let font = "EF_Diary"
-    @IBOutlet weak var toDoTableView: UITableView!
-    @IBOutlet weak var logoLabel: UILabel!
-   
-    @IBAction func TestClicked(_ sender: Any) {
-        present(MainViewController(), animated: true)
-    }
-    @IBOutlet weak var test: UIButton!
-    //var list = Todo.list
-
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        Tag.convertToTagDic(todos: Todo.list)
-        toDoTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
-        toDoTableView.delegate = self
-        toDoTableView.dataSource = self
-        toDoTableView.layer.cornerRadius = 20
-        toDoTableView.clipsToBounds = true
-        toDoTableView.layer.borderWidth = 5
-        toDoTableView.layer.borderColor = UIColor.label.cgColor
-        
-        logoLabel.font = UIFont(name: font, size: 45)
-        
-        
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        button.backgroundColor = UIColor.label
-        button.tintColor = UIColor.systemBackground
-        button.layer.cornerRadius = 40
-        button.layer.borderColor = UIColor.label.cgColor
-        button.layer.borderWidth = 5
-        button.layer.masksToBounds = true
-        view.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.trailingAnchor.constraint(equalTo: toDoTableView.trailingAnchor, constant: -30).isActive = true
-        button.bottomAnchor.constraint(equalTo: toDoTableView.bottomAnchor, constant: -50).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-
-        // Do any additional setup after loading the view.
-        
-    }
-    @objc func buttonTapped() {
-        let detailsViewController = DetailsViewController()
-        detailsViewController.modalPresentationStyle = .automatic
-        detailsViewController.modalTransitionStyle = .coverVertical
-        detailsViewController.dataTransferDelegate = self
-        //detailsViewController.list = self.list
-        self.present(detailsViewController, animated: true, completion: nil)
-    }
-}
-
 extension TodoViewController: UITableViewDelegate, UITableViewDataSource,TableViewDelegate {
     func importantFlagClicked(index: Int) {
         Todo.list[index].isImportant = Todo.list[index].isImportant ? false : true
@@ -186,32 +128,64 @@ extension TodoViewController : DataTransferDelegate {
     
 }
 
-extension String {
-    // 블로그 참고
-    func strikeThrough() -> NSAttributedString {
-            let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: self)
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, attributeString.length))
-            return attributeString
+class TodoViewController: UIViewController{
+    let font = "EF_Diary"
+    @IBOutlet weak var toDoTableView: UITableView!
+    @IBOutlet weak var logoLabel: UILabel!
+   
+    @IBAction func TestClicked(_ sender: Any) {
+        present(MainViewController(), animated: true)
+    }
+    @IBOutlet weak var test: UIButton!
+    //var list = Todo.list
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        Tag.convertToTagDic(todos: Todo.list)
+        toDoTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
+        toDoTableView.delegate = self
+        toDoTableView.dataSource = self
+        toDoTableView.layer.cornerRadius = 20
+        toDoTableView.clipsToBounds = true
+        toDoTableView.layer.borderWidth = 5
+        toDoTableView.layer.borderColor = UIColor.label.cgColor
+        
+        logoLabel.font = UIFont(name: font, size: 45)
+        
+        
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.backgroundColor = UIColor.label
+        button.tintColor = UIColor.systemBackground
+        button.layer.cornerRadius = 40
+        button.layer.borderColor = UIColor.label.cgColor
+        button.layer.borderWidth = 5
+        button.layer.masksToBounds = true
+        view.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.trailingAnchor.constraint(equalTo: toDoTableView.trailingAnchor, constant: -30).isActive = true
+        button.bottomAnchor.constraint(equalTo: toDoTableView.bottomAnchor, constant: -50).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+
+        // Do any additional setup after loading the view.
+        
+    }
+    @objc func buttonTapped() {
+        let detailsViewController = DetailsViewController()
+        detailsViewController.modalPresentationStyle = .automatic
+        detailsViewController.modalTransitionStyle = .coverVertical
+        detailsViewController.dataTransferDelegate = self
+        //detailsViewController.list = self.list
+        self.present(detailsViewController, animated: true, completion: nil)
     }
 }
 
-extension UIColor {
-    
-    convenience init(hexCode: String, alpha: CGFloat = 1.0) {
-        var hexFormatted: String = hexCode.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
-        
-        if hexFormatted.hasPrefix("#") {
-            hexFormatted = String(hexFormatted.dropFirst())
-        }
-        
-        assert(hexFormatted.count == 6, "Invalid hex code used.")
-        
-        var rgbValue: UInt64 = 0
-        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
-        
-        self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-                  green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-                  blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-                  alpha: alpha)
-    }
-}
+
+
+

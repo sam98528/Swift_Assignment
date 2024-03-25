@@ -33,9 +33,6 @@ class ToDoTableViewCell: UITableViewCell {
         self.delegate?.buttonIsClicked(index: index)
     }
     
-    
-
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         if let text = Title.text {

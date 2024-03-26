@@ -26,6 +26,7 @@ extension DetailsViewController : TagSettingDelegate {
         self.tagCollectionView.reloadData()
     }
 }
+
 // 키보드 숨기기
 extension UIViewController {
     
@@ -40,6 +41,7 @@ extension UIViewController {
     }
 
 }
+
 // 키보드로 인해 화면 가려졌을때 view 위로 올리기
 extension DetailsViewController {
     
@@ -67,7 +69,8 @@ extension DetailsViewController {
         }
     }
 }
-//TextField focus 잃었을때 키보드 가리기
+
+//TextField Return 키 키보드 내리기
 extension DetailsViewController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -79,6 +82,7 @@ extension DetailsViewController: UITextFieldDelegate {
         return true
     }
 }
+
 //TextView PlaceHolder
 extension DetailsViewController : UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -101,6 +105,7 @@ extension DetailsViewController : UITextViewDelegate {
         return true
     }
 }
+
 // Tag 보여주기용 CollectionView
 // 변경 OR 신규 추가에 따라서 다르게 작동
 extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{

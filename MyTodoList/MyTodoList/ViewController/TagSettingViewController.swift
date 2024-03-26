@@ -11,13 +11,16 @@ protocol TagSettingDelegate : AnyObject {
     func finishedTagSetting(tagList : [Tag])
 }
 
-extension DetailsViewController: UIColorPickerViewControllerDelegate {
-    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
-        print(viewController.selectedColor)
-    }
 
-    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-        print(viewController.selectedColor)
+extension TagSettingViewController: UITextFieldDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // TextField 비활성화
+        return true
     }
 }
 
@@ -129,6 +132,8 @@ class TagSettingViewController: UIViewController {
     @IBOutlet weak var tagCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        hideKeyboardWhenTappedAround()
         print("CurrentTagArray : \(currentTagArray)")
         tagArray = Array(Tag.tagDic.values)
         
@@ -187,6 +192,7 @@ class TagSettingViewController: UIViewController {
         titleNavigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
         
         self.tagTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        tagTextField.delegate = self
         tagTextField.font = UIFont(name: font, size: 15.0)
     }
     
@@ -209,10 +215,8 @@ class TagSettingViewController: UIViewController {
         }
         
         if let _ = (self.currentTags.firstIndex{$0.tagName == self.currentTagLabel.text }){
-            print("HELLO1")
             self.addButton.titleLabel?.text = "변경"
         }else{
-            print("HELLO2")
             self.addButton.titleLabel?.text = "추가"
         }
     }

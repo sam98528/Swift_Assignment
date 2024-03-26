@@ -64,7 +64,7 @@ extension Tag {
     static func updateTagsAfterTodoDeletion(deletedTodoID: Int) {
         // Tag 딕셔너리를 순회하면서 삭제된 Todo를 사용하고 있는 Tag를 업데이트합니다.
         for (tagName, _) in tagDic {
-            if var tag = tagDic[tagName], tag.todo.contains(where: { $0.id == deletedTodoID }) {
+            if let tag = tagDic[tagName], tag.todo.contains(where: { $0.id == deletedTodoID }) {
                 tag.remove(todoID: deletedTodoID)
                 if tag.todo.isEmpty {
                     tagDic[tagName] = nil // 사용되지 않는 Tag는 삭제합니다.

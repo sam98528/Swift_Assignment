@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TagSettingViewController" customModule="MyTodoList" customModuleProvider="target">
+            <connections>
+                <outlet property="addButton" destination="0Ci-uG-5EC" id="2qN-2z-JjV"/>
+                <outlet property="colorWell" destination="xwU-go-3m4" id="kfN-bK-Ltt"/>
+                <outlet property="currentTagCollectionView" destination="Xg0-WQ-UZs" id="Pp4-mc-fLD"/>
+                <outlet property="currentTagLabel" destination="CUa-jv-KEa" id="qkv-Di-UIo"/>
+                <outlet property="currentTagLabelView" destination="QVz-Uq-DwT" id="hAr-0y-wA4"/>
+                <outlet property="justLabel" destination="CGl-uN-nEL" id="j3V-EF-HJ7"/>
+                <outlet property="justNewLabel" destination="DWa-Mj-tdf" id="vCh-sY-pqe"/>
+                <outlet property="navigationBar" destination="hef-1N-Xed" id="Ktf-fY-uqG"/>
+                <outlet property="removeButton" destination="dIs-wS-tdD" id="Wsh-ld-Stb"/>
+                <outlet property="tagCollectionView" destination="obf-8p-xUP" id="Kc9-1u-JQK"/>
+                <outlet property="tagTextField" destination="FEL-Rw-HET" id="VP4-Nx-BB0"/>
+                <outlet property="titleNavigationItem" destination="iWr-M9-tDp" id="7NF-Sr-Kaq"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="obf-8p-xUP">
+                    <rect key="frame" x="20" y="568" width="353" height="200"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="aGQ-Wd-ZD0"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dC0-e6-d9s">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVz-Uq-DwT">
+                    <rect key="frame" x="20" y="143.33333333333334" width="353" height="100"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CUa-jv-KEa">
+                            <rect key="frame" x="50" y="25" width="253" height="50"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="JyG-H3-0Re"/>
+                        <constraint firstItem="CUa-jv-KEa" firstAttribute="leading" secondItem="QVz-Uq-DwT" secondAttribute="leading" constant="50" id="MW8-W9-qDe"/>
+                        <constraint firstAttribute="bottom" secondItem="CUa-jv-KEa" secondAttribute="bottom" constant="25" id="N74-T9-AlR"/>
+                        <constraint firstAttribute="trailing" secondItem="CUa-jv-KEa" secondAttribute="trailing" constant="50" id="Rkt-Hy-eIg"/>
+                        <constraint firstItem="CUa-jv-KEa" firstAttribute="top" secondItem="QVz-Uq-DwT" secondAttribute="top" constant="25" id="dMD-wF-hGs"/>
+                    </constraints>
+                </view>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hef-1N-Xed">
+                    <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <items>
+                        <navigationItem title="태그 변경 중.." id="iWr-M9-tDp">
+                            <barButtonItem key="leftBarButtonItem" title="취소" id="6sH-8f-H5t"/>
+                            <barButtonItem key="rightBarButtonItem" title="변경" id="KkK-12-Qtb">
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="적용중인 태그" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGl-uN-nEL">
+                    <rect key="frame" x="20" y="347.33333333333331" width="353" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="FEL-Rw-HET">
+                    <rect key="frame" x="20" y="253.33333333333337" width="310" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="continue" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                </textField>
+                <colorWell contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" supportsAlpha="NO" title="태그 색깔 변경" translatesAutoresizingMaskIntoConstraints="NO" id="xwU-go-3m4">
+                    <rect key="frame" x="345" y="253.33333333333337" width="28" height="28"/>
+                </colorWell>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DWa-Mj-tdf">
+                    <rect key="frame" x="20" y="113" width="353" height="20.333333333333343"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIs-wS-tdD">
+                    <rect key="frame" x="20" y="297.33333333333331" width="174" height="40"/>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain">
+                        <attributedString key="attributedTitle">
+                            <fragment content="새로 만들기">
+                                <attributes>
+                                    <font key="NSFont" size="18" name="EF_Diary"/>
+                                    <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </buttonConfiguration>
+                    <connections>
+                        <action selector="removeButtonClicked:" destination="-1" eventType="touchUpInside" id="fAH-OZ-LbP"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ci-uG-5EC">
+                    <rect key="frame" x="199" y="297.33333333333331" width="174" height="40"/>
+                    <color key="tintColor" systemColor="systemRedColor"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain">
+                        <attributedString key="attributedTitle">
+                            <fragment content="추가">
+                                <attributes>
+                                    <font key="NSFont" size="18" name="EF_Diary"/>
+                                    <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </buttonConfiguration>
+                    <connections>
+                        <action selector="addButtonClicked:" destination="-1" eventType="touchUpInside" id="z1G-ne-k7s"/>
+                    </connections>
+                </button>
+                <collectionView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Xg0-WQ-UZs">
+                    <rect key="frame" x="20" y="376" width="353" height="50"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="uhH-k1-C20"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zQa-F3-17w">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Xg0-WQ-UZs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="5zD-w7-2EZ"/>
+                <constraint firstItem="hef-1N-Xed" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="6kd-AP-ORd"/>
+                <constraint firstItem="CGl-uN-nEL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Amy-bL-n6J"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Xg0-WQ-UZs" secondAttribute="trailing" constant="20" id="BVd-5i-qmc"/>
+                <constraint firstItem="dIs-wS-tdD" firstAttribute="top" secondItem="FEL-Rw-HET" secondAttribute="bottom" constant="10" id="C4R-I4-gPs"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="obf-8p-xUP" secondAttribute="bottom" constant="50" id="C6f-lC-hAf"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QVz-Uq-DwT" secondAttribute="trailing" constant="20" id="DRO-8N-T1w"/>
+                <constraint firstItem="FEL-Rw-HET" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Fgl-iI-DN5"/>
+                <constraint firstItem="0Ci-uG-5EC" firstAttribute="leading" secondItem="dIs-wS-tdD" secondAttribute="trailing" constant="5" id="Gev-bW-8JQ"/>
+                <constraint firstItem="dIs-wS-tdD" firstAttribute="width" secondItem="0Ci-uG-5EC" secondAttribute="width" id="HBm-D5-FeA"/>
+                <constraint firstItem="Xg0-WQ-UZs" firstAttribute="top" secondItem="CGl-uN-nEL" secondAttribute="bottom" constant="10" id="JUf-9Q-z1p"/>
+                <constraint firstItem="QVz-Uq-DwT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Jnf-mS-50o"/>
+                <constraint firstItem="hef-1N-Xed" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Mha-e0-lc2"/>
+                <constraint firstItem="FEL-Rw-HET" firstAttribute="top" secondItem="QVz-Uq-DwT" secondAttribute="bottom" constant="10" id="N3J-Hf-cQ8"/>
+                <constraint firstItem="CGl-uN-nEL" firstAttribute="top" secondItem="FEL-Rw-HET" secondAttribute="bottom" constant="60" id="Nq9-vH-HiS"/>
+                <constraint firstItem="CGl-uN-nEL" firstAttribute="top" secondItem="0Ci-uG-5EC" secondAttribute="bottom" constant="10" id="OKh-us-F1d"/>
+                <constraint firstItem="obf-8p-xUP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="PlX-Zh-NEj"/>
+                <constraint firstItem="0Ci-uG-5EC" firstAttribute="top" secondItem="FEL-Rw-HET" secondAttribute="bottom" constant="10" id="Rb5-KV-EhR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xwU-go-3m4" secondAttribute="trailing" constant="20" id="SXW-Ny-NHR"/>
+                <constraint firstItem="hef-1N-Xed" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Wlc-1O-A8p"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="obf-8p-xUP" secondAttribute="trailing" constant="20" id="Z4M-jD-gdW"/>
+                <constraint firstItem="QVz-Uq-DwT" firstAttribute="top" secondItem="DWa-Mj-tdf" secondAttribute="bottom" constant="10" id="abi-ZD-mae"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CGl-uN-nEL" secondAttribute="trailing" constant="20" id="hPr-97-DAN"/>
+                <constraint firstItem="xwU-go-3m4" firstAttribute="leading" secondItem="FEL-Rw-HET" secondAttribute="trailing" constant="15" id="hba-Az-rpQ"/>
+                <constraint firstItem="CGl-uN-nEL" firstAttribute="top" secondItem="dIs-wS-tdD" secondAttribute="bottom" constant="10" id="hgN-Q2-XSK"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0Ci-uG-5EC" secondAttribute="trailing" constant="20" id="iH4-8Z-VDc"/>
+                <constraint firstItem="DWa-Mj-tdf" firstAttribute="top" secondItem="hef-1N-Xed" secondAttribute="bottom" constant="10" id="pVx-7M-L56"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="DWa-Mj-tdf" secondAttribute="trailing" constant="20" id="tdJ-cq-03Q"/>
+                <constraint firstItem="DWa-Mj-tdf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="xao-In-M7t"/>
+                <constraint firstItem="dIs-wS-tdD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="yQ8-sA-6K0"/>
+                <constraint firstItem="xwU-go-3m4" firstAttribute="top" secondItem="QVz-Uq-DwT" secondAttribute="bottom" constant="10" id="zXG-FK-boe"/>
+            </constraints>
+            <point key="canvasLocation" x="-434.35114503816794" y="41.549295774647888"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

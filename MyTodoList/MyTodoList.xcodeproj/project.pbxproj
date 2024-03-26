@@ -17,8 +17,8 @@
 		144818AC2BA831200031D234 /* MyTodoListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144818AB2BA831200031D234 /* MyTodoListUITests.swift */; };
 		144818AE2BA831200031D234 /* MyTodoListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144818AD2BA831200031D234 /* MyTodoListUITestsLaunchTests.swift */; };
 		14615E362BAD266800570A74 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615E352BAD266800570A74 /* Tag.swift */; };
-		14615E392BAD8C3C00570A74 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14615E382BAD8C3C00570A74 /* MainViewController.xib */; };
-		14615E3A2BAD8C3C00570A74 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615E372BAD8C3C00570A74 /* MainViewController.swift */; };
+		14615E392BAD8C3C00570A74 /* TagSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14615E382BAD8C3C00570A74 /* TagSettingViewController.xib */; };
+		14615E3A2BAD8C3C00570A74 /* TagSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615E372BAD8C3C00570A74 /* TagSettingViewController.swift */; };
 		14615E3D2BADAC4D00570A74 /* TagListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14615E3C2BADAC4D00570A74 /* TagListCollectionViewCell.xib */; };
 		14615E3E2BADAC4D00570A74 /* TagListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615E3B2BADAC4D00570A74 /* TagListCollectionViewCell.swift */; };
 		146452922BAE6268000853FA /* ExtensionSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146452912BAE6268000853FA /* ExtensionSave.swift */; };
@@ -66,8 +66,8 @@
 		144818AB2BA831200031D234 /* MyTodoListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTodoListUITests.swift; sourceTree = "<group>"; };
 		144818AD2BA831200031D234 /* MyTodoListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTodoListUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		14615E352BAD266800570A74 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		14615E372BAD8C3C00570A74 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		14615E382BAD8C3C00570A74 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		14615E372BAD8C3C00570A74 /* TagSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSettingViewController.swift; sourceTree = "<group>"; };
+		14615E382BAD8C3C00570A74 /* TagSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagSettingViewController.xib; sourceTree = "<group>"; };
 		14615E3B2BADAC4D00570A74 /* TagListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListCollectionViewCell.swift; sourceTree = "<group>"; };
 		14615E3C2BADAC4D00570A74 /* TagListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagListCollectionViewCell.xib; sourceTree = "<group>"; };
 		146452912BAE6268000853FA /* ExtensionSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSave.swift; sourceTree = "<group>"; };
@@ -174,8 +174,8 @@
 				14E354B32BAADA800076D2BE /* TagCollectionViewCell.xib */,
 				14615E3B2BADAC4D00570A74 /* TagListCollectionViewCell.swift */,
 				14615E3C2BADAC4D00570A74 /* TagListCollectionViewCell.xib */,
-				14615E372BAD8C3C00570A74 /* MainViewController.swift */,
-				14615E382BAD8C3C00570A74 /* MainViewController.xib */,
+				14615E372BAD8C3C00570A74 /* TagSettingViewController.swift */,
+				14615E382BAD8C3C00570A74 /* TagSettingViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -319,7 +319,7 @@
 				144818942BA831200031D234 /* Assets.xcassets in Resources */,
 				144818972BA831200031D234 /* Base in Resources */,
 				14E354B42BAADA800076D2BE /* TagCollectionViewCell.xib in Resources */,
-				14615E392BAD8C3C00570A74 /* MainViewController.xib in Resources */,
+				14615E392BAD8C3C00570A74 /* TagSettingViewController.xib in Resources */,
 				144818922BA8311E0031D234 /* Base in Resources */,
 				14974C452BA837D300228294 /* TodoTableViewCell.xib in Resources */,
 			);
@@ -353,7 +353,7 @@
 				14E354B52BAADA800076D2BE /* TagCollectionViewCell.swift in Sources */,
 				14615E3E2BADAC4D00570A74 /* TagListCollectionViewCell.swift in Sources */,
 				1448188D2BA8311E0031D234 /* SceneDelegate.swift in Sources */,
-				14615E3A2BAD8C3C00570A74 /* MainViewController.swift in Sources */,
+				14615E3A2BAD8C3C00570A74 /* TagSettingViewController.swift in Sources */,
 				14974C442BA837D300228294 /* ToDoTableViewCell.swift in Sources */,
 				14A452EC2BA9A39C002468E4 /* DetailsViewController.swift in Sources */,
 				146452922BAE6268000853FA /* ExtensionSave.swift in Sources */,

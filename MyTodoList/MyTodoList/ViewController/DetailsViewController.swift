@@ -10,7 +10,76 @@ import UIKit
 protocol DataTransferDelegate: AnyObject {
     func finishedEditing()
 }
+// 태그 수정페이지 Delegate
+extension DetailsViewController : TagSettingDelegate {
+    func finishedTagSetting(tagList: [Tag]) {
+        if currentTodo != nil {
+            tempTag = tagList
+        }else{
+            newTodo.tag = []
+            for (_,element) in tagList.enumerated(){
+                newTodo.tag.append(element.tagName)
+                tempTag = tagList
+            }
+            
+        }
+        self.tagCollectionView.reloadData()
+    }
+}
+// 키보드 숨기기
+extension UIViewController {
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 
+}
+// 키보드로 인해 화면 가려졌을때 view 위로 올리기
+extension DetailsViewController {
+    
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if memoTextView.isFirstResponder {
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                let keyboardHeight = keyboardSize.height
+                // Adjust your view accordingly, for example:
+                let transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+                UIView.animate(withDuration: 0.3) {
+                    self.view.transform = transform
+                }
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.transform = .identity
+        }
+    }
+}
+//TextField focus 잃었을때 키보드 가리기
+extension DetailsViewController: UITextFieldDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // TextField 비활성화
+        return true
+    }
+}
+//TextView PlaceHolder
 extension DetailsViewController : UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == textViewPlaceHolder{
@@ -27,8 +96,13 @@ extension DetailsViewController : UITextViewDelegate {
             textView.textContainerInset = UIEdgeInsets(top: (textView.bounds.height - textView.contentSize.height) / 2 - 10, left: 0, bottom: 0, right: 0)
         }
     }
+    func textFieldShouldReturn(_ textView: UITextView) -> Bool {
+        textView.resignFirstResponder()
+        return true
+    }
 }
-
+// Tag 보여주기용 CollectionView
+// 변경 OR 신규 추가에 따라서 다르게 작동
 extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if currentTodo != nil {
@@ -45,21 +119,13 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
+        
         if currentTodo != nil {
-            cell.tagLabel.text = tempTag[indexPath.row]
+            cell.tagLabel.text = tempTag[indexPath.row].tagName
         }else{
             cell.tagLabel.text = newTodo.tag[indexPath.row]
         }
-        if Tag.tagDic[cell.tagLabel.text!] != nil{
-            let tag = Tag.tagDic[cell.tagLabel.text!]!
-            cell.tagLabel.backgroundColor = tag.color
-            
-        }else{
-            //Tag.tagDic.updateValue(Tag(tagName: cell.tagLabel.text!, color: UIColor.black,todo: []), forKey: cell.tagLabel.text!)
-        }
-        
-        
-        
+        cell.tagLabel.backgroundColor = tempTag[indexPath.row].color
         cell.tagLabel.font = UIFont(name: font, size: 14)
         cell.tagLabel.layer.cornerRadius = 10
         cell.tagLabel.layer.borderColor = UIColor.black.cgColor
@@ -83,7 +149,7 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var tag : String
         if currentTodo != nil {
-            tag = tempTag[indexPath.row]
+            tag = tempTag[indexPath.row].tagName
         }else{
             tag = self.newTodo.tag[indexPath.row]
         }
@@ -114,7 +180,7 @@ class DetailsViewController: UIViewController {
     
     var currentTodo : Todo?
     var newTodo = Todo(id: 1, title: "", isCompleted: false, isImportant: false, startDate: nil, endDate: nil, memo: "", tag: [], isOpen: false)
-    var tempTag : [String] = []
+    var tempTag : [Tag] = []
     
     var index : Int?
     var important = false
@@ -132,40 +198,18 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var tagCollectionView: UICollectionView!
     
-    
+    //Tag 수정화면 띄우기
     @IBAction func TagCollectionButtonTouched(_ sender: Any) {
-        var temp = ""
-        let alert = UIAlertController(title: "태그 추가", message: "", preferredStyle: .alert)
-                alert.addTextField()
-                let confirm = UIAlertAction(title: "추가", style: .default){action in
-                    if let textField = alert.textFields?.first {
-                        if textField.text != "" {
-                            if textField.text!.first != "#" {
-                                temp = "#" + textField.text!
-                            }else{
-                                temp = textField.text!
-                            }
-                            if self.currentTodo != nil {
-                                if !self.tempTag.contains(temp){
-                                    self.tempTag.append(temp)
-                                }
-                            }else {
-                                if !self.newTodo.tag.contains(temp){
-                                    self.newTodo.tag.append(temp)
-                                }
-                               
-                            }
-                        }
-                        
-                        self.tagCollectionView.reloadData()
-                    }
-                }
-                let close = UIAlertAction(title: "닫기", style: .destructive, handler: nil)
-                        
-                alert.addAction(confirm)
-                alert.addAction(close)
-                present(alert, animated: true, completion: nil)
+        let tagModifyView = TagSettingViewController()
+        if self.currentTodo != nil {
+            tagModifyView.currentTags = self.tempTag
+        }else{
+            tagModifyView.currentTagArray = self.newTodo.tag
+        }
+        tagModifyView.delegate = self
+        self.present(tagModifyView, animated: true)
     }
+    //중요함 버튼 처리하기
     @IBAction func importantButtonTouched(_ sender: Any) {
         important = important ? false : true
         if important {
@@ -177,7 +221,8 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        registerForKeyboardNotifications()
+        self.hideKeyboardWhenTappedAround()
         
         self.tagCollectionView.delegate = self
         self.tagCollectionView.dataSource = self
@@ -187,28 +232,35 @@ class DetailsViewController: UIViewController {
         //tagCollectionView.layer.borderWidth = 1
         //tagCollectionView.layer.borderColor = UIColor.black.cgColor
         
-        
+        // CurrentTodo 가 nil이 아니면 "기존 투두 변경"
+        // Nil 이면 신규 추가
         if currentTodo != nil {
-            tempTag = (currentTodo?.tag)!
+            tempTag = []
+            for (_,element) in currentTodo!.tag.enumerated(){
+                if let temp = Tag.tagDic[element] {
+                    tempTag.append(temp)
+                }
+            }
+            print("tempTag.count : \(tempTag.count)")
             titleTextField.text = currentTodo?.title
             titleTextField.isEnabled = isEnabled
             titleTextField.textAlignment = .center
-            
-            
+        
             startTimeDatePicker.date = (currentTodo?.startDate)!
             startTimeDatePicker.isEnabled = isEnabled
             endTimeDatePicker.date = (currentTodo?.endDate)!
             endTimeDatePicker.isEnabled = isEnabled
             
             important = (currentTodo?.isImportant)!
+            importantButton.isEnabled = isEnabled
             if important {
                 self.importantButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             }else{
                 self.importantButton.setImage(UIImage(systemName: "star"), for: .normal)
             }
-            tagButton.isEnabled = isEnabled
             
-            importantButton.isEnabled = isEnabled
+            tagButton.isEnabled = isEnabled
+            memoTextView.isEditable = isEnabled
             
             if isEnabled{
                 titleNavigationItem.title = "투두 변경 중.."
@@ -225,36 +277,28 @@ class DetailsViewController: UIViewController {
                 memoTextView.textColor = UIColor.label
                 titleNavigationItem.rightBarButtonItem?.title = "수정하기"
             }
-            memoTextView.isEditable = isEnabled
-            
-            
-            //memoTextView.textAlignment = .natural
-            //memoTextView.textContainerInset = .init(top: 10, left: 5, bottom: 0, right: 0)
         }else{
             isEnabled = true
             memoTextView.text = textViewPlaceHolder
             memoTextView.textContainerInset = UIEdgeInsets(top: (memoTextView.bounds.height - memoTextView.contentSize.height) / 2 - 10, left: 0, bottom: 0, right: 0)
             memoTextView.textAlignment = .center
             memoTextView.textColor = .lightGray
-            memoTextView.delegate = self
             tagButton.setImage(UIImage(systemName: "plus"), for: .normal)
-            
-            
+  
         }
         
+        memoTextView.delegate = self
         memoTextView.font = UIFont(name: font, size: 15.0)
         memoTextView.layer.borderWidth = 5
         memoTextView.layer.cornerRadius = 20
         memoTextView.layer.borderColor = UIColor.black.cgColor
-        
-        //memoTextView.textInputView.backgroundColor = .red
-        
         
         titleTextField.font = UIFont(name: font, size: 20.0)
         titleTextField.backgroundColor = .clear
         titleTextField.layer.cornerRadius = 20
         titleTextField.layer.borderWidth = 5
         titleTextField.clipsToBounds = true
+        titleTextField.delegate = self
         
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: font, size: 20)!]
         titleNavigationItem.leftBarButtonItem?.action = #selector(self.dismissLeftButton)
@@ -262,34 +306,28 @@ class DetailsViewController: UIViewController {
         titleNavigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
         titleNavigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
         
-        
+        // 테두리 BackgroundView 추가
         let backgroundView = UIView(frame: self.view.bounds)
         backgroundView.backgroundColor = .clear
         backgroundView.layer.cornerRadius = 20
         backgroundView.layer.borderWidth = 5
         backgroundView.layer.borderColor = UIColor.black.cgColor
         self.view.addSubview(backgroundView)
-
-        // safe area를 고려하여 오토레이아웃 설정
+        
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 5).isActive = true
         backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         backgroundView.bottomAnchor.constraint(equalTo: memoTextView.topAnchor,constant: -5).isActive = true
         self.view.sendSubviewToBack(backgroundView)
-        
-        
-        //titleNavigationItem.title = "Hello"
-        // Do any additional setup after loading the view.
     }
 
-    
+    // 상단 취소 버튼
     @objc func dismissLeftButton(){
         self.dismiss(animated: true, completion: nil)
     }
-    
+    // 상단 추가 / 변경 버튼
     @objc func addRightBUtton(){
-        
         if isEnabled{
             if self.titleTextField.text == ""{
                 let alert = UIAlertController(title: "오류", message: "제목을 입력해주세요!", preferredStyle: .alert)
@@ -297,24 +335,26 @@ class DetailsViewController: UIViewController {
                 alert.addAction(close)
                 present(alert, animated: true, completion: nil)
             }else{
-                
-                
                 if currentTodo != nil {
                     Todo.list[index!].title = titleTextField.text!
                     Todo.list[index!].isImportant = important
                     Todo.list[index!].startDate = startTimeDatePicker.date
                     Todo.list[index!].endDate = endTimeDatePicker.date
                     Todo.list[index!].memo = memoTextView.text
-                    Todo.list[index!].tag = tempTag
-                    // 여기
+                    Todo.list[index!].tag = []
+                    for (_,element) in tempTag.enumerated(){
+                        Todo.list[index!].tag.append(element.tagName)
+                        Tag.tagDic.updateValue(element, forKey: element.tagName)
+                    }
                 }else{
                     Todo.todoID += 1
                     let currentTodoID = Todo.todoID
                     newTodo = Todo(id: currentTodoID, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startTimeDatePicker.date, endDate: endTimeDatePicker.date ,memo: memoTextView.text!, tag: newTodo.tag, isOpen: false)
                     Todo.list.append(newTodo)
+                    for (_,element) in tempTag.enumerated(){
+                        Tag.tagDic.updateValue(element, forKey: element.tagName)
+                    }
                 }
-                
-                //Tag.convertToTagDic(todos: <#T##[Todo]#>)
                 self.dataTransferDelegate?.finishedEditing()
                 self.dismiss(animated: true, completion: nil)
             }
@@ -324,4 +364,5 @@ class DetailsViewController: UIViewController {
         }
     }
 }
+
 

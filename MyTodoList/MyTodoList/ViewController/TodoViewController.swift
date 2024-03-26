@@ -8,7 +8,7 @@
 
 
 import UIKit
-
+// 투두 테이블뷰 설정
 extension TodoViewController: UITableViewDelegate, UITableViewDataSource,TableViewDelegate {
     func importantFlagClicked(index: Int) {
         Todo.list[index].isImportant = Todo.list[index].isImportant ? false : true
@@ -44,11 +44,8 @@ extension TodoViewController: UITableViewDelegate, UITableViewDataSource,TableVi
         cell.tagCollectionView.backgroundColor = .clear
         //cell.tagDic = self.tagDic
         cell.CheckBoxButton.tintColor = UIColor.label
-        if target.isOpen {
-            cell.backgroundColor = .lightGray
-        }else{
-            cell.backgroundColor = UIColor.systemBackground
-        }
+        cell.backgroundColor = UIColor.systemBackground
+
         //cell.backgroundColor = .clear
         
         
@@ -120,7 +117,7 @@ extension TodoViewController: UITableViewDelegate, UITableViewDataSource,TableVi
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
-
+// 새로운 투두 추가 / 투두 변경 후 Delegate
 extension TodoViewController : DataTransferDelegate {
     func finishedEditing() {
         self.toDoTableView.reloadData()
@@ -130,20 +127,20 @@ extension TodoViewController : DataTransferDelegate {
 
 class TodoViewController: UIViewController{
     let font = "EF_Diary"
+    
     @IBOutlet weak var toDoTableView: UITableView!
     @IBOutlet weak var logoLabel: UILabel!
    
     @IBAction func TestClicked(_ sender: Any) {
-        present(MainViewController(), animated: true)
+        present(TagSettingViewController(), animated: true)
     }
-    @IBOutlet weak var test: UIButton!
-    //var list = Todo.list
-
     
+    @IBOutlet weak var test: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         Tag.convertToTagDic(todos: Todo.list)
+        
         toDoTableView.register(ToDoTableViewCell.nib(), forCellReuseIdentifier: ToDoTableViewCell.identifier)
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
@@ -154,7 +151,7 @@ class TodoViewController: UIViewController{
         
         logoLabel.font = UIFont(name: font, size: 45)
         
-        
+        //추가 버튼 Subview 추가
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.contentVerticalAlignment = .fill
@@ -172,16 +169,14 @@ class TodoViewController: UIViewController{
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
         button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-
-        // Do any additional setup after loading the view.
         
     }
+    //추가 버튼 클릭시 새로운 투두 작성 페이지 이동
     @objc func buttonTapped() {
         let detailsViewController = DetailsViewController()
         detailsViewController.modalPresentationStyle = .automatic
         detailsViewController.modalTransitionStyle = .coverVertical
         detailsViewController.dataTransferDelegate = self
-        //detailsViewController.list = self.list
         self.present(detailsViewController, animated: true, completion: nil)
     }
 }

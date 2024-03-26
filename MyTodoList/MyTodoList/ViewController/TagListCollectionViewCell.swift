@@ -8,24 +8,14 @@
 import UIKit
 
 
-protocol TagList {
-    func delButtonClicked(index : Int)
-    
-}
 
 class TagListCollectionViewCell: UICollectionViewCell {
     
     var index : Int = 0
     var currentColor : UIColor = .clear
-    var delegate : TagList?
     @IBOutlet weak var tagLabel: UILabel!
     @IBOutlet weak var viewList: UIView!
-    @IBOutlet weak var delButton: UIButton!
-    
-    @IBAction func delButtonTouched(_ sender: Any) {
-        self.delegate?.delButtonClicked(index: index)
-        
-    }
+
     let font = "EF_Diary"
     static let identifier = "TagListCollectionViewCell"
     static func nib() -> UINib {
@@ -38,7 +28,7 @@ class TagListCollectionViewCell: UICollectionViewCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        delButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 1, bottom: 0, trailing: 1)
+        //delButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 1, bottom: 0, trailing: 1)
         // Initialization code
         
     }
@@ -46,9 +36,9 @@ class TagListCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet{
             if oldValue == false{
-                self.viewList.backgroundColor = .gray
+                self.tagLabel.backgroundColor = currentColor
             }else{
-                self.viewList.backgroundColor = currentColor
+                self.tagLabel.backgroundColor = currentColor
             }
             
         }

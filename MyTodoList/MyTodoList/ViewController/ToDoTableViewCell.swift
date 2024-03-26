@@ -63,7 +63,7 @@ class ToDoTableViewCell: UITableViewCell {
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
         tagCollectionView.register(TagCollectionViewCell.nib(), forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
-        tagCollectionView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+        //tagCollectionView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         tagLabel.text = "태그 :"
         tagLabel.font = UIFont(name: font, size: 13)
     }
@@ -76,7 +76,7 @@ class ToDoTableViewCell: UITableViewCell {
     
 }
 
-
+// 메인 투두 테이블뷰에서 Tag 보여주는 CollectionView
 extension ToDoTableViewCell : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if todo?.tag.count == 0 {

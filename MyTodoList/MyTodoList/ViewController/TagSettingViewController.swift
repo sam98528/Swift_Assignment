@@ -48,7 +48,7 @@ extension TagSettingViewController : UICollectionViewDataSource, UICollectionVie
             self.currentTagLabel.text = currentTags[indexPath.row].tagName
             self.currentTagLabel.backgroundColor = currentTags[indexPath.row].color
             self.tagTextField.text = currentTags[indexPath.row].tagName
-            self.addButton.titleLabel?.text = "변경"
+            //self.addButton.titleLabel?.text = "변경"
             self.colorWell.selectedColor = currentTags[indexPath.row].color
         }
         
@@ -207,6 +207,7 @@ class TagSettingViewController: UIViewController {
         }else{
             self.currentTagLabel.text = self.tagTextField.text
         }
+        
         if let _ = (self.currentTags.firstIndex{$0.tagName == self.currentTagLabel.text }){
             print("HELLO1")
             self.addButton.titleLabel?.text = "변경"

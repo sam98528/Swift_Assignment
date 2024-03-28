@@ -35,7 +35,7 @@ extension TagSettingViewController : UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-
+        
         // section에 inset을 주어 레이아웃 구성 (없으면 cell이 cell의 크기에 따라 한쪽에 붙는 현상이 생긴다.)
         return UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0) // 중앙 정렬을 위한 코드
     }
@@ -70,7 +70,7 @@ extension TagSettingViewController : UICollectionViewDataSource, UICollectionVie
         let tagSize = (tag as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])
         return CGSize(width: tagSize.width + 20, height: tagSize.height+10)
     }
-                      
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tagCollectionView {
             return tagArray.count
@@ -79,7 +79,7 @@ extension TagSettingViewController : UICollectionViewDataSource, UICollectionVie
         }
         
     }
-                      
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagListCollectionViewCell.identifier, for: indexPath) as! TagListCollectionViewCell
         var tag : Tag?
@@ -108,7 +108,7 @@ extension TagSettingViewController : UICollectionViewDataSource, UICollectionVie
 }
 
 
-                                        
+
 class TagSettingViewController: UIViewController {
     
     @IBOutlet weak var currentTagCollectionView: UICollectionView!
@@ -116,6 +116,7 @@ class TagSettingViewController: UIViewController {
     @IBOutlet weak var justLabel: UILabel!
     @IBOutlet weak var titleNavigationItem: UINavigationItem!
     
+    @IBOutlet weak var totalTagLabel: UILabel!
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var tagTextField: UITextField!
@@ -124,11 +125,13 @@ class TagSettingViewController: UIViewController {
     @IBOutlet weak var currentTagLabelView: UIView!
     
     @IBOutlet weak var colorWell: UIColorWell!
+    
     let font = "EF_Diary"
     var tagArray = Array(Tag.tagDic.values)
     var currentTagArray : [String] = []
     var delegate : TagSettingDelegate?
     var currentTags : [Tag] = []
+    var selectedTag : Tag?
     
     @IBOutlet weak var tagCollectionView: UICollectionView!
     override func viewDidLoad() {
@@ -142,6 +145,8 @@ class TagSettingViewController: UIViewController {
         justLabel.font = UIFont(name: font, size: 20)
         justNewLabel.text = "새로운 태그 생성"
         justNewLabel.font = UIFont(name: font, size: 20)
+        totalTagLabel.text = "전체 태그"
+        totalTagLabel.font = UIFont(name: font, size: 20)
         
         addButton.layer.cornerRadius = 20
         addButton.layer.borderWidth = 2
@@ -150,7 +155,7 @@ class TagSettingViewController: UIViewController {
         removeButton.layer.borderWidth = 2
         removeButton.titleLabel?.font = UIFont(name: font, size: 15)
         colorWell.addTarget(self, action: #selector(colorChanged) , for: .valueChanged)
-        colorWell.selectedColor = UIColor.gray
+        colorWell.selectedColor = UIColor.clear
         for tag in currentTags {
             tagArray.removeAll(where: {$0.tagName == tag.tagName})
         }
@@ -159,10 +164,10 @@ class TagSettingViewController: UIViewController {
             currentTags += Tag.tagDic.values.filter{$0.tagName == element}
         }
         
-
+        
         currentTagLabel.text = ""
         currentTagLabel.font = UIFont(name: font, size: 25)
-        currentTagLabel.backgroundColor = UIColor.gray
+        currentTagLabel.backgroundColor = UIColor.clear
         currentTagLabel.layer.cornerRadius = 20
         currentTagLabel.layer.borderWidth = 5
         currentTagLabel.clipsToBounds = true
@@ -198,6 +203,13 @@ class TagSettingViewController: UIViewController {
         self.tagTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         tagTextField.delegate = self
         tagTextField.font = UIFont(name: font, size: 15.0)
+        
+        if selectedTag != nil {
+            currentTagLabel.text = selectedTag?.tagName
+            currentTagLabel.backgroundColor = selectedTag?.color
+            colorWell.selectedColor = selectedTag?.color
+            tagTextField.text = selectedTag?.tagName
+        }
     }
     
     @objc func dismissLeftButton(){
@@ -229,7 +241,7 @@ class TagSettingViewController: UIViewController {
             self.colorWell.selectedColor = tagArray[index].color
         }
     }
-        
+    
     @IBAction func removeButtonClicked(_ sender: Any) {
         self.currentTagLabel.text = ""
         self.currentTagLabel.backgroundColor = .clear
@@ -257,11 +269,11 @@ class TagSettingViewController: UIViewController {
     }
     
     private var doubleTapGesture: UITapGestureRecognizer!
-        func setUpDoubleTap() {
-            doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapCollectionView))
-            doubleTapGesture.numberOfTapsRequired = 2
-            self.currentTagCollectionView.addGestureRecognizer(doubleTapGesture)
-            doubleTapGesture.delaysTouchesEnded = false
+    func setUpDoubleTap() {
+        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapCollectionView))
+        doubleTapGesture.numberOfTapsRequired = 2
+        self.currentTagCollectionView.addGestureRecognizer(doubleTapGesture)
+        doubleTapGesture.delaysTouchesEnded = false
     }
     @objc func didDoubleTapCollectionView() {
         let pointInCollectionView = doubleTapGesture.location(in: self.currentTagCollectionView)
@@ -274,7 +286,9 @@ class TagSettingViewController: UIViewController {
             self.currentTagCollectionView.deleteItems(at: [selectedIndexPath])
             self.tagCollectionView.reloadData()
             
-            }
         }
+    }
+    
+    
 }
 

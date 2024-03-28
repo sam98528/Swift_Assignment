@@ -13,7 +13,6 @@ protocol DataTransferDelegate: AnyObject {
 // 태그 수정페이지 Delegate
 extension DetailsViewController : TagSettingDelegate {
     func finishedTagSetting(tagList: [Tag]) {
-        print("CALLED")
         if currentTodo != nil {
             tempTag = tagList
         }else{
@@ -111,26 +110,12 @@ extension DetailsViewController : UITextViewDelegate {
 // 변경 OR 신규 추가에 따라서 다르게 작동
 extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if currentTodo != nil {
-            return tempTag.count
-        }else{
-            if newTodo.tag.count == 0 {
-                return 0
-            }else{
-                return newTodo.tag.count
-            }
-        }
-        
+        return tempTag.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
-        
-        if currentTodo != nil {
-            cell.tagLabel.text = tempTag[indexPath.row].tagName
-        }else{
-            cell.tagLabel.text = newTodo.tag[indexPath.row]
-        }
+        cell.tagLabel.text = tempTag[indexPath.row].tagName
         cell.tagLabel.backgroundColor = tempTag[indexPath.row].color
         cell.tagLabel.font = UIFont(name: font, size: 14)
         cell.tagLabel.layer.cornerRadius = 10
@@ -153,26 +138,18 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     
     // cell 사이즈( 옆 라인을 고려하여 설정 )
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var tag : String
-        if currentTodo != nil {
-            tag = tempTag[indexPath.row].tagName
-        }else{
-            tag = self.newTodo.tag[indexPath.row]
-        }
+        var tag = tempTag[indexPath.row].tagName
         let attributes = [NSAttributedString.Key.font: UIFont(name: font, size: 14)]
-        
         let tagSize = (tag as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])
         return CGSize(width: tagSize.width + 20, height: 30)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if currentTodo != nil {
-            tempTag.remove(at: indexPath.row)
-        }else{
-            newTodo.tag.remove(at: indexPath.row)
-        }
-        self.tagCollectionView.deleteItems(at: [indexPath])
-        
+        let tagModifyView = TagSettingViewController()
+        tagModifyView.currentTags = self.tempTag
+        tagModifyView.selectedTag = tempTag[indexPath.row]
+        tagModifyView.delegate = self
+        self.present(tagModifyView, animated: true)
     }
 }
 
@@ -201,7 +178,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var startTimeDatePicker: UIDatePicker!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var tagCollectionView: UICollectionView!
-    
     //Tag 수정화면 띄우기
     @IBAction func TagCollectionButtonTouched(_ sender: Any) {
         let tagModifyView = TagSettingViewController()
@@ -241,7 +217,6 @@ class DetailsViewController: UIViewController {
                     tempTag.append(temp)
                 }
             }
-            print("tempTag.count : \(tempTag.count)")
             titleTextField.text = currentTodo?.title
             titleTextField.textAlignment = .center
             
@@ -260,10 +235,9 @@ class DetailsViewController: UIViewController {
             memoTextView.textContainerInset = UIEdgeInsets(top: (memoTextView.bounds.height - memoTextView.contentSize.height) / 2 - 10, left: 0, bottom: 0, right: 0)
             memoTextView.textAlignment = .center
             memoTextView.textColor = .lightGray
-            tagButton.setImage(UIImage(systemName: "plus"), for: .normal)
-            
         }
         
+        tagButton.setImage(UIImage(systemName: "greaterthan.circle"), for: .normal)
         titleNavigationItem.title = "투두 변경 중.."
         titleNavigationItem.rightBarButtonItem?.title = "저장"
         memoTextView.text = currentTodo?.memo
@@ -335,16 +309,18 @@ class DetailsViewController: UIViewController {
             }else{
                 Todo.todoID += 1
                 let currentTodoID = Todo.todoID
-                newTodo = Todo(id: currentTodoID, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startTimeDatePicker.date, endDate: endTimeDatePicker.date ,memo: memoTextView.text!, tag: newTodo.tag, isOpen: false)
-                Todo.list.append(newTodo)
+                newTodo = Todo(id: currentTodoID, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startTimeDatePicker.date, endDate: endTimeDatePicker.date ,memo: memoTextView.text!, tag: [], isOpen: false)
                 for (_,element) in tempTag.enumerated(){
+                    newTodo.tag.append(element.tagName)
                     Tag.tagDic.updateValue(element, forKey: element.tagName)
                 }
+                Todo.list.append(newTodo)
             }
             self.dataTransferDelegate?.finishedEditing()
             self.dismiss(animated: true, completion: nil)
         }
     }
+        
 }
 
 

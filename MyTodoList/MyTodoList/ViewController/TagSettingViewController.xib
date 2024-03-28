@@ -22,6 +22,7 @@
                 <outlet property="tagCollectionView" destination="obf-8p-xUP" id="Kc9-1u-JQK"/>
                 <outlet property="tagTextField" destination="FEL-Rw-HET" id="VP4-Nx-BB0"/>
                 <outlet property="titleNavigationItem" destination="iWr-M9-tDp" id="7NF-Sr-Kaq"/>
+                <outlet property="totalTagLabel" destination="9lu-FK-w49" id="bTI-hg-KjA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="obf-8p-xUP">
-                    <rect key="frame" x="20" y="568" width="353" height="200"/>
+                    <rect key="frame" x="20" y="479.33333333333326" width="353" height="200"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <color key="tintColor" systemColor="labelColor"/>
                     <constraints>
@@ -47,7 +48,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVz-Uq-DwT">
                     <rect key="frame" x="20" y="143.33333333333334" width="353" height="100"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CUa-jv-KEa">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CUa-jv-KEa">
                             <rect key="frame" x="50" y="25" width="253" height="50"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
@@ -131,8 +132,8 @@
                         <action selector="addButtonClicked:" destination="-1" eventType="touchUpInside" id="z1G-ne-k7s"/>
                     </connections>
                 </button>
-                <collectionView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Xg0-WQ-UZs">
-                    <rect key="frame" x="20" y="376" width="353" height="50"/>
+                <collectionView clipsSubviews="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Xg0-WQ-UZs">
+                    <rect key="frame" x="20" y="378.33333333333331" width="353" height="50"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="uhH-k1-C20"/>
@@ -144,6 +145,12 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 태그" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9lu-FK-w49">
+                    <rect key="frame" x="20" y="448.33333333333331" width="353" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -153,8 +160,8 @@
                 <constraint firstItem="CGl-uN-nEL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Amy-bL-n6J"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Xg0-WQ-UZs" secondAttribute="trailing" constant="20" id="BVd-5i-qmc"/>
                 <constraint firstItem="dIs-wS-tdD" firstAttribute="top" secondItem="FEL-Rw-HET" secondAttribute="bottom" constant="10" id="C4R-I4-gPs"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="obf-8p-xUP" secondAttribute="bottom" constant="50" id="C6f-lC-hAf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QVz-Uq-DwT" secondAttribute="trailing" constant="20" id="DRO-8N-T1w"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9lu-FK-w49" secondAttribute="trailing" constant="20" id="EsW-pV-K3t"/>
                 <constraint firstItem="FEL-Rw-HET" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Fgl-iI-DN5"/>
                 <constraint firstItem="0Ci-uG-5EC" firstAttribute="leading" secondItem="dIs-wS-tdD" secondAttribute="trailing" constant="5" id="Gev-bW-8JQ"/>
                 <constraint firstItem="dIs-wS-tdD" firstAttribute="width" secondItem="0Ci-uG-5EC" secondAttribute="width" id="HBm-D5-FeA"/>
@@ -169,11 +176,14 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xwU-go-3m4" secondAttribute="trailing" constant="20" id="SXW-Ny-NHR"/>
                 <constraint firstItem="hef-1N-Xed" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Wlc-1O-A8p"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="obf-8p-xUP" secondAttribute="trailing" constant="20" id="Z4M-jD-gdW"/>
+                <constraint firstItem="9lu-FK-w49" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="abe-NN-wvv"/>
                 <constraint firstItem="QVz-Uq-DwT" firstAttribute="top" secondItem="DWa-Mj-tdf" secondAttribute="bottom" constant="10" id="abi-ZD-mae"/>
+                <constraint firstItem="obf-8p-xUP" firstAttribute="top" secondItem="9lu-FK-w49" secondAttribute="bottom" constant="10" id="eOK-EJ-JQt"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CGl-uN-nEL" secondAttribute="trailing" constant="20" id="hPr-97-DAN"/>
                 <constraint firstItem="xwU-go-3m4" firstAttribute="leading" secondItem="FEL-Rw-HET" secondAttribute="trailing" constant="15" id="hba-Az-rpQ"/>
                 <constraint firstItem="CGl-uN-nEL" firstAttribute="top" secondItem="dIs-wS-tdD" secondAttribute="bottom" constant="10" id="hgN-Q2-XSK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0Ci-uG-5EC" secondAttribute="trailing" constant="20" id="iH4-8Z-VDc"/>
+                <constraint firstItem="9lu-FK-w49" firstAttribute="top" secondItem="Xg0-WQ-UZs" secondAttribute="bottom" constant="20" id="mIY-k1-fnw"/>
                 <constraint firstItem="DWa-Mj-tdf" firstAttribute="top" secondItem="hef-1N-Xed" secondAttribute="bottom" constant="10" id="pVx-7M-L56"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="DWa-Mj-tdf" secondAttribute="trailing" constant="20" id="tdJ-cq-03Q"/>
                 <constraint firstItem="DWa-Mj-tdf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="xao-In-M7t"/>

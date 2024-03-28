@@ -99,6 +99,8 @@ extension ToDoTableViewCell : UICollectionViewDelegate, UICollectionViewDataSour
         if  Tag.tagDic[cell.tagLabel.text!] != nil{
             let tag = Tag.tagDic[cell.tagLabel.text!]!
             cell.tagLabel.backgroundColor = tag.color
+        }else{
+            cell.tagLabel.backgroundColor = .clear
         }
         
         cell.tagLabel.font = UIFont(name: font, size: 13)

@@ -131,11 +131,6 @@ class TodoViewController: UIViewController{
     @IBOutlet weak var toDoTableView: UITableView!
     @IBOutlet weak var logoLabel: UILabel!
    
-    @IBAction func TestClicked(_ sender: Any) {
-        present(TagSettingViewController(), animated: true)
-    }
-    
-    @IBOutlet weak var test: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()

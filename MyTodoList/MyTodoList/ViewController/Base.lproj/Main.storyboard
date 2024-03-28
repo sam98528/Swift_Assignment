@@ -33,15 +33,6 @@
                                 <fontDescription key="fontDescription" name="EF_Diary" family="EF_다이어리" pointSize="45"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPh-sc-UHF">
-                                <rect key="frame" x="345" y="68" width="75" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                <connections>
-                                    <action selector="TestClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BlR-E0-GQ6"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
@@ -61,7 +52,6 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="LogoLabel" destination="GaK-ry-e2Q" id="NUi-jz-qax"/>
-                        <outlet property="test" destination="PPh-sc-UHF" id="O9x-9x-aIg"/>
                         <outlet property="toDoTableView" destination="oDr-lf-cko" id="knc-3V-GNb"/>
                     </connections>
                 </viewController>

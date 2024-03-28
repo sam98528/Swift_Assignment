@@ -13,6 +13,7 @@ protocol DataTransferDelegate: AnyObject {
 // 태그 수정페이지 Delegate
 extension DetailsViewController : TagSettingDelegate {
     func finishedTagSetting(tagList: [Tag]) {
+        print("CALLED")
         if currentTodo != nil {
             tempTag = tagList
         }else{
@@ -39,7 +40,7 @@ extension UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-
+    
 }
 
 // 키보드로 인해 화면 가려졌을때 view 위로 올리기
@@ -119,7 +120,7 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
                 return newTodo.tag.count
             }
         }
-       
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -143,14 +144,14 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1
-        }
-
-        // 옆 간격
+    }
+    
+    // 옆 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
-
-        // cell 사이즈( 옆 라인을 고려하여 설정 )
+    
+    // cell 사이즈( 옆 라인을 고려하여 설정 )
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var tag : String
         if currentTodo != nil {
@@ -159,20 +160,19 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
             tag = self.newTodo.tag[indexPath.row]
         }
         let attributes = [NSAttributedString.Key.font: UIFont(name: font, size: 14)]
-
+        
         let tagSize = (tag as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])
         return CGSize(width: tagSize.width + 20, height: 30)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if isEnabled {
-            if currentTodo != nil {
-                tempTag.remove(at: indexPath.row)
-            }else{
-                newTodo.tag.remove(at: indexPath.row)
-            }
-            self.tagCollectionView.deleteItems(at: [indexPath])
+        if currentTodo != nil {
+            tempTag.remove(at: indexPath.row)
+        }else{
+            newTodo.tag.remove(at: indexPath.row)
         }
+        self.tagCollectionView.deleteItems(at: [indexPath])
+        
     }
 }
 
@@ -189,7 +189,6 @@ class DetailsViewController: UIViewController {
     
     var index : Int?
     var important = false
-    var isEnabled = false
     
     @IBOutlet weak var tagButton: UIButton!
     @IBOutlet weak var memoTextView: UITextView!
@@ -233,10 +232,6 @@ class DetailsViewController: UIViewController {
         self.tagCollectionView.dataSource = self
         tagCollectionView.register(TagCollectionViewCell.nib(), forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
         
-        //tagCollectionView.layer.cornerRadius = 10
-        //tagCollectionView.layer.borderWidth = 1
-        //tagCollectionView.layer.borderColor = UIColor.black.cgColor
-        
         // CurrentTodo 가 nil이 아니면 "기존 투두 변경"
         // Nil 이면 신규 추가
         if currentTodo != nil {
@@ -248,49 +243,35 @@ class DetailsViewController: UIViewController {
             }
             print("tempTag.count : \(tempTag.count)")
             titleTextField.text = currentTodo?.title
-            titleTextField.isEnabled = isEnabled
             titleTextField.textAlignment = .center
-        
+            
             startTimeDatePicker.date = (currentTodo?.startDate)!
-            startTimeDatePicker.isEnabled = isEnabled
             endTimeDatePicker.date = (currentTodo?.endDate)!
-            endTimeDatePicker.isEnabled = isEnabled
             
             important = (currentTodo?.isImportant)!
-            importantButton.isEnabled = isEnabled
+            
             if important {
                 self.importantButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             }else{
                 self.importantButton.setImage(UIImage(systemName: "star"), for: .normal)
             }
-            
-            tagButton.isEnabled = isEnabled
-            memoTextView.isEditable = isEnabled
-            
-            if isEnabled{
-                titleNavigationItem.title = "투두 변경 중.."
-                titleNavigationItem.rightBarButtonItem?.title = "저장"
-                memoTextView.text = currentTodo?.memo
-                memoTextView.textColor = .black
-                memoTextView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
-                memoTextView.textAlignment = .natural
-            }else{
-                titleNavigationItem.title = "투두 상세페이지"
-                memoTextView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
-                memoTextView.textAlignment = .center
-                memoTextView.text = currentTodo?.memo
-                memoTextView.textColor = UIColor.label
-                titleNavigationItem.rightBarButtonItem?.title = "수정하기"
-            }
         }else{
-            isEnabled = true
             memoTextView.text = textViewPlaceHolder
             memoTextView.textContainerInset = UIEdgeInsets(top: (memoTextView.bounds.height - memoTextView.contentSize.height) / 2 - 10, left: 0, bottom: 0, right: 0)
             memoTextView.textAlignment = .center
             memoTextView.textColor = .lightGray
             tagButton.setImage(UIImage(systemName: "plus"), for: .normal)
-  
+            
         }
+        
+        titleNavigationItem.title = "투두 변경 중.."
+        titleNavigationItem.rightBarButtonItem?.title = "저장"
+        memoTextView.text = currentTodo?.memo
+        memoTextView.textColor = .black
+        memoTextView.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
+        memoTextView.textAlignment = .natural
+        
+        
         
         memoTextView.delegate = self
         memoTextView.font = UIFont(name: font, size: 15.0)
@@ -326,46 +307,42 @@ class DetailsViewController: UIViewController {
         backgroundView.bottomAnchor.constraint(equalTo: memoTextView.topAnchor,constant: -5).isActive = true
         self.view.sendSubviewToBack(backgroundView)
     }
-
+    
     // 상단 취소 버튼
     @objc func dismissLeftButton(){
         self.dismiss(animated: true, completion: nil)
+        
     }
     // 상단 추가 / 변경 버튼
     @objc func addRightBUtton(){
-        if isEnabled{
-            if self.titleTextField.text == ""{
-                let alert = UIAlertController(title: "오류", message: "제목을 입력해주세요!", preferredStyle: .alert)
-                let close = UIAlertAction(title: "확인", style: .destructive, handler: nil)
-                alert.addAction(close)
-                present(alert, animated: true, completion: nil)
-            }else{
-                if currentTodo != nil {
-                    Todo.list[index!].title = titleTextField.text!
-                    Todo.list[index!].isImportant = important
-                    Todo.list[index!].startDate = startTimeDatePicker.date
-                    Todo.list[index!].endDate = endTimeDatePicker.date
-                    Todo.list[index!].memo = memoTextView.text
-                    Todo.list[index!].tag = []
-                    for (_,element) in tempTag.enumerated(){
-                        Todo.list[index!].tag.append(element.tagName)
-                        Tag.tagDic.updateValue(element, forKey: element.tagName)
-                    }
-                }else{
-                    Todo.todoID += 1
-                    let currentTodoID = Todo.todoID
-                    newTodo = Todo(id: currentTodoID, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startTimeDatePicker.date, endDate: endTimeDatePicker.date ,memo: memoTextView.text!, tag: newTodo.tag, isOpen: false)
-                    Todo.list.append(newTodo)
-                    for (_,element) in tempTag.enumerated(){
-                        Tag.tagDic.updateValue(element, forKey: element.tagName)
-                    }
-                }
-                self.dataTransferDelegate?.finishedEditing()
-                self.dismiss(animated: true, completion: nil)
-            }
+        if self.titleTextField.text == ""{
+            let alert = UIAlertController(title: "오류", message: "제목을 입력해주세요!", preferredStyle: .alert)
+            let close = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+            alert.addAction(close)
+            present(alert, animated: true, completion: nil)
         }else{
-            isEnabled.toggle()
-            viewDidLoad()
+            if currentTodo != nil {
+                Todo.list[index!].title = titleTextField.text!
+                Todo.list[index!].isImportant = important
+                Todo.list[index!].startDate = startTimeDatePicker.date
+                Todo.list[index!].endDate = endTimeDatePicker.date
+                Todo.list[index!].memo = memoTextView.text
+                Todo.list[index!].tag = []
+                for (_,element) in tempTag.enumerated(){
+                    Todo.list[index!].tag.append(element.tagName)
+                    Tag.tagDic.updateValue(element, forKey: element.tagName)
+                }
+            }else{
+                Todo.todoID += 1
+                let currentTodoID = Todo.todoID
+                newTodo = Todo(id: currentTodoID, title: titleTextField.text!, isCompleted: false, isImportant: important ,startDate: startTimeDatePicker.date, endDate: endTimeDatePicker.date ,memo: memoTextView.text!, tag: newTodo.tag, isOpen: false)
+                Todo.list.append(newTodo)
+                for (_,element) in tempTag.enumerated(){
+                    Tag.tagDic.updateValue(element, forKey: element.tagName)
+                }
+            }
+            self.dataTransferDelegate?.finishedEditing()
+            self.dismiss(animated: true, completion: nil)
         }
     }
 }

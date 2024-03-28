@@ -42,9 +42,9 @@ extension TagSettingViewController : UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == tagCollectionView {
-            let tag = tagArray[indexPath.row].tagName
+            let tag = tagArray[indexPath.row]
             tagArray.remove(at: indexPath.row)
-            currentTagArray.append(tag)
+            currentTags.append(tag)
             self.tagCollectionView.reloadData()
             self.currentTagCollectionView.reloadData()
         }else{
@@ -86,6 +86,7 @@ extension TagSettingViewController : UICollectionViewDataSource, UICollectionVie
         if collectionView == tagCollectionView {
             tag = tagArray[indexPath.row]
             cell.tagLabel.text = tag!.tagName
+            cell.tagLabel.backgroundColor = tag?.color
         }else{
             let currentTag = currentTags[indexPath.row].tagName
             cell.tagLabel.text = currentTag
@@ -132,9 +133,9 @@ class TagSettingViewController: UIViewController {
     @IBOutlet weak var tagCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpDoubleTap()
         
         hideKeyboardWhenTappedAround()
-        print("CurrentTagArray : \(currentTagArray)")
         tagArray = Array(Tag.tagDic.values)
         
         justLabel.text = "적용중인 태그"
@@ -150,8 +151,11 @@ class TagSettingViewController: UIViewController {
         removeButton.titleLabel?.font = UIFont(name: font, size: 15)
         colorWell.addTarget(self, action: #selector(colorChanged) , for: .valueChanged)
         colorWell.selectedColor = UIColor.gray
+        for tag in currentTags {
+            tagArray.removeAll(where: {$0.tagName == tag.tagName})
+        }
         for (_,element) in currentTagArray.enumerated(){
-            tagArray = tagArray.filter{$0.tagName != element}
+            //tagArray.removeAll(where: {$0.tagName == element})
             currentTags += Tag.tagDic.values.filter{$0.tagName == element}
         }
         
@@ -187,7 +191,7 @@ class TagSettingViewController: UIViewController {
         
         titleNavigationItem.rightBarButtonItem?.title = "저장"
         titleNavigationItem.leftBarButtonItem?.action = #selector(self.dismissLeftButton)
-        titleNavigationItem.rightBarButtonItem?.action = #selector(self.addRightBUtton)
+        titleNavigationItem.rightBarButtonItem?.action = #selector(self.addRightButton)
         titleNavigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
         titleNavigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: font, size: 15)!], for: .normal)
         
@@ -200,7 +204,7 @@ class TagSettingViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func addRightBUtton(){
+    @objc func addRightButton(){
         self.delegate?.finishedTagSetting(tagList: currentTags)
         self.dismiss(animated: true, completion: nil)
     }
@@ -219,6 +223,11 @@ class TagSettingViewController: UIViewController {
         }else{
             self.addButton.titleLabel?.text = "추가"
         }
+        
+        if let index = (self.tagArray.firstIndex{$0.tagName == self.currentTagLabel.text }){
+            self.currentTagLabel.backgroundColor = tagArray[index].color
+            self.colorWell.selectedColor = tagArray[index].color
+        }
     }
         
     @IBAction func removeButtonClicked(_ sender: Any) {
@@ -233,14 +242,39 @@ class TagSettingViewController: UIViewController {
         }else{
             text = self.tagTextField.text!
         }
+        
         if let index = (self.currentTags.firstIndex{$0.tagName == text}){
             currentTags[index].color = self.colorWell.selectedColor!
-            
         }else{
-            currentTags.append(Tag(tagName: text, color: (self.colorWell.selectedColor!), todo: []))
+            if text != "#"{
+                currentTags.append(Tag(tagName: text, color: (self.colorWell.selectedColor!), todo: []))
+                tagArray.removeAll(where: {$0.tagName == currentTags.last?.tagName})
+            }
+            
         }
         self.currentTagCollectionView.reloadData()
+        self.tagCollectionView.reloadData()
     }
     
+    private var doubleTapGesture: UITapGestureRecognizer!
+        func setUpDoubleTap() {
+            doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapCollectionView))
+            doubleTapGesture.numberOfTapsRequired = 2
+            self.currentTagCollectionView.addGestureRecognizer(doubleTapGesture)
+            doubleTapGesture.delaysTouchesEnded = false
+    }
+    @objc func didDoubleTapCollectionView() {
+        let pointInCollectionView = doubleTapGesture.location(in: self.currentTagCollectionView)
+        if let selectedIndexPath = self.currentTagCollectionView.indexPathForItem(at: pointInCollectionView) {
+            currentTags.remove(at: selectedIndexPath.row)
+            tagArray = Array(Tag.tagDic.values)
+            for tag in currentTags {
+                tagArray.removeAll(where: {$0.tagName == tag.tagName})
+            }
+            self.currentTagCollectionView.deleteItems(at: [selectedIndexPath])
+            self.tagCollectionView.reloadData()
+            
+            }
+        }
 }
 

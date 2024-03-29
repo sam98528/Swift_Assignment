@@ -41,7 +41,6 @@ class Todo : CustomStringConvertible{
     }
     
     deinit{
-        print("deinit")
     }
 }
 

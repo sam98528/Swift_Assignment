@@ -138,7 +138,7 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
     
     // cell 사이즈( 옆 라인을 고려하여 설정 )
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var tag = tempTag[indexPath.row].tagName
+        let tag = tempTag[indexPath.row].tagName
         let attributes = [NSAttributedString.Key.font: UIFont(name: font, size: 14)]
         let tagSize = (tag as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])
         return CGSize(width: tagSize.width + 20, height: 30)

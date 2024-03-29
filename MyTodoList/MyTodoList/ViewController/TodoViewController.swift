@@ -112,7 +112,6 @@ extension TodoViewController: UITableViewDelegate, UITableViewDataSource,TableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Tag.printTagDictionary()
         Todo.list[indexPath.row].isOpen.toggle()
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
@@ -143,7 +142,8 @@ class TodoViewController: UIViewController{
         toDoTableView.clipsToBounds = true
         toDoTableView.layer.borderWidth = 5
         toDoTableView.layer.borderColor = UIColor.label.cgColor
-        
+        toDoTableView.refreshControl = UIRefreshControl()
+        toDoTableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
         logoLabel.font = UIFont(name: font, size: 45)
         
         //추가 버튼 Subview 추가
@@ -173,6 +173,15 @@ class TodoViewController: UIViewController{
         detailsViewController.modalTransitionStyle = .coverVertical
         detailsViewController.dataTransferDelegate = self
         self.present(detailsViewController, animated: true, completion: nil)
+    }
+    
+    @objc func handleRefreshControl(){
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7){
+            self.toDoTableView.reloadData()
+            self.toDoTableView.refreshControl?.endRefreshing()
+        }
     }
 }
 

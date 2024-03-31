@@ -1,4 +1,5 @@
 import Foundation
+import Alamofire
 
 protocol UserModelDelegate {
     func userRetrieved(user : User)
@@ -8,16 +9,22 @@ protocol UserModelDelegate {
 class UserModel {
     
     var delegate: UserModelDelegate?
-    let user = "sam98528"
+    var urlString = "https://api.github.com/users/"
+    var user : String
     
+    init(delegate: UserModelDelegate? = nil, user: String, urlString: String = "https://api.github.com/users/") {
+        self.delegate = delegate
+        self.user = user
+        self.urlString = urlString + self.user
+    }
+    
+   
     func getUserURLSession(){
         // Request User
         // Parse JSON into User Instances and pass to viewController
         // Using Protocol and delegate Pattern
         
         // 1. 요청할 URL를 String 저장
-        var urlString = "https://api.github.com/users/"
-        urlString += user
         
         // 2. String -> URL 인스턴스
         let url = URL(string: urlString)
@@ -48,6 +55,24 @@ class UserModel {
             }
         }
         dataTask.resume()
+    }
+    
+    func getUserAlamofire(){
+        AF.request(urlString).response { response in
+            switch response.result {
+            case .success(let data):
+                do{
+                    let user = try JSONDecoder().decode(User.self, from: data!)
+                    DispatchQueue.main.async{
+                        self.delegate?.userRetrieved(user: user)
+                    }
+                }catch {
+                    print("Error Parsing Json")
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
 }

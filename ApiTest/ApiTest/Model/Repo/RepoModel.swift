@@ -1,4 +1,6 @@
 import Foundation
+import Alamofire
+
 
 protocol RepoModelDelegate {
     func reposRetrieved(repos : [Repo])
@@ -6,11 +8,17 @@ protocol RepoModelDelegate {
 class RepoModel {
     
     var delegate: RepoModelDelegate?
-    let user = "sam98528"
-
+    var urlString = "https://api.github.com/users/"
+    var user : String
+    
+    init(delegate: RepoModelDelegate? = nil, user: String, urlString: String = "https://api.github.com/users/") {
+        self.delegate = delegate
+        self.user = user
+        self.urlString = urlString + self.user + "/repos"
+    }
+    
     func getRepoURLSession() {
-        var urlString = "https://api.github.com/users/"
-        urlString += user + "/repos"
+    
         
         let url = URL(string: urlString)
         
@@ -36,5 +44,22 @@ class RepoModel {
         dataTask.resume()
     }
     
-    
+    func getRepoAlamofire(){
+        print(urlString)
+        AF.request(urlString).response { response in
+            switch response.result {
+            case .success(let data):
+                do{
+                    let repos = try JSONDecoder().decode([Repo].self, from: data!)
+                    DispatchQueue.main.async{
+                        self.delegate?.reposRetrieved(repos: repos)
+                    }
+                }catch {
+                    print("Error Parsing Json")
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }

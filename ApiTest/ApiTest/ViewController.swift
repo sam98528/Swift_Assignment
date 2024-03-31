@@ -9,16 +9,17 @@ import UIKit
 
 class ViewController: UIViewController{
 
-    var userModel = UserModel()
-    var repoModel = RepoModel()
+    var userModel = UserModel(user: "sam98528")
+    var repoModel = RepoModel(user: "sam98528")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         userModel.delegate = self
-        userModel.getUser()
-        
+        //userModel.getUserURLSession()
+        //userModel.getUserAlamofire()
+
         repoModel.delegate = self
-        repoModel.getRepo()
+        repoModel.getRepoAlamofire()
     }
     
     
@@ -28,7 +29,7 @@ class ViewController: UIViewController{
 extension ViewController : UserModelDelegate {
     // MARK: UserModelDelegate Function
     func userRetrieved(user: User) {
-        //print(user)
+        print(user)
     }
 }
 

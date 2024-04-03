@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,28 +17,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dks-xr-cXb">
-                        <rect key="frame" x="10" y="5" width="228.66666666666666" height="34"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5L-Ai-Xsg">
-                        <rect key="frame" x="268.66666666666669" y="5" width="41.333333333333314" height="34"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iX3-fJ-oo1">
+                        <rect key="frame" x="5" y="0.0" width="310" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dks-xr-cXb">
+                                <rect key="frame" x="0.0" y="0.0" width="268.66666666666669" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5L-Ai-Xsg">
+                                <rect key="frame" x="268.66666666666669" y="0.0" width="41.333333333333314" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="y5L-Ai-Xsg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="G8G-4r-uzg"/>
-                    <constraint firstItem="dks-xr-cXb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="P5v-J6-xtG"/>
-                    <constraint firstItem="dks-xr-cXb" firstAttribute="height" secondItem="y5L-Ai-Xsg" secondAttribute="height" id="P9I-AC-UQn"/>
-                    <constraint firstAttribute="trailing" secondItem="y5L-Ai-Xsg" secondAttribute="trailing" constant="10" id="SwU-X3-UTE"/>
-                    <constraint firstAttribute="bottom" secondItem="y5L-Ai-Xsg" secondAttribute="bottom" constant="5" id="XQw-R2-hp3"/>
-                    <constraint firstAttribute="bottom" secondItem="dks-xr-cXb" secondAttribute="bottom" constant="5" id="XiB-le-Bfq"/>
-                    <constraint firstItem="dks-xr-cXb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="exX-hc-yPh"/>
-                    <constraint firstItem="y5L-Ai-Xsg" firstAttribute="leading" secondItem="dks-xr-cXb" secondAttribute="trailing" constant="30" id="ixs-wJ-QK4"/>
+                    <constraint firstItem="iX3-fJ-oo1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="5lf-JF-gjg"/>
+                    <constraint firstItem="iX3-fJ-oo1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="GBP-QE-EzC"/>
+                    <constraint firstAttribute="bottom" secondItem="iX3-fJ-oo1" secondAttribute="bottom" id="bSV-lK-xcV"/>
+                    <constraint firstAttribute="trailing" secondItem="iX3-fJ-oo1" secondAttribute="trailing" constant="5" id="wDg-pK-7Th"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -45,7 +47,7 @@
                 <outlet property="languageLabel" destination="y5L-Ai-Xsg" id="RYJ-bJ-b0t"/>
                 <outlet property="repoNameLabel" destination="dks-xr-cXb" id="Y1R-aV-oxl"/>
             </connections>
-            <point key="canvasLocation" x="139" y="21"/>
+            <point key="canvasLocation" x="136" y="51"/>
         </tableViewCell>
     </objects>
 </document>

@@ -11,7 +11,7 @@ import Kingfisher
 class ViewController: UIViewController{
     
     var userModel = UserModel(user: "sam98528")
-    var repoModel = RepoModel(user: "Apple")
+    var repoModel = RepoModel(user: "apple")
     var idLabel: UILabel!
     var nameLabel: UILabel!
     var locationLabel: UILabel!

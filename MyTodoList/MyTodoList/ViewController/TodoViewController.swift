@@ -176,8 +176,6 @@ class TodoViewController: UIViewController{
     }
     
     @objc func handleRefreshControl(){
-        
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7){
             self.toDoTableView.reloadData()
             self.toDoTableView.refreshControl?.endRefreshing()

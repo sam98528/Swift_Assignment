@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ViewController: UIViewController{
     
@@ -26,7 +27,7 @@ class ViewController: UIViewController{
 
         
         userModel.delegate = self
-        //userModel.getUserAlamofire()
+        userModel.getUserAlamofire()
         
         repoModel.delegate = self
         repoModel.getRepoAlamofire()
@@ -83,7 +84,7 @@ extension ViewController {
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.axis = .vertical
             stackView.alignment = .fill
-            stackView.distribution = .equalSpacing
+            stackView.distribution = .fillProportionally
             stackView.spacing = 5
             return stackView
         }()
@@ -100,6 +101,7 @@ extension ViewController {
             stackView.alignment = .fill
             stackView.distribution = .fillEqually
             stackView.spacing = 5
+            //stackView.heightAnchor.constraint(lessThanOrEqualToConstant: 150.0).isActive = true
             return stackView
         }()
         
@@ -114,7 +116,6 @@ extension ViewController {
             tableView.dataSource = self
             tableView.register(ProfileTableViewCell.nib(), forCellReuseIdentifier: ProfileTableViewCell.identifier)
             tableView.translatesAutoresizingMaskIntoConstraints = false
-            tableView.backgroundColor = .red
             tableView.refreshControl = UIRefreshControl()
             tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
             return tableView
@@ -122,7 +123,7 @@ extension ViewController {
         
         self.view.addSubview(mainStackView)
         self.view.addSubview(repoTableView!)
-        
+
         mainStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10.0).isActive = true
         mainStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0.0).isActive = true
         mainStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0.0).isActive = true
@@ -148,6 +149,9 @@ extension ViewController : UserModelDelegate , RepoModelDelegate {
         locationLabel.text = "지역 이름 : \(user.location ?? "없음")"
         followersLabel.text = "팔로워 수 : \(String(user.followers ?? 0))"
         followingsLabel.text = "팔로잉 수 : \(String(user.following ?? 0))"
+        let processor = RoundCornerImageProcessor(cornerRadius: profileImageView.layer.bounds.width)
+        profileImageView.kf.indicatorType = .activity
+        profileImageView.kf.setImage(with: URL(string: user.avatar_url!), options: [.processor(processor)])
         self.currentUser = user
     }
     

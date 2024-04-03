@@ -116,6 +116,7 @@ extension ViewController {
             tableView.dataSource = self
             tableView.register(ProfileTableViewCell.nib(), forCellReuseIdentifier: ProfileTableViewCell.identifier)
             tableView.translatesAutoresizingMaskIntoConstraints = false
+
             tableView.refreshControl = UIRefreshControl()
             tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
             return tableView
@@ -144,14 +145,16 @@ extension ViewController {
 extension ViewController : UserModelDelegate , RepoModelDelegate {
     // MARK: UserModelDelegate, RepoModelDelegate Function
     func userRetrieved(user: User) {
-        idLabel.text = "아이디 : \(user.login ?? "")"
-        nameLabel.text = "이름 : \(user.name ?? "")"
+        idLabel.text = "아이디 : \(user.login ?? "오류")"
+        nameLabel.text = "이름 : \(user.name ?? "오류")"
         locationLabel.text = "지역 이름 : \(user.location ?? "없음")"
         followersLabel.text = "팔로워 수 : \(String(user.followers ?? 0))"
         followingsLabel.text = "팔로잉 수 : \(String(user.following ?? 0))"
         let processor = RoundCornerImageProcessor(cornerRadius: profileImageView.layer.bounds.width)
-        profileImageView.kf.indicatorType = .activity
-        profileImageView.kf.setImage(with: URL(string: user.avatar_url!), options: [.processor(processor)])
+        if let profileImageStr = user.avatar_url{
+            profileImageView.kf.indicatorType = .activity
+            profileImageView.kf.setImage(with: URL(string: user.avatar_url ?? ""), options: [.processor(processor)])
+        }
         self.currentUser = user
     }
     

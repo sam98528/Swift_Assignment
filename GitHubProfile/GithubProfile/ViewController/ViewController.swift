@@ -153,7 +153,7 @@ extension ViewController : UserModelDelegate , RepoModelDelegate {
         let processor = RoundCornerImageProcessor(cornerRadius: profileImageView.layer.bounds.width)
         if let profileImageStr = user.avatar_url{
             profileImageView.kf.indicatorType = .activity
-            profileImageView.kf.setImage(with: URL(string: user.avatar_url ?? ""), options: [.processor(processor)])
+            profileImageView.kf.setImage(with: URL(string: profileImageStr), options: [.processor(processor)])
         }
         self.currentUser = user
     }

@@ -10,7 +10,7 @@ import Kingfisher
 
 class ViewController: UIViewController{
     
-    var userModel = UserModel(user: "sam98528")
+    var userModel = UserModel(user: "Apple")
     var repoModel = RepoModel(user: "apple")
     var idLabel: UILabel!
     var nameLabel: UILabel!
@@ -183,7 +183,6 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == Repo.data.count {
-            
             self.repoModel.getRepoAlamofire()
         }
     }

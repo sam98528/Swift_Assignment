@@ -41,7 +41,7 @@ extension ViewController : ProductModelDelegate {
         self.productNameLabel.text = product.title
         self.productImageView.kf.indicatorType = .activity
         self.productImageView.kf.setImage(with: URL(string: product.thumbnail))
-        self.priceLabel.text = "$\(product.price)"
+        self.priceLabel.text = "$\(product.addCommas(to: product.price))"
     }
 }
 

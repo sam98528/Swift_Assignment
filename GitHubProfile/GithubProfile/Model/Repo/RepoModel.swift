@@ -5,11 +5,12 @@ import Alamofire
 protocol RepoModelDelegate {
     func reposRetrieved(repos : [Repo])
 }
+
 class RepoModel {
     
     var delegate: RepoModelDelegate?
     var urlString = "https://api.github.com/users/"
-    var user : String
+    let user : String
     var token : String = ""
     var page = 1
     var lastPage = Int.max
@@ -19,19 +20,18 @@ class RepoModel {
         self.delegate = delegate
         self.user = user
         self.urlString = urlString + self.user + "/repos"
-        do{
+        do {
             self.token = try Configuration.value(for: "API_TOKEN")
-        }catch{
+        }catch {
             print(error.localizedDescription)
         }
     }
     
     func getRepoURLSession() {
         
-        
         let url = URL(string: urlString)
         
-        guard url != nil else{
+        guard url != nil else {
             print("URL ERROR")
             return
         }
@@ -40,13 +40,13 @@ class RepoModel {
         let dataTask = session.dataTask(with: url!) {(data, response, error) in
             if error == nil && data != nil {
                 let decoder = JSONDecoder()
-                do{
+                do {
                     let repos = try decoder.decode([Repo].self, from: data!)
                     Repo.data = repos
-                    DispatchQueue.main.async{
+                    DispatchQueue.main.async {
                         self.delegate?.reposRetrieved(repos: repos)
                     }
-                }catch{
+                }catch {
                     print("Error Parsing Json")
                 }
             }
@@ -54,16 +54,16 @@ class RepoModel {
         dataTask.resume()
     }
     
-    func getRepoAlamofire(){
+    func getRepoAlamofire() {
         // 페이지 번호를 적용하여 URL 생성
-        if page < lastPage{
-            print("getRepoAlamofire() ")
+        if page < lastPage {
             let url = URL(string: "\(urlString)?page=\(page)")!
-            let headers: HTTPHeaders = [
-                "Authorization": token
-            ]
+            var headers: HTTPHeaders?
+            if token != "" {
+                headers = ["Authorization": token]
+            }
             AF.request(url,headers: headers).response { response in
-                if !self.checkedLastPage{
+                if !self.checkedLastPage {
                     if let headers = response.response?.headers {
                         if let linkHeader = headers["Link"] {
                             let links = linkHeader.components(separatedBy: ",")
@@ -84,7 +84,6 @@ class RepoModel {
                         }
                     }
                 }
-                
                 switch response.result {
                 case .success(let data):
                     do {
@@ -105,6 +104,5 @@ class RepoModel {
                 }
             }
         }
-        
     }
 }

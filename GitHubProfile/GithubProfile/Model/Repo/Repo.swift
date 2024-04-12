@@ -1,9 +1,15 @@
 import Foundation
 
 struct Repo : Codable {
-    var name: String
-    var language: String?
-    var html_url: String
+    let name: String
+    let language: String?
+    let htmlUrl: String
+    
+    enum CodingKeys : String, CodingKey {
+        case name
+        case language
+        case htmlUrl = "html_url"
+    }
 }
 
 extension Repo {

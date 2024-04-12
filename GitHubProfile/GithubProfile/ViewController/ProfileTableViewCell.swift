@@ -24,8 +24,12 @@ class ProfileTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
+    }
+    
+    func config (repo: Repo){
+        self.languageLabel.text = repo.language
+        self.repoNameLabel.text = repo.name
     }
 }
 

@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class ViewController: UIViewController{
+class ViewController: UIViewController {
     
     var userModel = UserModel(user: "Apple")
     var repoModel = RepoModel(user: "Apple")
@@ -24,24 +24,17 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
         userModel.delegate = self
         userModel.getUserAlamofire()
-        
         repoModel.delegate = self
         repoModel.getRepoAlamofire()
-        
         setView()
     }
-    
-    
-    
 }
 
 extension ViewController {
     
-    func setView(){
+    func setView() {
         idLabel = {
             let label = UILabel()
             label.text = "아이디 : "
@@ -89,10 +82,9 @@ extension ViewController {
             return stackView
         }()
         
-        [idLabel!,nameLabel!,locationLabel!,followersLabel!,followingsLabel!].map{
+        [idLabel!,nameLabel!,locationLabel!,followersLabel!,followingsLabel!].forEach {
             verticalStackView.addArrangedSubview($0)
         }
-        
         
         let mainStackView: UIStackView = {
             let stackView = UIStackView()
@@ -134,8 +126,8 @@ extension ViewController {
         repoTableView!.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0.0).isActive = true
     }
     
-    @objc func handleRefreshControl(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7){
+    @objc func handleRefreshControl() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             self.repoTableView.reloadData()
             self.repoTableView.refreshControl?.endRefreshing()
         }
@@ -143,15 +135,16 @@ extension ViewController {
 }
 
 extension ViewController : UserModelDelegate , RepoModelDelegate {
+    
     // MARK: UserModelDelegate, RepoModelDelegate Function
     func userRetrieved(user: User) {
-        idLabel.text = "아이디 : \(user.login ?? "오류")"
-        nameLabel.text = "이름 : \(user.name ?? "오류")"
+        idLabel.text = "아이디 : \(user.login)"
+        nameLabel.text = "이름 : \(user.name)"
         locationLabel.text = "지역 이름 : \(user.location ?? "없음")"
-        followersLabel.text = "팔로워 수 : \(String(user.followers ?? 0))"
-        followingsLabel.text = "팔로잉 수 : \(String(user.following ?? 0))"
+        followersLabel.text = "팔로워 수 : \(String(user.followers))"
+        followingsLabel.text = "팔로잉 수 : \(String(user.following))"
         let processor = RoundCornerImageProcessor(cornerRadius: profileImageView.layer.bounds.width)
-        if let profileImageStr = user.avatar_url{
+        if let profileImageStr = user.avatarUrl {
             profileImageView.kf.indicatorType = .activity
             profileImageView.kf.setImage(with: URL(string: profileImageStr), options: [.processor(processor)])
         }
@@ -161,11 +154,10 @@ extension ViewController : UserModelDelegate , RepoModelDelegate {
     func reposRetrieved(repos: [Repo]) {
         repoTableView.reloadData()
     }
-    
-    
 }
 
 extension ViewController : UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Repo.data.count
     }
@@ -175,11 +167,10 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
-        
-        cell.languageLabel.text = Repo.data[indexPath.row].language
-        cell.repoNameLabel.text = Repo.data[indexPath.row].name
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as? ProfileTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.config(repo: Repo.data[indexPath.row])
         return cell
     }
     
@@ -188,7 +179,4 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
             self.repoModel.getRepoAlamofire()
         }
     }
-    
-    
-    
 }

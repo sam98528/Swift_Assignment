@@ -11,7 +11,7 @@ class RepoModel {
     var urlString = "https://api.github.com/users/"
     var user : String
     var token : String = ""
-    var page = 0
+    var page = 1
     var lastPage = Int.max
     var checkedLastPage = false
     

@@ -11,7 +11,7 @@ import Kingfisher
 class ViewController: UIViewController{
     
     var userModel = UserModel(user: "Apple")
-    var repoModel = RepoModel(user: "apple")
+    var repoModel = RepoModel(user: "Apple")
     var idLabel: UILabel!
     var nameLabel: UILabel!
     var locationLabel: UILabel!
@@ -169,9 +169,11 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Repo.data.count
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
         

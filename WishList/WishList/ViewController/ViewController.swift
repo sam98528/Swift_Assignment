@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     
     @IBAction func showCartButtonClicked(_ sender: Any) {
         let wishListViewControler = WishListViewController()
+        wishListViewControler.delegate = self
         self.present(wishListViewControler,animated: true)
     }
     
@@ -47,16 +48,6 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController : ProductModelDelegate {
-    func dataRetrieved(product : Product) {
-        self.product = product
-        self.productDescriptionTextView.text = product.description
-        self.productNameLabel.text = product.title
-        self.productImageView.kf.indicatorType = .activity
-        self.productImageView.kf.setImage(with: URL(string: product.thumbnail))
-        self.priceLabel.text = "$\(Int.addCommas(to: product.price))"
-    }
-}
 
 extension ViewController{
     func configure() {
@@ -93,4 +84,23 @@ extension ViewController{
         alert.addAction(close)
         present(alert, animated: true, completion: nil)
     }
+}
+
+extension ViewController : ProductModelDelegate {
+    func dataRetrieved(product : Product) {
+        self.product = product
+        self.productDescriptionTextView.text = product.description
+        self.productNameLabel.text = product.title
+        self.productImageView.kf.indicatorType = .activity
+        self.productImageView.kf.setImage(with: URL(string: product.thumbnail))
+        self.priceLabel.text = "$\(Int.addCommas(to: product.price))"
+    }
+}
+
+extension ViewController : WishListDelegate {
+    func wishListModified() {
+        self.showCartButton.addBadge(number: self.coreDataManager.getCurrentCount())
+    }
+    
+    
 }

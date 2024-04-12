@@ -8,16 +8,21 @@
 import UIKit
 import CoreData
 
+protocol WishListDelegate {
+    func wishListModified()
+}
+
 class WishListViewController: UIViewController{
     
     let coreDataManger = CoreDataManger()
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var wishListTableView: UITableView!
     var data : [WishProduct] = []
+    var delegate : WishListDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        data = coreDataManger.getCurrnetData().sorted{$0.id < $1.id}
+        data = coreDataManger.getCurrnetData()
         titleLabel.text = "My WishList"
         titleLabel.font = UIFont(name: "FuturaCyrillic-Demi", size: 30)
         titleLabel.layer.cornerRadius = titleLabel.layer.bounds.height / 2
@@ -26,6 +31,10 @@ class WishListViewController: UIViewController{
         wishListTableView.dataSource = self
         wishListTableView.delegate = self
         wishListTableView.register(WishListTableViewCell.nib(), forCellReuseIdentifier: WishListTableViewCell.identifier)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.delegate?.wishListModified()
     }
 }
 
@@ -46,6 +55,18 @@ extension WishListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let del = UIContextualAction(style: .destructive, title: "", handler: {(action, view, completionHandler) in
+            self.coreDataManger.deleteData(product: self.data[indexPath.row])
+            self.data = self.coreDataManger.getCurrnetData()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            //tableView.reloadData()
+            completionHandler(true)
+        })
+        del.image = UIImage(systemName: "trash.fill")
+        return UISwipeActionsConfiguration(actions: [del])
     }
     
 }

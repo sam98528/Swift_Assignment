@@ -18,12 +18,5 @@ struct Product : Codable {
     var category : String
     var thumbnail : String
     var images : [String]
-    
-    
-    func addCommas(to number: Int) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        return formatter.string(from: NSNumber(value: number)) ?? ""
-    }
 }
 

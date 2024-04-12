@@ -59,6 +59,9 @@
                                                                 <color key="tintColor" systemColor="systemBackgroundColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                                <connections>
+                                                                    <action selector="addCartButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OaM-pO-Hxo"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0dN-SU-lvz">
                                                                 <rect key="frame" x="196.66666666666663" y="0.0" width="176.33333333333337" height="45"/>
@@ -78,6 +81,9 @@
                                                         <color key="tintColor" systemColor="systemBackgroundColor"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                        <connections>
+                                                            <action selector="showCartButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5bc-wJ-F7r"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -129,7 +135,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cartButton" destination="DcL-LT-IHI" id="pxd-IW-fSa"/>
+                        <outlet property="addCartButton" destination="DcL-LT-IHI" id="pxd-IW-fSa"/>
                         <outlet property="nextButton" destination="0dN-SU-lvz" id="3bI-66-zd5"/>
                         <outlet property="priceLabel" destination="jrx-DC-RTm" id="Nom-xl-Za4"/>
                         <outlet property="productDescriptionTextView" destination="q9o-uN-Axv" id="CQa-Xg-6W8"/>
@@ -153,13 +159,13 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

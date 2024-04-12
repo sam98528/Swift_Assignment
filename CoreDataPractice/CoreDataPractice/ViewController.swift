@@ -40,8 +40,9 @@ class ViewController: UIViewController {
     func readData(){
         guard let context = self.persistentContainer?.viewContext else {return}
         let request = Car.fetchRequest()
-        let cars = try? context.fetch(request)
-        
+        guard let cars = try? context.fetch(request) else{
+            return
+        }
         print(cars)
     }
     

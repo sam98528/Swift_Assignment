@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		145D60E22BC907B600D808F7 /* Car+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145D60E02BC907B600D808F7 /* Car+CoreDataClass.swift */; };
 		146C82DA2BC648F900A7B488 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C82D92BC648F900A7B488 /* AppDelegate.swift */; };
 		146C82DC2BC648F900A7B488 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C82DB2BC648F900A7B488 /* SceneDelegate.swift */; };
 		146C82DE2BC648F900A7B488 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146C82DD2BC648F900A7B488 /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		145D60E02BC907B600D808F7 /* Car+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Car+CoreDataClass.swift"; sourceTree = "<group>"; };
 		146C82D62BC648F900A7B488 /* CoreDataPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146C82D92BC648F900A7B488 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		146C82DB2BC648F900A7B488 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		146C82CD2BC648F900A7B488 = {
 			isa = PBXGroup;
 			children = (
+				145D60E02BC907B600D808F7 /* Car+CoreDataClass.swift */,
 				146C82D82BC648F900A7B488 /* CoreDataPractice */,
 				146C82EF2BC648FA00A7B488 /* CoreDataPracticeTests */,
 				146C82F92BC648FA00A7B488 /* CoreDataPracticeUITests */,
@@ -262,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				146C82DE2BC648F900A7B488 /* ViewController.swift in Sources */,
+				145D60E22BC907B600D808F7 /* Car+CoreDataClass.swift in Sources */,
 				146C82DA2BC648F900A7B488 /* AppDelegate.swift in Sources */,
 				146C82DC2BC648F900A7B488 /* SceneDelegate.swift in Sources */,
 				146C830B2BC6492500A7B488 /* Model.xcdatamodeld in Sources */,

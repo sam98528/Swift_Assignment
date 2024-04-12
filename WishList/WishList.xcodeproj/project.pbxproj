@@ -22,6 +22,7 @@
 		14004C9A2BC5355800A94ED2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 14004C992BC5355800A94ED2 /* Kingfisher */; };
 		14004C9E2BC54D4E00A94ED2 /* FuturaCyrillicDemi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14004C9D2BC54D4E00A94ED2 /* FuturaCyrillicDemi.ttf */; };
 		14004CA02BC54EEB00A94ED2 /* Peace Sans.otf in Resources */ = {isa = PBXBuildFile; fileRef = 14004C9F2BC54EEA00A94ED2 /* Peace Sans.otf */; };
+		145D60E62BC90EAA00D808F7 /* WishList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 145D60E42BC90EAA00D808F7 /* WishList.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		14004C932BC531F700A94ED2 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		14004C9D2BC54D4E00A94ED2 /* FuturaCyrillicDemi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaCyrillicDemi.ttf; sourceTree = "<group>"; };
 		14004C9F2BC54EEA00A94ED2 /* Peace Sans.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Peace Sans.otf"; sourceTree = "<group>"; };
+		145D60E52BC90EAA00D808F7 /* WishList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WishList.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				14004C682BC52E3400A94ED2 /* Assets.xcassets */,
 				14004C6A2BC52E3400A94ED2 /* LaunchScreen.storyboard */,
 				14004C6D2BC52E3400A94ED2 /* Info.plist */,
+				145D60E42BC90EAA00D808F7 /* WishList.xcdatamodeld */,
 			);
 			path = WishList;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 			files = (
 				14004C642BC52E3300A94ED2 /* ViewController.swift in Sources */,
 				14004C922BC52EE400A94ED2 /* Product.swift in Sources */,
+				145D60E62BC90EAA00D808F7 /* WishList.xcdatamodeld in Sources */,
 				14004C602BC52E3300A94ED2 /* AppDelegate.swift in Sources */,
 				14004C622BC52E3300A94ED2 /* SceneDelegate.swift in Sources */,
 				14004C942BC531F700A94ED2 /* ProductModel.swift in Sources */,
@@ -699,6 +703,19 @@
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		145D60E42BC90EAA00D808F7 /* WishList.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				145D60E52BC90EAA00D808F7 /* WishList.xcdatamodel */,
+			);
+			currentVersion = 145D60E52BC90EAA00D808F7 /* WishList.xcdatamodel */;
+			path = WishList.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 14004C542BC52E3300A94ED2 /* Project object */;
 }

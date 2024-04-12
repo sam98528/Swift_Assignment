@@ -26,31 +26,31 @@
 사용한 API 주소 : https://dummyjson.com/products/{ID}
 
 **LV1 :** 
-[x] API로 받아올 데이터 객체를 만듭니다.
-[x] API로 받아온 데이터에 맞게 CoreData 데이터를 모델링합니다.
+- [x] API로 받아올 데이터 객체를 만듭니다.
+- [x] API로 받아온 데이터에 맞게 CoreData 데이터를 모델링합니다.
 
 **LV2 :** 
-[x] 반드시 사용할 것 : URLSession, UIImage, UILabel
-[x] 디자인 및 화면 구성은 반드시 예시대로 하지 않아도 됩니다.
-[x] 다른 상품 보기 버튼 구현
-[x] 버튼을 누르면 랜덤한 “id”를 생성하고 해당 id에 따라 다른 상품을 보여줍니다.
+- [x] 반드시 사용할 것 : URLSession, UIImage, UILabel
+- [x] 디자인 및 화면 구성은 반드시 예시대로 하지 않아도 됩니다.
+- [x] 다른 상품 보기 버튼 구현
+- [x] 버튼을 누르면 랜덤한 “id”를 생성하고 해당 id에 따라 다른 상품을 보여줍니다.
 
 **LV3 :** 
-[x] 반드시 사용할 것 : UIViewController, TableView, Core Data, UIButton
-[x] 위시 리스트 담기 버튼 구현
-[x] 버튼을 누르면 현재 보여주고 있는 상품의 정보를 CoreData에 저장
-[x] 위시 리스트 보기 페이지 구현
-[x] “위시 리스트 보기” 버튼을 누르면 위시 리스트 담기 버튼을 눌렀을 때 CoreData에 저장한 데이터 노출
+- [x] 반드시 사용할 것 : UIViewController, TableView, Core Data, UIButton
+- [x] 위시 리스트 담기 버튼 구현
+- [x] 버튼을 누르면 현재 보여주고 있는 상품의 정보를 CoreData에 저장
+- [x] 위시 리스트 보기 페이지 구현
+- [x] “위시 리스트 보기” 버튼을 누르면 위시 리스트 담기 버튼을 눌렀을 때 CoreData에 저장한 데이터 노출
 
 **LV4 :**  
-[x] 반드시 사용할 것 : UITableView or UIButton
-[x] 목록을 스와이프하여 삭제 버튼을 노출하고 터치하면 삭제 - UITableView의 기능
+- [x] 반드시 사용할 것 : UITableView or UIButton
+- [x] 목록을 스와이프하여 삭제 버튼을 노출하고 터치하면 삭제 - UITableView의 기능
 
 **LV5 :**  
-[x] 반드시 사용할 것 : UIRefreshControl
-[x] 위시 리스트의 “다른 상품 보기”를 업그레이드 해봅니다.
-[x] 스크롤을 내려 당기면, Refresh Indicator를 노출시킵니다.
-[x] 데이터를 불러오는동안 잠시, Indicator를 고정시킵니다.
+- [x] 반드시 사용할 것 : UIRefreshControl
+- [x] 위시 리스트의 “다른 상품 보기”를 업그레이드 해봅니다.
+- [x] 스크롤을 내려 당기면, Refresh Indicator를 노출시킵니다.
+- [x] 데이터를 불러오는동안 잠시, Indicator를 고정시킵니다.
 
 ### 겪었던 문제점 및 소감 :
 - API 사용하는것에는 큰 문제가 없었던 것 같습니다. 처음에는 Alamofire를 사용했는데, 과제 제한사항에 URLSession만 사용해서 구현을 하라는걸 나중에 봐서, 다시 변경을 했습니다. 

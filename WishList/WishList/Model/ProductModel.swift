@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 protocol ProductModelDelegate {
     func dataRetrieved(product : Product)

@@ -7,8 +7,9 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController{
     
     var userModel = UserModel(user: "Apple")
     var repoModel = RepoModel(user: "Apple")
@@ -21,6 +22,7 @@ class ViewController: UIViewController {
     var repoTableView: UITableView!
     var currentUser: User?
     var token : String?
+    var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +31,24 @@ class ViewController: UIViewController {
         repoModel.delegate = self
         repoModel.getRepoAlamofire()
         setView()
+        
     }
 }
 
 extension ViewController {
+    func configureSearchBar(){
+        searchBar = {
+            let searchBar = UISearchBar()
+            searchBar.placeholder = "Github repositories"
+            searchBar.delegate = self
+            return searchBar
+        }()
+        self.view.addSubview(searchBar)
+        searchBar.snp.makeConstraints{make in
+            make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+    }
     
     func setView() {
         idLabel = {
@@ -116,14 +132,15 @@ extension ViewController {
         
         self.view.addSubview(mainStackView)
         self.view.addSubview(repoTableView!)
-
-        mainStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10.0).isActive = true
-        mainStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0.0).isActive = true
-        mainStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0.0).isActive = true
-        repoTableView!.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 10.0).isActive = true
-        repoTableView!.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0.0).isActive = true
-        repoTableView!.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0.0).isActive = true
-        repoTableView!.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0.0).isActive = true
+        configureSearchBar()
+        mainStackView.snp.makeConstraints{ make in
+            make.top.equalTo(self.searchBar.snp.bottom).inset(10)
+            make.leading.trailing.equalToSuperview()
+        }
+        repoTableView.snp.makeConstraints{make in
+            make.top.equalTo(mainStackView.snp.bottom).inset(-10)
+            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
     
     @objc func handleRefreshControl() {
@@ -178,5 +195,11 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
         if indexPath.row + 1 == Repo.data.count {
             self.repoModel.getRepoAlamofire()
         }
+    }
+}
+
+extension ViewController : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
     }
 }

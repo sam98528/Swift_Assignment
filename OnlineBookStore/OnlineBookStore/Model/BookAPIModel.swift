@@ -3,7 +3,7 @@ import Alamofire
 
 
 struct BookAPIModel : Codable, Hashable{
-    let meta: Meta
+    var meta: Meta
     var books : [Book]
     
     enum CodingKeys: String, CodingKey{

@@ -12,7 +12,7 @@ extension DetailViewModel{
         return currentBook?.thumbnail
     }
     var author : String? {
-        return currentBook?.authors[0]
+        return currentBook?.authors.first ?? ""
     }
     var publisher: String? {
         return currentBook?.publisher
@@ -25,5 +25,14 @@ extension DetailViewModel{
     }
     var content : String?{
         return currentBook?.contents
+    }
+    
+    func saveBook(){
+        if let bookToSave = currentBook{
+            CoredataManager.shared.saveBook(bookToSave: bookToSave)
+        }
+    }
+    func readBook(){
+        NotificationCenter.default.post(name: Notification.Name.bookRead, object: currentBook)
     }
 }

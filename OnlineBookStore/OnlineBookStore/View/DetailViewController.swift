@@ -24,12 +24,15 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
-        configureButtonStackView()
+        configureBottomStackView()
+        configureButton()
         configureScrollView()
-        configure()
+        configureContent()
+        viewModel?.readBook()
+        
     }
     
-    func configureButtonStackView(){
+    func configureBottomStackView(){
         stackView.backgroundColor = .systemBackground
         stackView.distribution = .fillProportionally
         stackView.spacing = 5
@@ -63,6 +66,10 @@ class DetailViewController: UIViewController {
             $0.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
         }
     }
+    func configureButton(){
+        cancelButton.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
+        confirmButton.addTarget(self, action: #selector(confirmButtonClicked), for: .touchUpInside)
+    }
     
     func configureScrollView(){
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,7 +92,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    func configure(){
+    func configureContent(){
         contentStackView.backgroundColor = .systemBackground
         contentStackView.distribution = .equalSpacing
         contentStackView.axis = .vertical
@@ -100,6 +107,10 @@ class DetailViewController: UIViewController {
         publisher.text = viewModel?.publisher
         image.kf.setImage(with: URL(string: viewModel?.image ?? ""),placeholder: UIImage(systemName: "x.circle"))
         image.contentMode = .scaleAspectFit
+        image.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+        image.layer.shadowOpacity = 1
+        image.layer.shadowOffset = CGSize(width: 5, height: 5)
+        
         price.text = viewModel?.price
         price.attributedText = price.text?.strikeThrough()
         salePrice.text = viewModel?.salePrice
@@ -111,6 +122,7 @@ class DetailViewController: UIViewController {
             $0.textColor = .secondaryLabel
         }
         salePrice.font = .systemFont(ofSize: 18)
+        contents.font = .systemFont(ofSize: 15)
         [author,price,publisher,titleLabel,salePrice].forEach{
             $0.textAlignment = .center
         }
@@ -123,8 +135,17 @@ class DetailViewController: UIViewController {
         image.snp.makeConstraints{make in
             make.height.equalTo(300)
         }
-        
-        
     }
 
+    
+    @objc func cancelButtonClicked(){
+        self.dismiss(animated: true)
+    }
+    
+    @objc func confirmButtonClicked(){
+        self.dismiss(animated: true)
+        viewModel?.saveBook()
+    }
+    
+    
 }

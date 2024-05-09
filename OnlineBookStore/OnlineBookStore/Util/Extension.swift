@@ -15,3 +15,11 @@ extension Int {
         return formatter.string(from: NSNumber(value: number)) ?? ""
     }
 }
+
+extension Notification.Name {
+    static let bookAdd = Notification.Name("bookAdd")
+    static let bookDelete = Notification.Name("bookDelete")
+    static let bookRead = Notification.Name("bookRead")
+}
+
+
